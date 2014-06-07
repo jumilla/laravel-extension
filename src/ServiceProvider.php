@@ -12,7 +12,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	protected $defer = false;
 
-	private $packages;
+	private $plugins;
 
 	/**
 	 * Register the service provider.
@@ -21,11 +21,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->packages = PackageCollection::packages();
+		$this->plugins = PluginManager::plugins();
 
-//		$this->loadAutoloadFiles(PackageCollection::path());
+//		$this->loadAutoloadFiles(PluginManager::path());
 
-		ClassResolver::register($this->packages, $this->app['config']->get('app.aliases'));
+		ClassResolver::register($this->plugins, $this->app['config']->get('app.aliases'));
 	}
 
 	/**
@@ -45,26 +45,26 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 // publish
 		]);
 
-		// setup all packages
-		foreach ($this->packages as $package) {
-			$this->setupEmbedPackage($package);
+		// setup all plugins
+		foreach ($this->plugins as $plugin) {
+			$this->setupPlugin($plugin);
 		}
 	}
 
-	function setupEmbedPackage($package)
+	function setupPlugin($plugin)
 	{
-//		\Log::info($package->name());
+//		\Log::info($plugin->name());
 		// register package
-		$this->package('packages/'.$package->name, $package->name, $package->path);
+		$this->package('plugins/'.$plugin->name, $plugin->name, $plugin->path);
 
 		// 
-		$this->loadFiles($package);
+		$this->loadFiles($plugin);
 	}
 
-	function loadFiles($package)
+	function loadFiles($plugin)
 	{
 		$files = $this->app['files'];
-		foreach ($files->files($package->path) as $file) {
+		foreach ($files->files($plugin->path) as $file) {
 			if (ends_with($file, '.php')) {
 				require $file;
 			}

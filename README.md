@@ -3,15 +3,15 @@
 
 ## 機能
 
-* 手軽なパッケージ機能の追加
+* プラグイン機能の追加
 	* appディレクトリを複製するイメージで使うことができます。
-	* パッケージに独自の名前空間(PSR-4)を持たせることができます。
+	* パッケージに独自の名前空間(PSR-4)を一つ持たせることができます。
 	* Laravel4のパッケージとしても扱えます。
 		* config, viewの識別子の名前空間表記`package-name::`が使えます。
-	* パッケージを追加はディレクトリをコピーするだけ。`config/app.php`にコードを追加する必要はありません。
+	* プラグインの追加はディレクトリをコピーするだけ。`config/app.php`にコードを追加する必要はありません。
 
 * 名前空間内でのファサード問題の解決
-	* パッケージの名前空間の中からも同じ記述方法でファサードが扱えます。
+	* プラグインの名前空間の中からも同じ記述方法でファサードが扱えます。
 
 ## インストール方法
 
@@ -36,26 +36,35 @@ app/config/app.config
 	],
 ```
 
+## 設定
+
+T.B.D.
+
 ## コマンド
 
-### php artisan package:setup
-パッケージ機能を有効にします。
-* packagesディレクトリを作成する。
-* app/config/package.phpファイルを作成する。
+### php artisan plugin:setup
+プラグイン機能を有効にします。
+* pluginディレクトリを作成する。
+* app/config/plugin.phpファイルを作成する。
 
-### php artisan package:make &lt;package-name&gt; {namespace}
-パッケージを作成します。
-* packagesディレクトリ下に、**package-name**という名前でディレクトリを作成する。
+### php artisan plugin:make &lt;plugin-name&gt; {namespace}
+プラグインを作成します。
+* packagesディレクトリ下に、**plugin-name**という名前でディレクトリを作成する。
 * 以下のディレクトリ構成を作成する。
-	* config
+	* assets/
+	* config/
 		* config.php
-		* package.php
-	* controllers
-		* config.php
-	* lang
-	* migrations
-	* models
-	* views
+		* plugin.php
+	* controllers/
+		* BaseController.php
+		* SampleController.php
+	* lang/
+		* en/
+		* ja/
+	* migrations/
+	* models/
+	* views/
+		* sample.blade.php
 	routes.php
 
 ## ファサード
@@ -81,7 +90,7 @@ function index()
 }
 ```
 
-Laravel Extensionは、パッケージ下の名前空間内に対してファサードを解決するエイリアスローダーを持っているので、Laravel公式ドキュメント記載の方法がそのまま使えます。
+Laravel Extensionは、プラグイン下の名前空間内に対してファサードを解決するエイリアスローダーを持っているので、Laravel公式ドキュメント記載の方法がそのまま使えます。
 
 ```
 function index()
@@ -89,3 +98,13 @@ function index()
 	return View::make()
 }
 ```
+
+## 機能追加予定
+
+* プラグイン
+	* assetsのpublish
+	* migration
+	* ServiceProviderの設定
+* ビュー
+	* ビュー引数を明示的に宣言する方法とチェック機能の追加
+

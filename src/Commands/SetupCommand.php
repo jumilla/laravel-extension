@@ -4,6 +4,7 @@ use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Jumilla\LaravelExtension\PluginManager;
 
 /**
 * Modules console commands
@@ -16,14 +17,14 @@ class SetupCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $name = 'package:setup';
+	protected $name = 'plugin:setup';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Command description.';
+	protected $description = 'Setup plugin architecture.';
 
 	/**
 	 * IoC
@@ -33,33 +34,24 @@ class SetupCommand extends Command {
 	protected $files;
 
 	/**
-	 * DI
-	 *
-	 * @param Filesystem $files
-	 */
-	public function __construct(Application $app)
-	{
-		parent::__construct();
-		$this->files = $app['files'];
-	}
-
-	/**
 	 * Execute the console command.
 	 *
 	 * @return mixed
 	 */
 	public function fire()
 	{
-		// make packages/
-		$packagesDirectory = base_path().'/packages';
-		if (!$this->files->exists($packagesDirectory))
-			$this->files->makeDirectory($packagesDirectory);
+		$this->files = $this->laravel['files'];
 
-		// copy app/config/package.php
-		$packageConfigSourceFile = __DIR__ . '/../../config/package.php';
-		$packageConfigFile = app_path().'/config/package.php';
-		if (!$this->files->exists($packageConfigFile))
-			$this->files->copy($packageConfigSourceFile, $packageConfigFile);
+		// make plugins/
+		$pluginsDirectory = PluginManager::path();
+		if (!$this->files->exists($pluginsDirectory))
+			$this->files->makeDirectory($pluginsDirectory);
+
+		// copy app/config/plugin.php
+		$pluginConfigSourceFile = __DIR__ . '/../../config/plugin.php';
+		$pluginConfigFile = app_path().'/config/plugin.php';
+		if (!$this->files->exists($pluginConfigFile))
+			$this->files->copy($pluginConfigSourceFile, $pluginConfigFile);
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php namespace Jumilla\LaravelExtension;
 
-class Package {
+class Plugin {
 
 	public $name;
 

@@ -2,16 +2,16 @@
 
 class ClassResolver {
 
-	private static $packages;
+	private static $plugins;
 
 	private static $globalClassAliases;
 
-	public static function register($packages, $aliases)
+	public static function register($plugins, $aliases)
 	{
-		static::$packages = $packages;
+		static::$plugins = $plugins;
 		static::$globalClassAliases = $aliases;
 
-		// TODO check package configuration
+		// TODO check plugin configuration
 
 		spl_autoload_register(['Jumilla\LaravelExtension\ClassResolver', 'load'], true, true);
 	}
@@ -23,12 +23,12 @@ class ClassResolver {
 
 	public static function load($className)
 	{
-		foreach (static::$packages as $package) {
-			$namespace = $package->config('namespace').'\\';
-			$includesGlobalAliases = $package->config('includes_global_aliases', true);
-			$packageAliases = $package->config('aliases', []);
+		foreach (static::$plugins as $plugin) {
+			$namespace = $plugin->config('namespace').'\\';
+			$includesGlobalAliases = $plugin->config('includes_global_aliases', true);
+			$pluginAliases = $plugin->config('aliases', []);
 
-			// パッケージの名前空間下のクラスなら
+			// プラグインの名前空間下のクラスなら
 			if (starts_with($className, $namespace)) {
 				// 名前空間を削る
 				$relativeClassName = substr($className, strlen($namespace));
@@ -44,8 +44,8 @@ class ClassResolver {
 				}
 
 				// パッケージ固有のエイリアスかチェックする
-				if ($packageAliases) {
-					foreach ($packageAliases as $alias => $originalClassName) {
+				if ($pluginAliases) {
+					foreach ($pluginAliases as $alias => $originalClassName) {
 						if ($relativeClassName === $alias) {
 							class_alias($originalClassName, $className);
 							return true;
@@ -57,8 +57,8 @@ class ClassResolver {
 				$relativePath = str_replace('\\', '/', $relativeClassName).'.php';
 
 				// 全ディレクトリ下を探索する
-				foreach ($package->config('directories') as $directory) {
-					$path = $package->path.'/'.$directory.'/'.$relativePath;
+				foreach ($plugin->config('directories') as $directory) {
+					$path = $plugin->path.'/'.$directory.'/'.$relativePath;
 					if (file_exists($path)) {
 						require_once $path;
 						return true;

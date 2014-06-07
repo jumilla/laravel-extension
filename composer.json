@@ -3,7 +3,7 @@
     "type": "framework-extension",
 	"description": "Laravel Extension Pack",
 	"license": "MIT",
-	"keywords": ["Laravel", "Laravel4", "plugin", "module", "package", "namespace", "facade"],
+	"keywords": ["Laravel", "Laravel4", "plugin", "architecture", "facade"],
 	"homepage": "http://io.laravel.jp",
 	"authors": [
 		{
