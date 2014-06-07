@@ -82,10 +82,16 @@ class MakeCommand extends AbstractCommand {
 			],
 		]);
 		// controllers/BaseController.php
+		$source = <<<SRC
+class BaseController extends \Controller {
+
+}
+SRC;
+		$this->makePhpSource('controllers/BaseController.php', $source, $namespace);
 
 		// controllers/SampleController.php
 		$source = <<<SRC
-class SampleController extends Controller {
+class SampleController extends BaseController {
 
 	public function index() {
 		return View::make('{$packageName}::sample');

@@ -15,22 +15,25 @@
 
 ## インストール方法
 
+composer.json
 ``` composer.json
 	"require": [
 		"jumilla/laravel-extension": "dev-master",
 	],
 ```
 
+以下のコマンドを実行する。
+```
+composer update
+```
+
+app/config/app.config
 ``` app/config/app.config
 	'providers' => [
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		...
 		'Jumilla\LaravelExtension\ServiceProvider',
 	],
-```
-
-```
-composer update
 ```
 
 ## コマンド
@@ -40,7 +43,7 @@ composer update
 * packagesディレクトリを作成する。
 * app/config/package.phpファイルを作成する。
 
-### php artisan package:make &gt;package-name&lt; {namespace}
+### php artisan package:make &lt;package-name&gt; {namespace}
 パッケージを作成します。
 * packagesディレクトリ下に、**package-name**という名前でディレクトリを作成する。
 * 以下のディレクトリ構成を作成する。
