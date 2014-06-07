@@ -1,4 +1,4 @@
-<?php namespace Jumilla\Laravel;
+<?php namespace Jumilla\LaravelExtension;
 
 use Illuminate\Filesystem\Filesystem;
 

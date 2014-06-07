@@ -1,4 +1,4 @@
-<?php namespace Jumilla\Laravel;
+<?php namespace Jumilla\LaravelExtension;
 
 use Symfony\Component\Finder\Finder;
 use Illuminate\Filesystem\Filesystem;
@@ -39,8 +39,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 		// Add package commands
 		$this->setupCommands([
-			['name' => 'package.setup', 'class' => 'Jumilla\\Laravel\\Commands\\SetupCommand'],
-			['name' => 'package.make', 'class' => 'Jumilla\\Laravel\\Commands\\MakeCommand'],
+			['name' => 'package.setup', 'class' => 'Jumilla\\LaravelExtension\\Commands\\SetupCommand'],
+			['name' => 'package.make', 'class' => 'Jumilla\\LaravelExtension\\Commands\\MakeCommand'],
 // dump-autoload
 // publish
 		]);

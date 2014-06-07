@@ -1,4 +1,4 @@
-<?php namespace Jumilla\Laravel;
+<?php namespace Jumilla\LaravelExtension;
 
 class ClassResolver {
 
@@ -13,12 +13,12 @@ class ClassResolver {
 
 		// TODO check package configuration
 
-		spl_autoload_register(['Jumilla\Laravel\ClassResolver', 'load'], true, true);
+		spl_autoload_register(['Jumilla\LaravelExtension\ClassResolver', 'load'], true, true);
 	}
 
 	public static function unregister()
 	{
-		spl_autoload_unregister(['Jumilla\Laravel\ClassResolver', 'load']);
+		spl_autoload_unregister(['Jumilla\LaravelExtension\ClassResolver', 'load']);
 	}
 
 	public static function load($className)

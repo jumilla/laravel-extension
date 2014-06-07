@@ -1,20 +1,23 @@
 {
-    "name": "jumilla/laravel-extension",
-    "description": "",
-    "authors": [
-        {
-            "name": "Fumio Furukawa",
-            "email": "fumio.furukawa@gmail.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.4.0",
-        "illuminate/framework": "~4.2"
-    },
-    "autoload": {
-        "psr-4": {
-            "Jumilla\\Laravel\\": "src/"
-        }
-    },
-    "minimum-stability": "stable"
+	"name": "jumilla/laravel-extension",
+    "type": "framework-extension",
+	"description": "Laravel Extension Pack",
+	"keywords": ["Laravel", "Laravel4", "plugin", "module", "package", "namespace", "facade"],
+	"homepage": "http://io.laravel.jp",
+	"authors": [
+		{
+			"name": "Fumio Furukawa",
+			"email": "fumio.furukawa@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0",
+		"illuminate/framework": "~4.2"
+	},
+	"autoload": {
+		"psr-4": {
+			"Jumilla\\LaravelExtension\\": "src/"
+		}
+	},
+	"minimum-stability": "dev"
 }

@@ -4,11 +4,34 @@
 ## 機能
 
 * 手軽なパッケージ機能の追加
-	* appディレクトリを複製するイメージで使うことができる。
-	* パッケージに独自の名前空間(PSR-4)を持たせることができる。
-	* Laravel4のパッケージとして扱える。(config, viewの識別子の名前空間表記'package-name::'が使える)
-	* パッケージの名前空間の中からファサードが扱える。
-	* ディレクトリをコピーするだけでパッケージを追加できる。
+	* appディレクトリを複製するイメージで使うことができます。
+	* パッケージに独自の名前空間(PSR-4)を持たせることができます。
+	* Laravel4のパッケージとしても扱えます。
+		* config, viewの識別子の名前空間表記`package-name::`が使えます。
+	* パッケージを追加はディレクトリをコピーするだけ。`config/app.php`にコードを追加する必要はありません。
+
+* 名前空間内でのファサード問題の解決
+	* パッケージの名前空間の中からも同じ記述方法でファサードが扱えます。
+
+## インストール方法
+
+``` composer.json
+	"require": [
+		"jumilla/laravel-extension": "dev-master",
+	],
+```
+
+``` app/config/app.config
+	'providers' => [
+		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
+		...
+		'Jumilla\LaravelExtension\ServiceProvider',
+	],
+```
+
+```
+composer update
+```
 
 ## コマンド
 
@@ -32,7 +55,7 @@
 	routes.php
 
 ## ファサード
-Laravel4のエイリアスローダーはグローバル名前空間にしか作用しないため、名前空間の中からファサードを扱うにはクラス名の先頭に`\\`を付けなければなりません。
+Laravel4のエイリアスローダーはグローバル名前空間にしか作用しないため、名前空間の中からファサードを扱うにはクラス名の先頭に`\`を付けなければなりません。
 
 ```
 function index()
