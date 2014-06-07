@@ -48,9 +48,10 @@ app/config/app.config
 * packagesディレクトリ下に、**package-name**という名前でディレクトリを作成する。
 * 以下のディレクトリ構成を作成する。
 	* config
-		config.php
-		package.php
+		* config.php
+		* package.php
 	* controllers
+		* config.php
 	* lang
 	* migrations
 	* models
