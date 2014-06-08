@@ -131,7 +131,7 @@ function index()
 ## 起動時の動き
 
 * プラグインディレクトリ直下の.phpファイルを全てrequireします。
-* `plugins/{plugin-name}/config/plugin.php` の `namespace`を見て、クラスオートロードの設定をします。
+* `plugins/{plugin-name}/config/plugin.php` の `namespace`を見て、`directories`に指定された全てのディレクトリに対しPSR-4規約に基づくクラスオートロードの設定をします。
 
 ## 機能追加予定
 
