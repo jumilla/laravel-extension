@@ -4,6 +4,14 @@ use Illuminate\Console\Command;
 
 abstract class AbstractCommand extends Command {
 
+	protected $files;
+
+	public function setLaravel($laravel) {
+		parent::setLaravel($laravel);
+
+		$this->files = 	$this->laravel['files'];
+	}
+
 	protected function makeDirectories($subPaths)
 	{
 		foreach ($subPaths as $path) {

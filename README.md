@@ -65,7 +65,7 @@ T.B.D.
 	* models/
 	* views/
 		* sample.blade.php
-	routes.php
+	* routes.php
 
 ## ファサード
 Laravel4のエイリアスローダーはグローバル名前空間にしか作用しないため、名前空間の中からファサードを扱うにはクラス名の先頭に`\`を付けなければなりません。
@@ -99,12 +99,17 @@ function index()
 }
 ```
 
+## 起動時の動き
+
+* プラグインディレクトリ直下の.phpファイルを全てrequireします。
+* {plugin-name}/config/plugin.php の `namespace`を見て、クラスオートロードの設定をします。
+
 ## 機能追加予定
 
 * プラグイン
+	* ServiceProviderの設定
 	* assetsのpublish
 	* migration
-	* ServiceProviderの設定
 * ビュー
 	* ビュー引数を明示的に宣言する方法とチェック機能の追加
 

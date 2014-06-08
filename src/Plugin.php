@@ -15,7 +15,7 @@ class Plugin {
 
 		$this->path = $path;
 
-		$this->config = require $path.'/config/package.php';
+		$this->config = require $path.'/config/plugin.php';
 	}
 
 	public function config($name, $default = null)

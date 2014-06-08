@@ -31,13 +31,20 @@ class MakeCommand extends AbstractCommand {
 	 */
 	public function fire()
 	{
-		$files = $this->files = $this->laravel['files'];
+		// load laravel services
+		$files = $this->laravel['files'];
+		$translator = $this->laravel['translator'];
+
+		// load command arguments
+		$pluginName = $this->argument('name');
+		$namespace = $this->option('namespace');
+		if (empty($namespace))
+			$namespace = ucfirst(\Str::studly($pluginName));
+
 		$pluginsDirectory = PluginManager::path();
 //		$templateDirectory = dirname(dirname(__DIR__)).'/templates/plugin';
 
-		$pluginName = $this->argument('name');
-
-		// make packages/
+		// make plugins/
 		if (!$files->exists($pluginsDirectory))
 			$files->makeDirectory($pluginsDirectory);
 
@@ -56,13 +63,16 @@ class MakeCommand extends AbstractCommand {
 			'controllers',
 			'lang',
 			'lang/en',
-			'lang/ja',
 			'migrations',
 			'models',
 			'views',
 		]);
+		if ($translator->getLocale() !== 'en') {
+			$this->makeDirectories([
+				'lang/'.$translator->getLocale(),
+			]);
+		}
 
-		$namespace = ucfirst(\Str::studly($pluginName));
 /*
 		$this->makeComposerJson($namespace, [
 			'controllers',
@@ -74,7 +84,7 @@ class MakeCommand extends AbstractCommand {
 		$this->makePhpConfig('config/config.php', [
 			'sample_title' => 'Plugin: '.$pluginName,
 		]);
-		$this->makePhpConfig('config/package.php', [
+		$this->makePhpConfig('config/plugin.php', [
 			'namespace' => $namespace,
 			'directories' => [
 				'controllers',
@@ -138,7 +148,7 @@ SRC;
 	protected function getOptions()
 	{
 		return [
-//			array('example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null),
+			['namespace', null, InputOption::VALUE_OPTIONAL, 'Plugin namespace.', null],
 		];
 	}
 
