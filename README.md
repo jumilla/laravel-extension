@@ -18,21 +18,25 @@
 `composer.json`ファイルを編集します。
 ``` composer.json
 	"require": [
-		"laravel/framework": "4.*"
+		"laravel/framework": "4.*",
 		...
 		↓追加する
-		"jumilla/laravel-extension": "dev-master",
+		"jumilla/laravel-extension": "dev-master"
 	],
 ```
 
 以下のコマンドを実行して、Laravel Extension Packをセットアップしてください。
 ```
 $ composer update
-※もしくは、
+
+もしくは、
+
 $ php composer.phar update
 ```
 
 `app/config/app.config`ファイルを編集します。
+行末のカンマはJSON記法に合わせて設定してください。
+
 ``` app/config/app.config
 	'providers' => [
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
