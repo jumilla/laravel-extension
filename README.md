@@ -7,7 +7,7 @@
 	* appディレクトリを複製するイメージで使うことができます。
 	* パッケージに独自の名前空間(PSR-4)を一つ持たせることができます。
 	* Laravel4のパッケージとしても扱えます。
-		* config, viewの識別子の名前空間表記`package-name::`が使えます。
+		* config, viewの識別子の名前空間表記`{plugin-name}::`が使えます。
 	* プラグインの追加はディレクトリをコピーするだけ。`config/app.php`にコードを追加する必要はありません。
 
 * 名前空間内でのファサード問題の解決
@@ -15,25 +15,54 @@
 
 ## インストール方法
 
-composer.json
+`composer.json`ファイルを編集します。
 ``` composer.json
 	"require": [
+		"laravel/framework": "4.*"
+		...
+		↓追加する
 		"jumilla/laravel-extension": "dev-master",
 	],
 ```
 
-以下のコマンドを実行する。
+以下のコマンドを実行して、Laravel Extension Packをセットアップしてください。
 ```
-composer update
+$ composer update
+※もしくは、
+$ php composer.phar update
 ```
 
-app/config/app.config
+`app/config/app.config`ファイルを編集します。
 ``` app/config/app.config
 	'providers' => [
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		...
+		↓追加する
 		'Jumilla\LaravelExtension\ServiceProvider',
 	],
+```
+
+プラグイン設定ファイルをインストールします。
+app/config/plugin.phpを生成したい時に、いつでも使えます。
+```
+$ php artisan plugin:setup
+```
+
+サンプルとして、プラグインを`wiki`を作成します。
+プラグインに割り当てられる名前空間は`Wiki`です。(--namespaceオプションで指定することもできます。)
+```
+$ php artisan plugin:make wiki
+```
+
+ルーティング設定を確認してください。
+```
+$ php artisan route
+```
+
+ローカルサーバーを立ち上げ、ブラウザで`http//localhost:8000/plugins/wiki`にアクセスします。
+パッケージ名が表示されれば成功です。
+```
+$ php artisan serve
 ```
 
 ## 設定
@@ -44,12 +73,12 @@ T.B.D.
 
 ### php artisan plugin:setup
 プラグイン機能を有効にします。
-* pluginディレクトリを作成する。
+* pluginsディレクトリを作成する。
 * app/config/plugin.phpファイルを作成する。
 
 ### php artisan plugin:make &lt;plugin-name&gt; {namespace}
 プラグインを作成します。
-* packagesディレクトリ下に、**plugin-name**という名前でディレクトリを作成する。
+* pluginsディレクトリ下に、**plugin-name**という名前でディレクトリを作成する。
 * 以下のディレクトリ構成を作成する。
 	* assets/
 	* config/
@@ -60,7 +89,7 @@ T.B.D.
 		* SampleController.php
 	* lang/
 		* en/
-		* ja/
+		* {Lang::getLocale()}/
 	* migrations/
 	* models/
 	* views/
