@@ -48,7 +48,8 @@ $ php composer.phar update
 $ php artisan plugin:setup
 ```
 
-サンプルとして、プラグインを`wiki`を作成します。
+## 動作確認
+サンプルとして、プラグイン`wiki`を作成します。
 プラグインに割り当てられる名前空間は`Wiki`です。(--namespaceオプションで指定することもできます。)
 ```
 $ php artisan plugin:make wiki
