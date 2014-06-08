@@ -59,7 +59,7 @@ $ php artisan plugin:make wiki
 $ php artisan route
 ```
 
-ローカルサーバーを立ち上げ、ブラウザで`http//localhost:8000/plugins/wiki`にアクセスします。
+ローカルサーバーを立ち上げ、ブラウザで`http://localhost:8000/plugins/wiki`にアクセスします。
 パッケージ名が表示されれば成功です。
 ```
 $ php artisan serve
