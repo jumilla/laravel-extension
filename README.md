@@ -76,7 +76,7 @@ T.B.D.
 * pluginsディレクトリを作成する。
 * app/config/plugin.phpファイルを作成する。
 
-### php artisan plugin:make &lt;plugin-name&gt; {namespace}
+### php artisan plugin:make &lt;plugin-name&gt; {--namespace=...}
 プラグインを作成します。
 * pluginsディレクトリ下に、**plugin-name**という名前でディレクトリを作成する。
 * 以下のディレクトリ構成を作成する。
@@ -89,7 +89,7 @@ T.B.D.
 		* SampleController.php
 	* lang/
 		* en/
-		* {Lang::getLocale()}/
+		* `Lang::getLocale()`/
 	* migrations/
 	* models/
 	* views/
@@ -131,7 +131,7 @@ function index()
 ## 起動時の動き
 
 * プラグインディレクトリ直下の.phpファイルを全てrequireします。
-* {plugin-name}/config/plugin.php の `namespace`を見て、クラスオートロードの設定をします。
+* `plugins/{plugin-name}/config/plugin.php` の `namespace`を見て、クラスオートロードの設定をします。
 
 ## 機能追加予定
 
