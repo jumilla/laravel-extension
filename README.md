@@ -16,6 +16,7 @@
 ## インストール方法
 
 `composer.json`ファイルを編集します。
+行末のカンマはJSON記法に合わせて設定してください。
 ``` composer.json
 	"require": [
 		"laravel/framework": "4.*",
@@ -35,8 +36,6 @@ $ php composer.phar update
 ```
 
 `app/config/app.config`ファイルを編集します。
-行末のカンマはJSON記法に合わせて設定してください。
-
 ``` app/config/app.config
 	'providers' => [
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
@@ -69,10 +68,6 @@ $ php artisan route
 ```
 $ php artisan serve
 ```
-
-## 設定
-
-T.B.D.
 
 ## コマンド
 
