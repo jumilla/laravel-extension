@@ -1,7 +1,6 @@
 <?php namespace Jumilla\LaravelExtension;
 
 use Symfony\Component\Finder\Finder;
-use Illuminate\Filesystem\Filesystem;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
@@ -23,6 +22,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	{
 		$this->plugins = PluginManager::plugins();
 
+		// MEMO 現在はクラスファイルの解決を動的に行うモードのみ実装している。
 //		$this->loadAutoloadFiles(PluginManager::path());
 
 		ClassResolver::register($this->plugins, $this->app['config']->get('app.aliases'));
@@ -39,10 +39,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 		// Add package commands
 		$this->setupCommands([
-			['name' => 'package.setup', 'class' => 'Jumilla\\LaravelExtension\\Commands\\SetupCommand'],
-			['name' => 'package.make', 'class' => 'Jumilla\\LaravelExtension\\Commands\\MakeCommand'],
-// dump-autoload
+			['name' => 'package.setup', 'class' => 'Jumilla\LaravelExtension\Commands\SetupCommand'],
+			['name' => 'package.make', 'class' => 'Jumilla\LaravelExtension\Commands\MakeCommand'],
+// migrate
 // publish
+// dump-autoload
 		]);
 
 		// setup all plugins
@@ -51,13 +52,37 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 		}
 	}
 
+	function setupCommands($commands)
+	{
+		$names = [];
+
+		foreach ($commands as $command) {
+			$this->app[$command['name']] = $this->app->share(function($app) use($command) {
+				return new $command['class']($app);
+			});
+
+			$names[] = $command['name'];
+		}
+
+		// Now register all the commands
+		$this->commands($names);
+	}
+
 	function setupPlugin($plugin)
 	{
-//		\Log::info($plugin->name());
-		// register package
+		// regist package
 		$this->package('plugins/'.$plugin->name, $plugin->name, $plugin->path);
 
-		// 
+		// regist service providers
+		$providers = $plugin->config('providers', []);
+		foreach ($providers as $provider) {
+			if (!starts_with($provider, '\\'))
+				$provider = sprintf('%s\%s', $plugin->config('namespace'), $provider);
+
+			$this->app->register($provider);
+		}
+
+		// load *.php on plugin's root directory
 		$this->loadFiles($plugin);
 	}
 
@@ -84,22 +109,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 		{
 			$files->requireOnce($file->getRealPath());
 		}
-	}
-
-	function setupCommands($commands)
-	{
-		$names = [];
-
-		foreach ($commands as $command) {
-			$this->app[$command['name']] = $this->app->share(function($app) use($command) {
-				return new $command['class']($app);
-			});
-
-			$names[] = $command['name'];
-		}
-
-		// Now register all the commands
-		$this->commands($names);
 	}
 
 	/**

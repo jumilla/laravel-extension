@@ -65,6 +65,7 @@ class MakeCommand extends AbstractCommand {
 			'lang/en',
 			'migrations',
 			'models',
+			'services',
 			'views',
 		]);
 		if ($translator->getLocale() !== 'en') {
@@ -90,11 +91,15 @@ class MakeCommand extends AbstractCommand {
 				'controllers',
 				'migrations',
 				'models',
+				'services',
+			],
+			'providers' => [
 			],
 			'includes_global_aliases' => true,
 			'aliases' => [
 			],
 		]);
+
 		// controllers/BaseController.php
 		$source = <<<SRC
 class BaseController extends \Controller {
@@ -114,6 +119,50 @@ class SampleController extends BaseController {
 }
 SRC;
 		$this->makePhpSource('controllers/SampleController.php', $source, $namespace);
+
+		// controllers/SampleController.php
+		$source = <<<SRC
+
+class ServiceProvider extends \Illuminate\Support\ServiceProvider {
+
+	/**
+	 * Indicates if loading of the provider is deferred.
+	 *
+	 * @var bool
+	 */
+	protected \$defer = false;
+
+	/**
+	 * Register the service provider.
+	 *
+	 * @return void
+	 */
+	public function register()
+	{
+	}
+
+	/**
+	 * Bootstrap the application events.
+	 *
+	 * @return void
+	 */
+	public function boot()
+	{
+	}
+
+	/**
+	 * Get the services provided by the provider.
+	 *
+	 * @return array
+	 */
+	public function provides()
+	{
+		return [];
+	}
+
+}
+SRC;
+		$this->makePhpSource('services/ServiceProvider.php', $source, $namespace);
 
 		// views/sample.blade.php
 		$source = <<<SRC
