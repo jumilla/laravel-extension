@@ -92,11 +92,13 @@ $ php artisan serve
 		* `Lang::getLocale()`/
 	* migrations/
 	* models/
+	* services/
+		* ServiceProvider.php
 	* views/
 		* sample.blade.php
 	* routes.php
 
-## ファサード
+## ファサードの拡張
 Laravel4のエイリアスローダーはグローバル名前空間にしか作用しないため、名前空間の中からファサードを扱うにはクラス名の先頭に`\`を付けなければなりません。
 
 ```
@@ -136,7 +138,7 @@ function index()
 ## 機能追加予定
 
 * プラグイン
-	* ServiceProviderの設定
+	* ~~ServiceProviderの設定~~ ***完了***
 	* assetsのpublish
 	* migration
 * ビュー
