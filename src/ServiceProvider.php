@@ -35,7 +35,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 		// MEMO 現在はクラスファイルの解決を動的に行うモードのみ実装している。
 //		$this->loadAutoloadFiles(PluginManager::path());
 
-		ClassResolver::register($this->plugins, $this->app['config']->get('app.aliases'));
+		PluginClassLoader::register($this->plugins);
+		AliasResolver::register($this->plugins, $this->app['config']->get('app.aliases'));
 	}
 
 	/**

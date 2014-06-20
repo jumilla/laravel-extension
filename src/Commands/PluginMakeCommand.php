@@ -40,6 +40,15 @@ class PluginMakeCommand extends AbstractCommand {
 		$namespace = $this->option('namespace');
 		if (empty($namespace))
 			$namespace = ucfirst(\Str::studly($pluginName));
+		if ($this->option('no-namespace'))
+			$namespace = '';
+
+		$namespacePrefix = $namespace ? $namespace.'\\' : '';
+
+		// output spec
+		$this->line('== Making Plugin Specs ==');
+		$this->line(sprintf('Directory name: "%s"', $pluginName));
+		$this->line(sprintf('PHP namespace: "%s"', $namespace));
 
 		$pluginsDirectory = PluginManager::path();
 //		$templateDirectory = dirname(dirname(__DIR__)).'/templates/plugin';
@@ -51,7 +60,7 @@ class PluginMakeCommand extends AbstractCommand {
 		$basePath = $this->basePath = $pluginsDirectory.'/'.$pluginName;
 
 		if ($files->exists($basePath)) {
-			echo 'Error: already exists.';
+			$this->error(sprintf('Error: directory "%s" already exists.', $basePath));
 			return;
 		}
 
@@ -172,9 +181,11 @@ SRC;
 
 		// routes.php
 		$source = <<<SRC
-Route::get('plugins/{$pluginName}', ['uses' => '{$namespace}\SampleController@index']);
+Route::get('plugins/{$pluginName}', ['uses' => '{$namespacePrefix}SampleController@index']);
 SRC;
 		$this->makePhpSource('routes.php', $source);
+
+		$this->info('Plugin Generated');
 	}
 
 	/**
@@ -198,6 +209,7 @@ SRC;
 	{
 		return [
 			['namespace', null, InputOption::VALUE_OPTIONAL, 'Plugin namespace.', null],
+			['no-namespace', null, InputOption::VALUE_NONE, 'Plugin namespace nothing.', null],
 		];
 	}
 

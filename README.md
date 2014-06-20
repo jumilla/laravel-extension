@@ -76,7 +76,7 @@ $ php artisan serve
 * pluginsディレクトリを作成する。
 * app/config/plugin.phpファイルを作成する。
 
-### php artisan plugin:make &lt;plugin-name&gt; {--namespace=...}
+### php artisan plugin:make &lt;plugin-name&gt; {--namespace=...} {--no-namespace}
 プラグインを作成します。
 * pluginsディレクトリ下に、**plugin-name**という名前でディレクトリを作成する。
 * 以下のディレクトリ構成を作成する。
