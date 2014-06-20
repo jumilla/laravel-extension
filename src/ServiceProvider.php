@@ -4,6 +4,16 @@ use Symfony\Component\Finder\Finder;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
+	private static $commands = [
+		['name' => 'commands.package.setup', 'class' => 'Jumilla\LaravelExtension\Commands\PluginSetupCommand'],
+		['name' => 'commands.package.make', 'class' => 'Jumilla\LaravelExtension\Commands\PluginMakeCommand'],
+		['name' => 'commands.package.check', 'class' => 'Jumilla\LaravelExtension\Commands\PluginCheckCommand'],
+// migrate
+// publish
+// dump-autoload
+//		['name' => 'commands.migrate.generate', 'class' => 'Jumilla\LaravelExtension\Commands\MigrateGenerateCommand'],
+	];
+
 	/**
 	 * Indicates if loading of the provider is deferred.
 	 *
@@ -35,23 +45,21 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('jumilla/laravel', 'jumilla', __DIR__);
+//		$this->package('jumilla/laravel', 'laravel-extension', __DIR__);
 
 		// Add package commands
-		$this->setupCommands([
-			['name' => 'package.setup', 'class' => 'Jumilla\LaravelExtension\Commands\SetupCommand'],
-			['name' => 'package.make', 'class' => 'Jumilla\LaravelExtension\Commands\MakeCommand'],
-// migrate
-// publish
-// dump-autoload
-		]);
+		$this->setupCommands(static::$commands);
 
 		// setup all plugins
-		foreach ($this->plugins as $plugin) {
-			$this->setupPlugin($plugin);
-		}
+		$this->bootPlugins();
 	}
 
+	/**
+	 * setup package's commands.
+	 *
+	 * @param  $command array
+	 * @return void
+	 */
 	function setupCommands($commands)
 	{
 		$names = [];
@@ -68,7 +76,25 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 		$this->commands($names);
 	}
 
-	function setupPlugin($plugin)
+	/**
+	 * setup & boot plugins.
+	 *
+	 * @return void
+	 */
+	function bootPlugins()
+	{
+		foreach ($this->plugins as $plugin) {
+			$this->bootPlugin($plugin);
+		}
+	}
+
+	/**
+	 * setup & boot plugin.
+	 *
+	 * @param  $plugin \Jumilla\LaravelExtension\Plugin
+	 * @return void
+	 */
+	function bootPlugin($plugin)
 	{
 		// regist package
 		$this->package('plugins/'.$plugin->name, $plugin->name, $plugin->path);
@@ -86,6 +112,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 		$this->loadFiles($plugin);
 	}
 
+	/**
+	 * load plugin initial script files.
+	 *
+	 * @param  $plugin \Jumilla\LaravelExtension\Plugin
+	 * @return void
+	 */
 	function loadFiles($plugin)
 	{
 		$files = $this->app['files'];
@@ -96,6 +128,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 		}
 	}
 
+	/**
+	 * load 'autoload.php' files.
+	 *
+	 * @param  $path string
+	 * @return void
+	 */
 	function loadAutoloadFiles($path)
 	{
 		// We will use the finder to locate all "autoload.php" files in the workbench
@@ -118,7 +156,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	public function provides()
 	{
-		return [];
+		return array_pluck(static::$commands, 'name');
 	}
 
 }

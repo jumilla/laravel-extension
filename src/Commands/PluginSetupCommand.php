@@ -10,7 +10,7 @@ use Jumilla\LaravelExtension\PluginManager;
 * Modules console commands
 * @author Fumio Furukawa <fumio.furukawa@gmail.com>
 */
-class SetupCommand extends Command {
+class PluginSetupCommand extends Command {
 
 	/**
 	 * The console command name.

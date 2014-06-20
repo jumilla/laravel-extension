@@ -8,7 +8,7 @@ use Jumilla\LaravelExtension\PluginManager;
 * Modules console commands
 * @author Fumio Furukawa <fumio.furukawa@gmail.com>
 */
-class MakeCommand extends AbstractCommand {
+class PluginMakeCommand extends AbstractCommand {
 
 	/**
 	 * The console command name.

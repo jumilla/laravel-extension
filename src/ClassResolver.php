@@ -53,8 +53,8 @@ class ClassResolver {
 					}
 				}
 
-				// クラスの相対パスを作成する
-				$relativePath = str_replace('\\', '/', $relativeClassName).'.php';
+				// クラスの相対パスを作成する（PSR-4）
+				$relativePath = PackageManager::classToPath($relativeClassName);
 
 				// 全ディレクトリ下を探索する (PSR-4)
 				foreach ($plugin->config('directories') as $directory) {

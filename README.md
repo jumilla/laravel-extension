@@ -22,7 +22,7 @@
 		"laravel/framework": "4.*",
 		...
 		↓追加する
-		"jumilla/laravel-extension": "dev-master"
+		"jumilla/laravel-extension": "1.*"
 	],
 ```
 
@@ -144,3 +144,10 @@ function index()
 * ビュー
 	* ビュー引数を明示的に宣言する方法とチェック機能の追加
 
+## 著者
+
+Fumio Furukawa (fumio.furukawa@gmail.com)
+
+## ライセンス
+
+MIT
