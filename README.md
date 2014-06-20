@@ -98,6 +98,9 @@ $ php artisan serve
 		* sample.blade.php
 	* routes.php
 
+### php artisan plugin:check
+全てのプラグインをチェックします。
+
 ## ファサードの拡張
 Laravel4のエイリアスローダーはグローバル名前空間にしか作用しないため、名前空間の中からファサードを扱うにはクラス名の先頭に`\`を付けなければなりません。
 
