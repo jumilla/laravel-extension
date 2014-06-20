@@ -54,7 +54,7 @@ class ClassResolver {
 				}
 
 				// クラスの相対パスを作成する（PSR-4）
-				$relativePath = PackageManager::classToPath($relativeClassName);
+				$relativePath = PluginManager::classToPath($relativeClassName);
 
 				// 全ディレクトリ下を探索する (PSR-4)
 				foreach ($plugin->config('directories') as $directory) {
