@@ -1,6 +1,8 @@
 <?php namespace Jumilla\LaravelExtension;
 
 use Symfony\Component\Finder\Finder;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Config;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
@@ -31,6 +33,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	public function register()
 	{
 		$this->plugins = PluginManager::plugins();
+
+		$this->app['specs'] = $this->app->share(function($app) {
+			$loader = new Config\FileLoader(new Filesystem, $app['path'].'/specs');
+			return new Config\Repository($loader, $app['env']);
+		});
 
 		// MEMO 現在はクラスファイルの解決を動的に行うモードのみ実装している。
 //		$this->loadAutoloadFiles(PluginManager::path());
@@ -97,8 +104,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	function bootPlugin($plugin)
 	{
+		$packageName = 'plugins/'.$plugin->name;
+
 		// regist package
-		$this->package('plugins/'.$plugin->name, $plugin->name, $plugin->path);
+		$this->package($packageName, $plugin->name, $plugin->path);
+		$this->app['specs']->package($packageName, $plugin->name, $plugin->path.'/specs');
 
 		// regist service providers
 		$providers = $plugin->config('providers', []);

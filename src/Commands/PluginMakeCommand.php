@@ -75,6 +75,7 @@ class PluginMakeCommand extends AbstractCommand {
 			'migrations',
 			'models',
 			'services',
+			'specs',
 			'views',
 		]);
 		if ($translator->getLocale() !== 'en') {
