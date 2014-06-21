@@ -69,9 +69,9 @@ class InputModel {
 		return $this->validator->errors();
 	}
 
-	public function redirect($route, $parameters, $status = 302, $headers = [])
+	public function validator()
 	{
-		return \Redirect::route($route, $parameters, status, headers)->withError($this->validator)->withInput();
+		return $this->validator;
 	}
 
 }
