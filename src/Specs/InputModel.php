@@ -17,14 +17,17 @@ class InputModel {
 
 	public function __construct($spec, $in = null)
 	{
+		if (is_string($spec))
+			$spec = InputSpec::make($spec);
+
 		$this->spec = $spec;
 		$this->in = $in ?: $this->getInput();
-		$this->validator = Validator::make($this->in, $this->spec->rules());
+		$this->validator = \Validator::make($this->in, $this->spec->rules());
 	}
 
 	public function getInput()
 	{
-		return Input::only($this->spec->attributes());
+		return \Input::only($this->spec->attributes());
 	}
 
 	/**
@@ -67,7 +70,7 @@ class InputModel {
 
 	public function redirect($route, $parameters, $status = 302, $headers = [])
 	{
-		return Redirect::route($route, $parameters, status, headers)->withError($this->validator)->withInput();
+		return \Redirect::route($route, $parameters, status, headers)->withError($this->validator)->withInput();
 	}
 
 }

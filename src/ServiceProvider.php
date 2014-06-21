@@ -108,7 +108,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 		// regist package
 		$this->package($packageName, $plugin->name, $plugin->path);
-		$this->app['specs']->package($packageName, $plugin->name, $plugin->path.'/specs');
+		$this->app['specs']->package($packageName, $plugin->path.'/specs', $plugin->name);
 
 		// regist service providers
 		$providers = $plugin->config('providers', []);
