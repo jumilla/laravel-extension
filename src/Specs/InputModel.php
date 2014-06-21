@@ -17,8 +17,9 @@ class InputModel {
 
 	public function __construct($spec, $in = null)
 	{
-		if (is_string($spec))
+		if (is_string($spec)) {
 			$spec = InputSpec::make($spec);
+		}
 
 		$this->spec = $spec;
 		$this->in = $in ?: $this->getInput();
