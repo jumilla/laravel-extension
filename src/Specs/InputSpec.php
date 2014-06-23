@@ -2,31 +2,40 @@
 
 class InputSpec {
 
-	protected $rules = [];
-
+	/* @param string */
 	protected $namespace;
 
-	public static function make($rules)
+	/* @param string */
+	protected $path;
+
+	/* @param array */
+	protected $rules = [];
+
+	/* @param rule string or array */
+	public static function make($path)
 	{
-		return new static($rules);
+		return new static($path);
 	}
 
-	public function __construct($rules, $namespace = null)
+	/* @param path string */
+	public function __construct($path)
 	{
-		if (is_string($rules)) {
-			if (strpos($rules, '::') !== false) {
-				list($namespace, ) = explode('::', $rules);
-			}
-			$rules = app('specs')->get($rules);
+		if (strpos($path, '::') !== false) {
+			list($namespace, $path) = explode('::', $path, 2);
 		}
+		$rules = app('specs')->get($path);
+
+		if (is_null($rules))
+			throw new \InvalidArgumentException("spec '$path' is not found");
 
 		if (!is_array($rules))
-			throw new \InvalidArgumentException('$rules must array');
+			throw new \InvalidArgumentException('$rules must array in path '.$path);
 
-		$this->rules = $rules;
+		$this->path = $path;
 		$this->namespace = $namespace;
+		$this->rules = $rules;
 
-		$this->resolveReferences();
+		$this->resolveSpecReferences();
 	}
 
 	public function attributes()
@@ -39,17 +48,69 @@ class InputSpec {
 		return $this->rules;
 	}
 
-	private function resolveReferences()
+	public function attributes()
+	{
+		$path = $this->path.'.attributes';
+		return Translator::make($this->namespace)->translateWithVocabulary($path);
+	}
+
+	public function values()
+	{
+		$path = $this->path.'.values';
+		return Translator::make($this->namespace)->translateWithVocabulary($path);
+	}
+
+	public function required($name)
+	{
+		return $this->hasRule($this->rules[$name], 'required');
+	}
+
+	public function label($name)
+	{
+		$path = $this->path.'.attributes.'.$name;
+		return Translator::make($this->namespace)->translateWithVocabulary($path);
+	}
+
+	public function helptext($name)
+	{
+		$path = $this->path.'.helptexts.'.$name;
+		return Translator::make($this->namespace)->translateWithVocabulary($path);
+	}
+
+	protected function hasRule($ruleOrRules, $name)
+	{
+		if (is_string($ruleOrRules)) {
+			return $this->hasRuleInArray(explode('|', $ruleOrRules), 'required');
+		}
+		else if (is_array($ruleOrRules)) {
+			return $this->hasRuleInArray($ruleOrRules, 'required');
+		}
+		else {
+			return false;
+		}
+	}
+
+	private function hasRuleInArray(array $rules, $name)
+	{
+		foreach ($rules as $rule) {
+			if ($rule == $name)
+				return true;
+		}
+
+		return false;
+	}
+
+	private function resolveSpecReferences()
 	{
 		foreach ($this->rules as $key => &$value) {
 			if (strpos($value, '@') !== false) {
-				list(, $vocabularyName) = explode('@', $value);
+				list(, $vocabularyPath) = explode('@', $value);
 
 				$prefix = $this->namespace ? $this->namespace.'::' : '';
-				$rule = app('specs')->get($prefix.'vocaburary.'.$vocabularyName, null);
+				$rule = app('specs')->get($prefix.'vocabulary.'.$vocabularyPath, null);
 
 				if (empty($rule))
-					throw new \InvalidArgumentException('vocaburary '.$value.' not found.');
+					throw new \InvalidArgumentException('specs/vocabulary '.$vocabularyPath.' not found.');
 
 				$value = $rule;
 			}

@@ -15,15 +15,15 @@ class InputModel {
 		return $instance;
 	}
 
-	public function __construct($spec, $in = null)
+	public function __construct($path, $in = null)
 	{
-		if (is_string($spec)) {
-			$spec = InputSpec::make($spec);
+		if (is_string($path)) {
+			$spec = InputSpec::make($path);
 		}
 
 		$this->spec = $spec;
 		$this->in = $in ?: $this->getInput();
-		$this->validator = \Validator::make($this->in, $this->spec->rules());
+		$this->validator = \Validator::make($this->in, $this->spec->rules(), [], $this->spec->attributes());
 	}
 
 	public function getInput()
