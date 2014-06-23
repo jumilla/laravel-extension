@@ -48,6 +48,12 @@ class InputSpec {
 		return $this->rules;
 	}
 
+	public function ruleMessages()
+	{
+		$path = $this->path.'.rules';
+		return Translator::make($this->namespace)->get($path);
+	}
+
 	public function labels()
 	{
 		$path = $this->path.'.attributes';
