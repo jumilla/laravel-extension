@@ -23,7 +23,7 @@ class InputModel {
 
 		$this->spec = $spec;
 		$this->in = $in ?: $this->getInput();
-		$this->validator = \Validator::make($this->in, $this->spec->rules(), [], $this->spec->attributes());
+		$this->validator = \Validator::make($this->in, $this->spec->rules(), [], $this->spec->labels());
 	}
 
 	public function getInput()

@@ -2,12 +2,24 @@
 
 class Translator {
 
-	protected $namespace;
+	public static function translate($path, $default = false)
+	{
+		$string = app('translator')->get($path);
 
-	public function make($namespace)
+		if ($default !== false) {
+			if ($string == $path)
+				$string = $default;
+		}
+
+		return $string;
+	}
+
+	public static function make($namespace)
 	{
 		return new static($namespace);
 	}
+
+	protected $namespace;
 
 	public function __construct($namespace)
 	{
@@ -16,7 +28,7 @@ class Translator {
 
 	public function get($path, $default = false)
 	{
-		$value = static::translate($path, $default);
+		$value = static::translate($this->fullpath($path), $default);
 
 		if (is_string($value)) {
 			$value = $this->resolve($value);
@@ -27,31 +39,23 @@ class Translator {
 			}
 		}
 
-		return $string;
+		return $value;
 	}
 
-	public function resolve($string)
+	public function resolve($string, $default = false)
 	{
 		if (strpos($string, '@') !== false) {
-			list(, $vocabularyPath) = explode('@', $string);
+			list(, $vocabularyPath) = explode('@', $string, 2);
 
-			$prefix = $this->namespace ? $this->namespace.'::' : '';
-			$string = static::translate($prefix.'vocabulary.'.$vocabularyPath, $default);
+			$string = static::translate($this->fullpath('vocabulary.'.$vocabularyPath), $default);
 		}
 
 		return $string;
 	}
 
-	private static function translate($path, $default = false)
+	private function fullpath($path)
 	{
-		$string = app('translator')->get($path);
-
-		if ($default !== false) {
-			if ($string == $path)
-				$string = $default;
-		}
-
-		return $string;
+		return $this->namespace ? $this->namespace.'::'.$path : $path;
 	}
 
 }

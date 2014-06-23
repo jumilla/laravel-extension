@@ -2,6 +2,12 @@
 
 class InputSpec {
 
+	/* @param rule string or array */
+	public static function make($path)
+	{
+		return new static($path);
+	}
+
 	/* @param string */
 	protected $namespace;
 
@@ -11,18 +17,9 @@ class InputSpec {
 	/* @param array */
 	protected $rules = [];
 
-	/* @param rule string or array */
-	public static function make($path)
-	{
-		return new static($path);
-	}
-
 	/* @param path string */
 	public function __construct($path)
 	{
-		if (strpos($path, '::') !== false) {
-			list($namespace, $path) = explode('::', $path, 2);
-		}
 		$rules = app('specs')->get($path);
 
 		if (is_null($rules))
@@ -31,6 +28,9 @@ class InputSpec {
 		if (!is_array($rules))
 			throw new \InvalidArgumentException('$rules must array in path '.$path);
 
+		if (strpos($path, '::') !== false) {
+			list($namespace, $path) = explode('::', $path, 2);
+		}
 		$this->path = $path;
 		$this->namespace = $namespace;
 		$this->rules = $rules;
@@ -48,16 +48,16 @@ class InputSpec {
 		return $this->rules;
 	}
 
-	public function attributes()
+	public function labels()
 	{
 		$path = $this->path.'.attributes';
-		return Translator::make($this->namespace)->translateWithVocabulary($path);
+		return Translator::make($this->namespace)->get($path);
 	}
 
 	public function values()
 	{
 		$path = $this->path.'.values';
-		return Translator::make($this->namespace)->translateWithVocabulary($path);
+		return Translator::make($this->namespace)->get($path);
 	}
 
 	public function required($name)
@@ -68,13 +68,13 @@ class InputSpec {
 	public function label($name)
 	{
 		$path = $this->path.'.attributes.'.$name;
-		return Translator::make($this->namespace)->translateWithVocabulary($path);
+		return Translator::make($this->namespace)->get($path);
 	}
 
 	public function helptext($name)
 	{
 		$path = $this->path.'.helptexts.'.$name;
-		return Translator::make($this->namespace)->translateWithVocabulary($path);
+		return Translator::make($this->namespace)->get($path, '');
 	}
 
 	protected function hasRule($ruleOrRules, $name)
@@ -104,10 +104,9 @@ class InputSpec {
 	{
 		foreach ($this->rules as $key => &$value) {
 			if (strpos($value, '@') !== false) {
-				list(, $vocabularyPath) = explode('@', $value);
+				list(, $vocabularyPath) = explode('@', $value, 2);
 
-				$prefix = $this->namespace ? $this->namespace.'::' : '';
-				$rule = app('specs')->get($prefix.'vocabulary.'.$vocabularyPath, null);
+				$rule = app('specs')->get($this->fullpath('vocabulary.'.$vocabularyPath), null);
 
 				if (empty($rule))
 					throw new \InvalidArgumentException('specs/vocabulary '.$vocabularyPath.' not found.');
@@ -115,6 +114,11 @@ class InputSpec {
 				$value = $rule;
 			}
 		}
+	}
+
+	private function fullpath($path)
+	{
+		return $this->namespace ? $this->namespace.'::'.$path : $path;
 	}
 
 }
