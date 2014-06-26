@@ -6,7 +6,7 @@ class FormModel {
 	 *	Form name for HTML Element
 	 *	@param string
 	 */
-	protected $name;
+	protected $id;
 
 	/**
 	 *	Form spec
@@ -14,20 +14,25 @@ class FormModel {
 	 */
 	protected $spec;
 
-	public static function make($name, $spec)
+	public static function make($id, $spec)
 	{
-		return new static($name, $spec);
+		return new static($id, $spec);
 	}
 
-	public function __construct($name, $spec)
+	public function __construct($id, $spec)
 	{
-		$this->name = $name;
+		$this->id = $id;
 		$this->spec = new InputSpec($spec);
+	}
+
+	public function id()
+	{
+		return $this->id;
 	}
 
 	public function fieldId($fieldName)
 	{
-		return $this->name.'-'.$fieldName;
+		return $this->id.'-'.$fieldName;
 	}
 
 	public function __call($method, $parameters)
