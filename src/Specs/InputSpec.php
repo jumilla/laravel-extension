@@ -28,6 +28,10 @@ class InputSpec {
 		if (!is_array($rules))
 			throw new \InvalidArgumentException('$rules must array in path '.$path);
 
+		if (!app('translator')->has($path)) {
+			throw new \InvalidArgumentException("translate '$path' is not found");
+		}
+
 		if (strpos($path, '::') !== false) {
 			list($namespace, $path) = explode('::', $path, 2);
 		}
@@ -51,19 +55,19 @@ class InputSpec {
 	public function ruleMessages()
 	{
 		$path = $this->path.'.rules';
-		return Translator::make($this->namespace)->get($path);
+		return Translator::make($this->namespace)->get($path, []);
 	}
 
 	public function labels()
 	{
 		$path = $this->path.'.attributes';
-		return Translator::make($this->namespace)->get($path);
+		return Translator::make($this->namespace)->get($path, []);
 	}
 
 	public function values()
 	{
 		$path = $this->path.'.values';
-		return Translator::make($this->namespace)->get($path);
+		return Translator::make($this->namespace)->get($path, []);
 	}
 
 	public function required($name)
