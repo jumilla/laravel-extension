@@ -47,8 +47,9 @@ class AliasResolver {
 			if (!starts_with($className, $namespacePrefix))
 				continue;
 
-			// 名前空間を削る
-			$relativeClassName = substr($className, strlen($namespacePrefix));
+			// クラス名を取り出す
+			$parts = explode('\\', $className);
+			$relativeClassName = $parts[count($parts) - 1];
 
 			// グローバルなエイリアスかチェックする
 			if ($includesGlobalAliases) {
