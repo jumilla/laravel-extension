@@ -4,27 +4,27 @@ use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Jumilla\LaravelExtension\PluginManager;
+use Jumilla\LaravelExtension\AddonManager;
 
 /**
 * Modules console commands
 * @author Fumio Furukawa <fumio.furukawa@gmail.com>
 */
-class PluginSetupCommand extends Command {
+class AddonSetupCommand extends Command {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'plugin:setup';
+	protected $name = 'addon:setup';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Setup plugin architecture.';
+	protected $description = 'Setup addon architecture.';
 
 	/**
 	 * IoC
@@ -42,16 +42,16 @@ class PluginSetupCommand extends Command {
 	{
 		$this->files = $this->laravel['files'];
 
-		// make plugins/
-		$pluginsDirectory = PluginManager::path();
-		if (!$this->files->exists($pluginsDirectory))
-			$this->files->makeDirectory($pluginsDirectory);
+		// make addons/
+		$addonsDirectory = AddonManager::path();
+		if (!$this->files->exists($addonsDirectory))
+			$this->files->makeDirectory($addonsDirectory);
 
-		// copy app/config/plugin.php
-		$pluginConfigSourceFile = __DIR__ . '/../../config/plugin.php';
-		$pluginConfigFile = app_path().'/config/plugin.php';
-		if (!$this->files->exists($pluginConfigFile))
-			$this->files->copy($pluginConfigSourceFile, $pluginConfigFile);
+		// copy app/config/addon.php
+		$addonConfigSourceFile = __DIR__ . '/../../config/addon.php';
+		$addonConfigFile = app_path().'/config/addon.php';
+		if (!$this->files->exists($addonConfigFile))
+			$this->files->copy($addonConfigSourceFile, $addonConfigFile);
 	}
 
 	/**

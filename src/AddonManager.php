@@ -2,12 +2,12 @@
 
 use Illuminate\Filesystem\Filesystem;
 
-// Plugin Manager
-class PluginManager {
+// Addon Manager
+class AddonManager {
 
 	public static function path()
 	{
-		return base_path().'/'.\Config::get('plugin.path', 'plugins');
+		return base_path().'/'.\Config::get('addon.path', 'addons');
 	}
 
 	public static function classToPath($relativeClassName)
@@ -25,21 +25,21 @@ class PluginManager {
 		return str_replace('/', '\\', $relativePath);
 	}
 
-	public static function plugins()
+	public static function addons()
 	{
 		$files = new Filesystem;
 
-		$pluginsDirectory = self::path();
+		$addonsDirectory = self::path();
 
-		// make plugins/
-		if (!$files->exists($pluginsDirectory))
-			$files->makeDirectory($pluginsDirectory);
+		// make addons/
+		if (!$files->exists($addonsDirectory))
+			$files->makeDirectory($addonsDirectory);
 
-		$plugins = [];
-		foreach ($files->directories($pluginsDirectory) as $dir) {
-			$plugins[] = new Plugin($dir);
+		$addons = [];
+		foreach ($files->directories($addonsDirectory) as $dir) {
+			$addons[] = new Addon($dir);
 		}
-		return $plugins;
+		return $addons;
 	}
 
 }

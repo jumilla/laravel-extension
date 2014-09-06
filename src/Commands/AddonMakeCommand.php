@@ -2,27 +2,27 @@
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Jumilla\LaravelExtension\PluginManager;
+use Jumilla\LaravelExtension\AddonManager;
 
 /**
 * Modules console commands
 * @author Fumio Furukawa <fumio.furukawa@gmail.com>
 */
-class PluginMakeCommand extends AbstractCommand {
+class AddonMakeCommand extends AbstractCommand {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'plugin:make';
+	protected $name = 'addon:make';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Make plugin.';
+	protected $description = 'Make addon.';
 
 	/**
 	 * Execute the console command.
@@ -36,28 +36,28 @@ class PluginMakeCommand extends AbstractCommand {
 		$translator = $this->laravel['translator'];
 
 		// load command arguments
-		$pluginName = $this->argument('name');
+		$addonName = $this->argument('name');
 		$namespace = $this->option('namespace');
 		if (empty($namespace))
-			$namespace = ucfirst(\Str::studly($pluginName));
+			$namespace = ucfirst(\Str::studly($addonName));
 		if ($this->option('no-namespace'))
 			$namespace = '';
 
 		$namespacePrefix = $namespace ? $namespace.'\\' : '';
 
 		// output spec
-		$this->line('== Making Plugin Specs ==');
-		$this->line(sprintf('Directory name: "%s"', $pluginName));
+		$this->line('== Making Addon Specs ==');
+		$this->line(sprintf('Directory name: "%s"', $addonName));
 		$this->line(sprintf('PHP namespace: "%s"', $namespace));
 
-		$pluginsDirectory = PluginManager::path();
-//		$templateDirectory = dirname(dirname(__DIR__)).'/templates/plugin';
+		$addonsDirectory = AddonManager::path();
+//		$templateDirectory = dirname(dirname(__DIR__)).'/templates/addon';
 
-		// make plugins/
-		if (!$files->exists($pluginsDirectory))
-			$files->makeDirectory($pluginsDirectory);
+		// make addons/
+		if (!$files->exists($addonsDirectory))
+			$files->makeDirectory($addonsDirectory);
 
-		$basePath = $this->basePath = $pluginsDirectory.'/'.$pluginName;
+		$basePath = $this->basePath = $addonsDirectory.'/'.$addonName;
 
 		if ($files->exists($basePath)) {
 			$this->error(sprintf('Error: directory "%s" already exists.', $basePath));
@@ -93,9 +93,9 @@ class PluginMakeCommand extends AbstractCommand {
 */
 
 		$this->makePhpConfig('config/config.php', [
-			'sample_title' => 'Plugin: '.$pluginName,
+			'sample_title' => 'Addon: '.$addonName,
 		]);
-		$this->makePhpConfig('config/plugin.php', [
+		$this->makePhpConfig('config/addon.php', [
 			'namespace' => $namespace,
 			'directories' => [
 				'controllers',
@@ -123,7 +123,7 @@ SRC;
 class SampleController extends BaseController {
 
 	public function index() {
-		return View::make('{$pluginName}::sample');
+		return View::make('{$addonName}::sample');
 	}
 
 }
@@ -176,17 +176,17 @@ SRC;
 
 		// views/sample.blade.php
 		$source = <<<SRC
-<h1>{{ Config::get('{$pluginName}::sample_title') }}</h1>
+<h1>{{ Config::get('{$addonName}::sample_title') }}</h1>
 SRC;
 		$this->makeTextFile('views/sample.blade.php', $source);
 
 		// routes.php
 		$source = <<<SRC
-Route::get('plugins/{$pluginName}', ['uses' => '{$namespacePrefix}SampleController@index']);
+Route::get('addons/{$addonName}', ['uses' => '{$namespacePrefix}SampleController@index']);
 SRC;
 		$this->makePhpSource('routes.php', $source);
 
-		$this->info('Plugin Generated');
+		$this->info('Addon Generated');
 	}
 
 	/**
@@ -197,7 +197,7 @@ SRC;
 	protected function getArguments()
 	{
 		return [
-			['name', InputArgument::REQUIRED, 'Plugin name.'],
+			['name', InputArgument::REQUIRED, 'Addon name.'],
 		];
 	}
 
@@ -209,8 +209,8 @@ SRC;
 	protected function getOptions()
 	{
 		return [
-			['namespace', null, InputOption::VALUE_OPTIONAL, 'Plugin namespace.', null],
-			['no-namespace', null, InputOption::VALUE_NONE, 'Plugin namespace nothing.', null],
+			['namespace', null, InputOption::VALUE_OPTIONAL, 'Addon namespace.', null],
+			['no-namespace', null, InputOption::VALUE_NONE, 'Addon namespace nothing.', null],
 		];
 	}
 

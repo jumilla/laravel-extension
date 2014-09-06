@@ -3,23 +3,23 @@
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Finder\Finder;
-use Jumilla\LaravelExtension\PluginManager;
+use Jumilla\LaravelExtension\AddonManager;
 
-class PluginCheckCommand extends AbstractCommand {
+class AddonCheckCommand extends AbstractCommand {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'plugin:check';
+	protected $name = 'addon:check';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Check plugin information.';
+	protected $description = 'Check addon information.';
 
 	/**
 	 * IoC
@@ -37,49 +37,48 @@ class PluginCheckCommand extends AbstractCommand {
 	{
 		$this->files = $this->laravel['files'];
 
-		// make plugins/
-		$pluginsDirectory = PluginManager::path();
-		if (!$this->files->exists($pluginsDirectory))
-			$this->files->makeDirectory($pluginsDirectory);
+		// make addons/
+		$addonsDirectory = AddonManager::path();
+		if (!$this->files->exists($addonsDirectory))
+			$this->files->makeDirectory($addonsDirectory);
 
 		$this->output->writeln('> Check Start.');
 		$this->output->writeln('--------');
 
-		$plugins = PluginManager::plugins();
-		foreach ($plugins as $plugin) {
-			$this->dump($plugin);
+		$addons = AddonManager::addons();
+		foreach ($addons as $addon) {
+			$this->dump($addon);
 		}
 
 		$this->output->writeln('> Check Finished!');
 	}
 
-	function dump($plugin)
+	function dump($addon)
 	{
-		$this->dumpProperties($plugin);
-		$this->dumpClasses($plugin);
-		$this->dumpServiceProviders($plugin);
+		$this->dumpProperties($addon);
+		$this->dumpClasses($addon);
+		$this->dumpServiceProviders($addon);
 
 		$this->output->writeln('--------');
 	}
 
-	function dumpProperties($plugin)
+	function dumpProperties($addon)
 	{
-		$this->info(sprintf('Plugin "%s"', $plugin->name));
-		$this->info(sprintf('Path: %s', $plugin->relativePath()));
-		$this->info(sprintf('PHP namespace: %s', $plugin->config('namespace')));
+		$this->info(sprintf('Addon "%s"', $addon->name));
+		$this->info(sprintf('Path: %s', $addon->relativePath()));
+		$this->info(sprintf('PHP namespace: %s', $addon->config('namespace')));
 	}
 
-	function dumpClasses($plugin)
+	function dumpClasses($addon)
 	{
 		// load laravel services
 		$files = $this->laravel['files'];
-		$finder = new Finder;
 
 		// 全ディレクトリ下を探索する (PSR-4)
-		foreach ($plugin->config('directories') as $directory) {
+		foreach ($addon->config('directories') as $directory) {
 			$this->info(sprintf('PHP classes on "%s"', $directory));
 
-			$classDirectoryPath = $plugin->path.'/'.$directory;
+			$classDirectoryPath = $addon->path.'/'.$directory;
 
 			if (!file_exists($classDirectoryPath)) {
 				$this->line(sprintf('Warning: Class directory "%s" not found', $directory));
@@ -87,19 +86,19 @@ class PluginCheckCommand extends AbstractCommand {
 			}
 
 			// recursive find files
-			$phpFilePaths = iterator_to_array($finder->name('*.php')->files()->in($classDirectoryPath), false);
+			$phpFilePaths = iterator_to_array((new Finder)->in($classDirectoryPath)->name('*.php')->files(), false);
 
 			foreach ($phpFilePaths as $phpFilePath) {
 				$relativePath = substr($phpFilePath, strlen($classDirectoryPath) + 1);
 
-				$classFullName = $plugin->config('namespace').'\\'.PluginManager::pathToClass($relativePath);
+				$classFullName = $addon->config('namespace').'\\'.AddonManager::pathToClass($relativePath);
 
 				$this->line(sprintf('  "%s" => %s', $relativePath, $classFullName));
 			}
 		}
 	}
 
-	function dumpServiceProviders($plugin)
+	function dumpServiceProviders($addon)
 	{
 		
 	}

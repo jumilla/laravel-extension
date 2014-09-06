@@ -4,11 +4,11 @@ class AliasResolver {
 
 	private static $instance;
 
-	public static function register($plugins, $aliases)
+	public static function register($addons, $aliases)
 	{
-		static::$instance = new static($plugins, $aliases);
+		static::$instance = new static($addons, $aliases);
 
-		// TODO check plugin configuration
+		// TODO check addon configuration
 
 		spl_autoload_register([static::$instance, 'load'], true, false);
 	}
@@ -20,28 +20,28 @@ class AliasResolver {
 		}
 	}
 
-	private $plugins;
+	private $addons;
 
 	private $globalClassAliases;
 
-	public function __construct($plugins, $aliases)
+	public function __construct($addons, $aliases)
 	{
-		$this->plugins = $plugins;
+		$this->addons = $addons;
 		$this->globalClassAliases = $aliases;
 	}
 
 	public function load($className)
 	{
-		foreach ($this->plugins as $plugin) {
-			$namespace = $plugin->config('namespace');
+		foreach ($this->addons as $addon) {
+			$namespace = $addon->config('namespace');
 
 			// 名前空間のないパッケージはエイリアス解決をする必要がない
 			if (empty($namespace))
 				continue;
 
 			$namespacePrefix = $namespace.'\\';
-			$includesGlobalAliases = $plugin->config('includes_global_aliases', true);
-			$pluginAliases = $plugin->config('aliases', []);
+			$includesGlobalAliases = $addon->config('includes_global_aliases', true);
+			$addonAliases = $addon->config('aliases', []);
 
 			// プラグインの名前空間下のクラスでないなら
 			if (!starts_with($className, $namespacePrefix))
@@ -61,9 +61,9 @@ class AliasResolver {
 			}
 
 			// パッケージ固有のエイリアスかチェックする
-			if ($pluginAliases) {
-				if (isset($pluginAliases[$relativeClassName])) {
-					$originalClassName = $pluginAliases[$relativeClassName];
+			if ($addonAliases) {
+				if (isset($addonAliases[$relativeClassName])) {
+					$originalClassName = $addonAliases[$relativeClassName];
 					class_alias($originalClassName, $className);
 					return true;
 				}

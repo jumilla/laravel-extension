@@ -1,6 +1,6 @@
 <?php namespace Jumilla\LaravelExtension;
 
-class Plugin {
+class Addon {
 
 	public $name;
 
@@ -15,7 +15,7 @@ class Plugin {
 
 		$this->path = $path;
 
-		$this->config = require $path.'/config/plugin.php';
+		$this->config = require $path.'/config/addon.php';
 	}
 
 	public function relativePath()

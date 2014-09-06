@@ -7,7 +7,7 @@
 	* appディレクトリを複製するイメージで使うことができます。
 	* パッケージに独自の名前空間(PSR-4)を一つ持たせることができます。
 	* Laravel4のパッケージとして扱えます。
-		* config, viewの識別子の名前空間表記`{plugin-name}::`が使えます。
+		* config, viewの識別子の名前空間表記`{addon-name}::`が使えます。
 	* プラグインの追加はディレクトリをコピーするだけ。`app/config/app.php`にコードを追加する必要はありません。
 
 * 名前空間内でのファサード問題の解決
@@ -46,16 +46,16 @@ $ php composer.phar update
 ```
 
 プラグイン設定ファイルをインストールします。
-`app/config/plugin.php`を生成したい時に、いつでも使えます。
+`app/config/addon.php`を生成したい時に、いつでも使えます。
 ```
-$ php artisan plugin:setup
+$ php artisan addon:setup
 ```
 
 ## 動作確認
 サンプルとして、プラグイン`wiki`を作成します。
 プラグインに割り当てられる名前空間は`Wiki`です。(--namespaceオプションで指定することもできます。)
 ```
-$ php artisan plugin:make wiki
+$ php artisan addon:make wiki
 ```
 
 ルーティング設定を確認してください。
@@ -63,7 +63,7 @@ $ php artisan plugin:make wiki
 $ php artisan route
 ```
 
-ローカルサーバーを立ち上げ、ブラウザで`http://localhost:8000/plugins/wiki`にアクセスします。
+ローカルサーバーを立ち上げ、ブラウザで`http://localhost:8000/addons/wiki`にアクセスします。
 パッケージ名が表示されれば成功です。
 ```
 $ php artisan serve
@@ -71,19 +71,19 @@ $ php artisan serve
 
 ## コマンド
 
-### php artisan plugin:setup
+### php artisan addon:setup
 プラグイン機能を有効にします。
-* pluginsディレクトリを作成する。
-* app/config/plugin.phpファイルを作成する。
+* addonsディレクトリを作成する。
+* app/config/addon.phpファイルを作成する。
 
-### php artisan plugin:make &lt;plugin-name&gt; {--namespace=...} {--no-namespace}
+### php artisan addon:make &lt;addon-name&gt; {--namespace=...} {--no-namespace}
 プラグインを作成します。
-* pluginsディレクトリ下に、**plugin-name**という名前でディレクトリを作成する。
+* addonsディレクトリ下に、**addon-name**という名前でディレクトリを作成する。
 * 以下のディレクトリ構成を作成する。
 	* assets/
 	* config/
 		* config.php
-		* plugin.php
+		* addon.php
 	* controllers/
 		* BaseController.php
 		* SampleController.php
@@ -98,7 +98,7 @@ $ php artisan serve
 		* sample.blade.php
 	* routes.php
 
-### php artisan plugin:check
+### php artisan addon:check
 全てのプラグインをチェックします。
 
 ## ファサードの拡張
@@ -136,7 +136,7 @@ function index()
 ## 起動時の動き
 
 * プラグインディレクトリ直下の.phpファイルを全てrequireします。
-* `plugins/{plugin-name}/config/plugin.php` の `namespace`を見て、`directories`に指定された全てのディレクトリに対しPSR-4規約に基づくクラスオートロードの設定をします。
+* `addons/{addon-name}/config/addon.php` の `namespace`を見て、`directories`に指定された全てのディレクトリに対しPSR-4規約に基づくクラスオートロードの設定をします。
 
 ## 機能追加予定
 

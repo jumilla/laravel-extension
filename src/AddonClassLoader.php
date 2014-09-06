@@ -1,14 +1,14 @@
 <?php namespace Jumilla\LaravelExtension;
 
-class PluginClassLoader {
+class AddonClassLoader {
 
 	private static $instance;
 
-	public static function register($plugins)
+	public static function register($addons)
 	{
-		static::$instance = new static($plugins);
+		static::$instance = new static($addons);
 
-		// TODO check plugin configuration
+		// TODO check addon configuration
 
 		spl_autoload_register([static::$instance, 'load'], true, false);
 	}
@@ -20,17 +20,17 @@ class PluginClassLoader {
 		}
 	}
 
-	private $plugins;
+	private $addons;
 
-	public function __construct($plugins)
+	public function __construct($addons)
 	{
-		$this->plugins = $plugins;
+		$this->addons = $addons;
 	}
 
 	public function load($className)
 	{
-		foreach ($this->plugins as $plugin) {
-			$namespace = $plugin->config('namespace');
+		foreach ($this->addons as $addon) {
+			$namespace = $addon->config('namespace');
 
 			$namespacePrefix = $namespace ? $namespace.'\\' : '';
 
@@ -42,11 +42,11 @@ class PluginClassLoader {
 			$relativeClassName = substr($className, strlen($namespacePrefix));
 
 			// クラスの相対パスを作成する（PSR-4）
-			$relativePath = PluginManager::classToPath($relativeClassName);
+			$relativePath = AddonManager::classToPath($relativeClassName);
 
 			// 全ディレクトリ下を探索する (PSR-4)
-			foreach ($plugin->config('directories') as $directory) {
-				$path = $plugin->path.'/'.$directory.'/'.$relativePath;
+			foreach ($addon->config('directories') as $directory) {
+				$path = $addon->path.'/'.$directory.'/'.$relativePath;
 				if (file_exists($path)) {
 					require_once $path;
 					return true;

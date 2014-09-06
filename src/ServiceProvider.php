@@ -7,9 +7,9 @@ use Illuminate\Config;
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 	private static $commands = [
-		['name' => 'commands.package.setup', 'class' => 'Jumilla\LaravelExtension\Commands\PluginSetupCommand'],
-		['name' => 'commands.package.make', 'class' => 'Jumilla\LaravelExtension\Commands\PluginMakeCommand'],
-		['name' => 'commands.package.check', 'class' => 'Jumilla\LaravelExtension\Commands\PluginCheckCommand'],
+		['name' => 'commands.package.setup', 'class' => 'Jumilla\LaravelExtension\Commands\AddonSetupCommand'],
+		['name' => 'commands.package.make', 'class' => 'Jumilla\LaravelExtension\Commands\AddonMakeCommand'],
+		['name' => 'commands.package.check', 'class' => 'Jumilla\LaravelExtension\Commands\AddonCheckCommand'],
 // migrate
 // publish
 // dump-autoload
@@ -23,7 +23,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	protected $defer = false;
 
-	private $plugins;
+	private $addons;
 
 	/**
 	 * Register the service provider.
@@ -32,7 +32,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->plugins = PluginManager::plugins();
+		$this->addons = AddonManager::addons();
 
 		$this->app['specs'] = $this->app->share(function($app) {
 			$loader = new Config\FileLoader(new Filesystem, $app['path'].'/specs');
@@ -40,10 +40,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 		});
 
 		// MEMO 現在はクラスファイルの解決を動的に行うモードのみ実装している。
-//		$this->loadAutoloadFiles(PluginManager::path());
+//		$this->loadAutoloadFiles(AddonManager::path());
 
-		PluginClassLoader::register($this->plugins);
-		AliasResolver::register($this->plugins, $this->app['config']->get('app.aliases'));
+		AddonClassLoader::register($this->addons);
+		AliasResolver::register($this->addons, $this->app['config']->get('app.aliases'));
 	}
 
 	/**
@@ -58,8 +58,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 		// Add package commands
 		$this->setupCommands(static::$commands);
 
-		// setup all plugins
-		$this->bootPlugins();
+		// setup all addons
+		$this->bootAddons();
 	}
 
 	/**
@@ -85,55 +85,55 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	}
 
 	/**
-	 * setup & boot plugins.
+	 * setup & boot addons.
 	 *
 	 * @return void
 	 */
-	function bootPlugins()
+	function bootAddons()
 	{
-		foreach ($this->plugins as $plugin) {
-			$this->bootPlugin($plugin);
+		foreach ($this->addons as $addon) {
+			$this->bootAddon($addon);
 		}
 	}
 
 	/**
-	 * setup & boot plugin.
+	 * setup & boot addon.
 	 *
-	 * @param  $plugin \Jumilla\LaravelExtension\Plugin
+	 * @param  $addon \Jumilla\LaravelExtension\Addon
 	 * @return void
 	 */
-	function bootPlugin($plugin)
+	function bootAddon($addon)
 	{
-		$packageName = 'plugins/'.$plugin->name;
+		$packageName = 'addons/'.$addon->name;
 
 		// regist package
-		$this->package($packageName, $plugin->name, $plugin->path);
-		if (is_dir($plugin->path.'/specs'))
-			$this->app['specs']->package($packageName, $plugin->path.'/specs', $plugin->name);
+		$this->package($packageName, $addon->name, $addon->path);
+		if (is_dir($addon->path.'/specs'))
+			$this->app['specs']->package($packageName, $addon->path.'/specs', $addon->name);
 
 		// regist service providers
-		$providers = $plugin->config('providers', []);
+		$providers = $addon->config('providers', []);
 		foreach ($providers as $provider) {
 			if (!starts_with($provider, '\\'))
-				$provider = sprintf('%s\%s', $plugin->config('namespace'), $provider);
+				$provider = sprintf('%s\%s', $addon->config('namespace'), $provider);
 
 			$this->app->register($provider);
 		}
 
-		// load *.php on plugin's root directory
-		$this->loadFiles($plugin);
+		// load *.php on addon's root directory
+		$this->loadFiles($addon);
 	}
 
 	/**
-	 * load plugin initial script files.
+	 * load addon initial script files.
 	 *
-	 * @param  $plugin \Jumilla\LaravelExtension\Plugin
+	 * @param  $addon \Jumilla\LaravelExtension\Addon
 	 * @return void
 	 */
-	function loadFiles($plugin)
+	function loadFiles($addon)
 	{
 		$files = $this->app['files'];
-		foreach ($files->files($plugin->path) as $file) {
+		foreach ($files->files($addon->path) as $file) {
 			if (ends_with($file, '.php')) {
 				require $file;
 			}
