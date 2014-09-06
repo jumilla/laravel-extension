@@ -39,7 +39,7 @@ class AddonMakeCommand extends AbstractCommand {
 		$addonName = $this->argument('name');
 		$namespace = $this->option('namespace');
 		if (empty($namespace))
-			$namespace = ucfirst(\Str::studly($addonName));
+			$namespace = ucfirst(studly_case($addonName));
 		if ($this->option('no-namespace'))
 			$namespace = '';
 

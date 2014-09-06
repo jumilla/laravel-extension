@@ -15,6 +15,7 @@ class Addon {
 
 		$this->path = $path;
 
+		// TODO エラーチェック
 		$this->config = require $path.'/config/addon.php';
 	}
 

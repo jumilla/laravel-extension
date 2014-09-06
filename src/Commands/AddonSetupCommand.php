@@ -49,7 +49,7 @@ class AddonSetupCommand extends Command {
 
 		// copy app/config/addon.php
 		$addonConfigSourceFile = __DIR__ . '/../../config/addon.php';
-		$addonConfigFile = app_path().'/config/addon.php';
+		$addonConfigFile = app('path.config').'/addon.php';
 		if (!$this->files->exists($addonConfigFile))
 			$this->files->copy($addonConfigSourceFile, $addonConfigFile);
 	}
