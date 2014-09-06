@@ -112,7 +112,10 @@ class AddonMakeCommand extends AbstractCommand {
 
 		// controllers/BaseController.php
 		$source = <<<SRC
-class BaseController extends \Controller {
+
+use Illuminate\Routing\Controller;
+
+class BaseController extends Controller {
 
 }
 SRC;
