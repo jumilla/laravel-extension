@@ -34,7 +34,7 @@ class AddonClassLoader {
 
 			$namespacePrefix = $namespace ? $namespace.'\\' : '';
 
-			// プラグインの名前空間下のクラスでないなら
+			// アドオンの名前空間下のクラスでないなら
 			if (!starts_with($className, $namespacePrefix))
 				continue;
 

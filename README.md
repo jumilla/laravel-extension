@@ -3,15 +3,15 @@
 
 ## 機能
 
-* プラグイン機能の追加
-	* appディレクトリを複製するイメージで使うことができます。
+* アドオン機能の追加
+	* Laravel4.0〜4.2のappディレクトリを複製するイメージで使うことができます。
 	* パッケージに独自の名前空間(PSR-4)を一つ持たせることができます。
 	* Laravel4のパッケージとして扱えます。
 		* config, viewの識別子の名前空間表記`{addon-name}::`が使えます。
-	* プラグインの追加はディレクトリをコピーするだけ。`app/config/app.php`にコードを追加する必要はありません。
+	* アドオンの追加はディレクトリをコピーするだけ。`app/config/app.php`にコードを追加する必要はありません。
 
 * 名前空間内でのファサード問題の解決
-	* プラグインの名前空間の中からも同じ記述方法でファサードが扱えます。
+	* アドオンの名前空間の中からも同じ記述方法でファサードが扱えます。
 
 ## インストール方法
 
@@ -45,15 +45,15 @@ $ php composer.phar update
 	],
 ```
 
-プラグイン設定ファイルをインストールします。
+アドオン設定ファイルをインストールします。
 `app/config/addon.php`を生成したい時に、いつでも使えます。
 ```
 $ php artisan addon:setup
 ```
 
 ## 動作確認
-サンプルとして、プラグイン`wiki`を作成します。
-プラグインに割り当てられる名前空間は`Wiki`です。(--namespaceオプションで指定することもできます。)
+サンプルとして、アドオン`wiki`を作成します。
+アドオンに割り当てられる名前空間は`Wiki`です。(--namespaceオプションで指定することもできます。)
 ```
 $ php artisan addon:make wiki
 ```
@@ -72,12 +72,12 @@ $ php artisan serve
 ## コマンド
 
 ### php artisan addon:setup
-プラグイン機能を有効にします。
+アドオン機能を有効にします。
 * addonsディレクトリを作成する。
 * app/config/addon.phpファイルを作成する。
 
 ### php artisan addon:make &lt;addon-name&gt; {--namespace=...} {--no-namespace}
-プラグインを作成します。
+アドオンを作成します。
 * addonsディレクトリ下に、**addon-name**という名前でディレクトリを作成する。
 * 以下のディレクトリ構成を作成する。
 	* assets/
@@ -99,7 +99,7 @@ $ php artisan serve
 	* routes.php
 
 ### php artisan addon:check
-全てのプラグインをチェックします。
+全てのアドオンをチェックします。
 
 ## ファサードの拡張
 Laravel4のエイリアスローダーはグローバル名前空間にしか作用しないため、名前空間の中からファサードを扱うにはクラス名の先頭に`\`を付けなければなりません。
@@ -124,7 +124,7 @@ function index()
 }
 ```
 
-Laravel Extensionは、プラグイン下の名前空間内に対してファサードを解決するエイリアスローダーを持っているので、Laravel公式ドキュメント記載の方法がそのまま使えます。
+Laravel Extensionは、アドオン下の名前空間内に対してファサードを解決するエイリアスローダーを持っているので、Laravel公式ドキュメント記載の方法がそのまま使えます。
 
 ```
 function index()
@@ -135,12 +135,12 @@ function index()
 
 ## 起動時の動き
 
-* プラグインディレクトリ直下の.phpファイルを全てrequireします。
+* アドオンディレクトリ直下の.phpファイルを全てrequireします。
 * `addons/{addon-name}/config/addon.php` の `namespace`を見て、`directories`に指定された全てのディレクトリに対しPSR-4規約に基づくクラスオートロードの設定をします。
 
 ## 機能追加予定
 
-* プラグイン
+* アドオン
 	* ~~ServiceProviderの設定~~ ***完了***
 	* assetsのpublish
 	* migration

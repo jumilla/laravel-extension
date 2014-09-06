@@ -43,7 +43,7 @@ class AliasResolver {
 			$includesGlobalAliases = $addon->config('includes_global_aliases', true);
 			$addonAliases = $addon->config('aliases', []);
 
-			// プラグインの名前空間下のクラスでないなら
+			// アドオンの名前空間下のクラスでないなら
 			if (!starts_with($className, $namespacePrefix))
 				continue;
 
