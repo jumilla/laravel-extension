@@ -1,5 +1,6 @@
 <?php namespace Jumilla\LaravelExtension\Commands;
 
+use Jumilla\LaravelExtension\PhpSettingGenerator;
 use Illuminate\Console\Command;
 
 abstract class AbstractCommand extends Command {
@@ -29,9 +30,9 @@ abstract class AbstractCommand extends Command {
 		$this->files->prepend($this->basePath.'/composer.json', json_encode($data, JSON_PRETTY_PRINT));
 	}
 
-	protected function makePhpConfig($path, $data)
+	protected function makePhpConfig($path, array $data)
 	{
-		$this->files->prepend($this->basePath.'/'.$path, "<?php\n\nreturn ".var_export($data, true).";\n");
+		$this->files->prepend($this->basePath.'/'.$path, PhpSettingGenerator::generateText($data));
 	}
 
 	protected function makePhpSource($path, $source, $namespace = null)

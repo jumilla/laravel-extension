@@ -67,20 +67,29 @@ class AddonMakeCommand extends AbstractCommand {
 		$files->makeDirectory($basePath);
 
 		$this->makeDirectories([
-			'assets',
 			'config',
-			'controllers',
-			'lang',
-			'lang/en',
-			'migrations',
-			'models',
-			'services',
 			'specs',
-			'views',
+			'classes',
+			'classes/Console',
+			'classes/Console/Commands',
+			'classes/Http',
+			'classes/Http/Controllers',
+			'classes/Http/Middleware',
+			'classes/Http/Requests',
+			'classes/Providers',
+			'classes/Services',
+			'database',
+			'database/migrations',
+			'database/seeds',
+			'resources',
+			'resources/assets',
+			'resources/lang',
+			'resources/lang/en',
+			'resources/views',
 		]);
 		if ($translator->getLocale() !== 'en') {
 			$this->makeDirectories([
-				'lang/'.$translator->getLocale(),
+				'resources/lang/'.$translator->getLocale(),
 			]);
 		}
 
@@ -96,21 +105,32 @@ class AddonMakeCommand extends AbstractCommand {
 			'sample_title' => 'Addon: '.$addonName,
 		]);
 		$this->makePhpConfig('config/addon.php', [
+			'version' => 5,
 			'namespace' => $namespace,
 			'directories' => [
-				'controllers',
-				'migrations',
-				'models',
-				'services',
+				'classes',
+			],
+			'paths' => [
+				'assets' => 'resources/assets',
+				'lang' => 'resources/lang',
+				'views' => 'resources/views',
+				'migrations' => 'database/migrations',
+				'seeds' => 'database/seeds',
 			],
 			'providers' => [
+				'classes/Providers/AddonServiceProvider',
+				'classes/Providers/RouteServiceProvider',
+			],
+			'commands' => [
+			],
+			'middlewares' => [
 			],
 			'includes_global_aliases' => true,
 			'aliases' => [
 			],
 		]);
 
-		// controllers/BaseController.php
+		// controllers/Http/Controllers/BaseController.php
 		$source = <<<SRC
 
 use Illuminate\Routing\Controller;
@@ -119,9 +139,9 @@ class BaseController extends Controller {
 
 }
 SRC;
-		$this->makePhpSource('controllers/BaseController.php', $source, $namespace);
+		$this->makePhpSource('classes/Http/Controllers/BaseController.php', $source, $namespace.'\\Http\\Controllers');
 
-		// controllers/SampleController.php
+		// controllers/Http/Controllers/SampleController.php
 		$source = <<<SRC
 class SampleController extends BaseController {
 
@@ -131,12 +151,12 @@ class SampleController extends BaseController {
 
 }
 SRC;
-		$this->makePhpSource('controllers/SampleController.php', $source, $namespace);
+		$this->makePhpSource('classes/Http/Controllers/SampleController.php', $source, $namespace.'\\Http\\Controllers');
 
-		// controllers/SampleController.php
+		// controllers/Providers/AddonServiceProvider.php
 		$source = <<<SRC
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider {
+class AddonServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 	/**
 	 * Indicates if loading of the provider is deferred.
@@ -175,19 +195,51 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 }
 SRC;
-		$this->makePhpSource('services/ServiceProvider.php', $source, $namespace);
+		$this->makePhpSource('classes/Providers/AddonServiceProvider.php', $source, $namespace.'\\Providers');
+
+		// controllers/Providers/ServiceProvider.php
+		$source = <<<SRC
+
+use Illuminate\Routing\Router;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+
+class RouteServiceProvider extends ServiceProvider {
+	/**
+	 * All of the application's route middleware keys.
+	 *
+	 * @var array
+	 */
+	protected \$middleware = [
+	];
+
+	protected \$scan = [
+	];
+//	protected \$scanWhenLocal = true;
+
+	/**
+	 * Define the routes for the addon.
+	 *
+	 * @param  \Illuminate\Routing\Router  \$router
+	 * @return void
+	 */
+	public function map(Router \$router)
+	{
+	}
+}
+SRC;
+		$this->makePhpSource('classes/Providers/RouteServiceProvider.php', $source, $namespace.'\\Providers');
 
 		// views/sample.blade.php
 		$source = <<<SRC
 <h1>{{ Config::get('{$addonName}::sample_title') }}</h1>
 SRC;
-		$this->makeTextFile('views/sample.blade.php', $source);
+		$this->makeTextFile('resources/views/sample.blade.php', $source);
 
 		// routes.php
 		$source = <<<SRC
 Route::get('addons/{$addonName}', ['uses' => '{$namespacePrefix}SampleController@index']);
 SRC;
-		$this->makePhpSource('routes.php', $source);
+		$this->makePhpSource('classes/Http/routes.php', $source);
 
 		$this->info('Addon Generated');
 	}
