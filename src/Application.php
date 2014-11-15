@@ -8,7 +8,7 @@ class Application {
 
 	public static function getNamespace()
 	{
-		return preg_replace('/\\+$/', '', (new Application)->getAppNamespace());
+		return preg_replace('/\\\\+$/', '', (new Application)->getAppNamespace());
 	}
 
 }
