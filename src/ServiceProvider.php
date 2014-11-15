@@ -5,6 +5,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Config;
 use Jumilla\LaravelExtension\Addons\Addon;
 use Jumilla\LaravelExtension\Addons\AddonDirectory;
+use Jumilla\LaravelExtension\Addons\AddonClassLoader;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 

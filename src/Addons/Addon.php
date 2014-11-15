@@ -1,5 +1,7 @@
 <?php namespace Jumilla\LaravelExtension\Addons;
 
+use Jumilla\LaravelExtension\Application;
+
 class Addon {
 
 	/**
