@@ -3,7 +3,7 @@
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Finder\Finder;
-use Jumilla\LaravelExtension\AddonManager;
+use Jumilla\LaravelExtension\Addons\AddonDirectory;
 
 class AddonCheckCommand extends AbstractCommand {
 
@@ -38,14 +38,14 @@ class AddonCheckCommand extends AbstractCommand {
 		$this->files = $this->laravel['files'];
 
 		// make addons/
-		$addonsDirectory = AddonManager::path();
+		$addonsDirectory = AddonDirectory::path();
 		if (!$this->files->exists($addonsDirectory))
 			$this->files->makeDirectory($addonsDirectory);
 
 		$this->output->writeln('> Check Start.');
 		$this->output->writeln('--------');
 
-		$addons = AddonManager::addons();
+		$addons = AddonDirectory::addons();
 		foreach ($addons as $addon) {
 			$this->dump($addon);
 		}
@@ -91,7 +91,7 @@ class AddonCheckCommand extends AbstractCommand {
 			foreach ($phpFilePaths as $phpFilePath) {
 				$relativePath = substr($phpFilePath, strlen($classDirectoryPath) + 1);
 
-				$classFullName = $addon->config('namespace').'\\'.AddonManager::pathToClass($relativePath);
+				$classFullName = $addon->config('namespace').'\\'.AddonDirectory::pathToClass($relativePath);
 
 				$this->line(sprintf('  "%s" => %s', $relativePath, $classFullName));
 			}

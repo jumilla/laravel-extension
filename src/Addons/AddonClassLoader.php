@@ -1,4 +1,4 @@
-<?php namespace Jumilla\LaravelExtension;
+<?php namespace Jumilla\LaravelExtension\Addons;
 
 class AddonClassLoader {
 
@@ -42,7 +42,7 @@ class AddonClassLoader {
 			$relativeClassName = substr($className, strlen($namespacePrefix));
 
 			// クラスの相対パスを作成する（PSR-4）
-			$relativePath = AddonManager::classToPath($relativeClassName);
+			$relativePath = AddonDirectory::classToPath($relativeClassName);
 
 			// 全ディレクトリ下を探索する (PSR-4)
 			foreach ($addon->config('directories') as $directory) {

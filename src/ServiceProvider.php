@@ -3,6 +3,8 @@
 use Symfony\Component\Finder\Finder;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Config;
+use Jumilla\LaravelExtension\Addons\Addon;
+use Jumilla\LaravelExtension\Addons\AddonDirectory;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
@@ -38,7 +40,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->addons = AddonManager::addons();
+		$this->addons = AddonDirectory::addons();
 
 		$this->app['specs'] = $this->app->share(function($app) {
 			$loader = new Config\FileLoader(new Filesystem, $app['path'].'/specs');
@@ -46,7 +48,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 		});
 
 		// MEMO 現在はクラスファイルの解決を動的に行うモードのみ実装している。
-//		$this->loadAutoloadFiles(AddonManager::path());
+//		$this->loadAutoloadFiles(AddonDirectory::path());
 
 		AddonClassLoader::register($this->addons);
 		AliasResolver::register($this->addons, $this->app['config']->get('app.aliases'));
@@ -108,42 +110,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 * @param  $addon \Jumilla\LaravelExtension\Addon
 	 * @return void
 	 */
-	function bootAddon($addon)
+	function bootAddon(Addon $addon)
 	{
 		$packageName = 'addons/'.$addon->name;
 
 		// regist package
 		$this->package($packageName, $addon->name, $addon->path);
 		if (is_dir($addon->path.'/specs'))
-			$this->app['specs']->package($packageName, $addon->path.'/specs', $addon->name);
+			$this->app['specs']->package($packageName, $this->path.'/specs', $addon->name);
 
-		// regist service providers
-		$providers = $addon->config('providers', []);
-		foreach ($providers as $provider) {
-			if (!starts_with($provider, '\\'))
-				$provider = sprintf('%s\%s', $addon->config('namespace'), $provider);
-
-			$this->app->register($provider);
-		}
-
-		// load *.php on addon's root directory
-		$this->loadFiles($addon);
-	}
-
-	/**
-	 * load addon initial script files.
-	 *
-	 * @param  $addon \Jumilla\LaravelExtension\Addon
-	 * @return void
-	 */
-	function loadFiles($addon)
-	{
-		$files = $this->app['files'];
-		foreach ($files->files($addon->path) as $file) {
-			if (ends_with($file, '.php')) {
-				require $file;
-			}
-		}
+		// boot addon
+		$addon->boot($this->app);
 	}
 
 	/**

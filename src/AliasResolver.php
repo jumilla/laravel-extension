@@ -1,10 +1,12 @@
 <?php namespace Jumilla\LaravelExtension;
 
+use Jumilla\LaravelExtension\Addons\Addon;
+
 class AliasResolver {
 
 	private static $instance;
 
-	public static function register($addons, $aliases)
+	public static function register(array $addons, array $aliases)
 	{
 		static::$instance = new static($addons, $aliases);
 

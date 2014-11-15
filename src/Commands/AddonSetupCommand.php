@@ -4,7 +4,7 @@ use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Jumilla\LaravelExtension\AddonManager;
+use Jumilla\LaravelExtension\Addons\AddonDirectory;
 
 /**
 * Modules console commands
@@ -43,7 +43,7 @@ class AddonSetupCommand extends Command {
 		$this->files = $this->laravel['files'];
 
 		// make addons/
-		$addonsDirectory = AddonManager::path();
+		$addonsDirectory = AddonDirectory::path();
 		if (!$this->files->exists($addonsDirectory))
 			$this->files->makeDirectory($addonsDirectory);
 

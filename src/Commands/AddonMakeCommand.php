@@ -2,7 +2,7 @@
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Jumilla\LaravelExtension\AddonManager;
+use Jumilla\LaravelExtension\Addons\AddonDirectory;
 
 /**
 * Modules console commands
@@ -50,7 +50,7 @@ class AddonMakeCommand extends AbstractCommand {
 		$this->line(sprintf('Directory name: "%s"', $addonName));
 		$this->line(sprintf('PHP namespace: "%s"', $namespace));
 
-		$addonsDirectory = AddonManager::path();
+		$addonsDirectory = AddonDirectory::path();
 //		$templateDirectory = dirname(dirname(__DIR__)).'/templates/addon';
 
 		// make addons/

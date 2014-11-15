@@ -1,4 +1,4 @@
-<?php namespace Jumilla\LaravelExtension;
+<?php namespace Jumilla\LaravelExtension\Addons;
 
 class Addon {
 
@@ -56,4 +56,39 @@ class Addon {
 			return $default;
 	}
 
+	/**
+	 * boot addon.
+	 *
+	 * @return void
+	 */
+	public function boot($app)
+	{
+		// regist service providers
+		$providers = $this->config('providers', []);
+		foreach ($providers as $provider) {
+			// TODO: 埋め込み変数形式に変更する
+			if (!starts_with($provider, '\\'))
+				$provider = sprintf('%s\%s', $this->config('namespace'), $provider);
+
+			$app->register($provider);
+		}
+
+		// load *.php on addon's root directory
+		$this->loadFiles($app);
+	}
+
+	/**
+	 * load addon initial script files.
+	 *
+	 * @return void
+	 */
+	private function loadFiles($app)
+	{
+		$files = $app['files'];
+		foreach ($files->files($this->path) as $file) {
+			if (ends_with($file, '.php')) {
+				require $file;
+			}
+		}
+	}
 }

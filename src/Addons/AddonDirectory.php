@@ -1,9 +1,9 @@
-<?php namespace Jumilla\LaravelExtension;
+<?php namespace Jumilla\LaravelExtension\Addons;
 
 use Illuminate\Filesystem\Filesystem;
 
-// Addon Manager
-class AddonManager {
+// Addon Directory
+class AddonDirectory {
 
 	public static function path()
 	{
