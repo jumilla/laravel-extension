@@ -37,7 +37,7 @@ class AddonManager {
 
 		$addons = [];
 		foreach ($files->directories($addonsDirectory) as $dir) {
-			$addons[] = new Addon($dir);
+			$addons[] = Addon::create($dir);
 		}
 		return $addons;
 	}

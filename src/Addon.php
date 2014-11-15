@@ -1,6 +1,10 @@
 <?php namespace Jumilla\LaravelExtension;
 
+use Illuminate\Console\AppNamespaceDetectorTrait;
+
 class Addon {
+
+	use AppNamespaceDetectorTrait;
 
 	public $name;
 
@@ -8,15 +12,36 @@ class Addon {
 
 	public $config;
 
-	public function __construct($path)
+	public static function create($path)
 	{
 		$pathComponents = explode('/', $path);
-		$this->name = $pathComponents[count($pathComponents) - 1];
-
-		$this->path = $path;
+		$name = $pathComponents[count($pathComponents) - 1];
 
 		// TODO エラーチェック
-		$this->config = require $path.'/config/addon.php';
+		$config = require $path.'/config/addon.php';
+
+		return new static($name, $path, $config);
+	}
+
+	public static function createApp()
+	{
+		$name = 'app';
+
+		$path = app_path();
+
+//		$config = require app('path.config') . '/addon.php';
+		$config = [
+			'namespace' => $this->getAppNamespace(),
+		];
+
+		return new static($name, $path, $config);
+	}
+
+	public function __construct($name, $path, array $config)
+	{
+		$this->name = $name;
+		$this->path = $path;
+		$this->config = $config;
 	}
 
 	public function relativePath()

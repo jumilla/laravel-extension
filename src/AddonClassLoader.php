@@ -22,7 +22,7 @@ class AddonClassLoader {
 
 	private $addons;
 
-	public function __construct($addons)
+	public function __construct(array $addons)
 	{
 		$this->addons = $addons;
 	}

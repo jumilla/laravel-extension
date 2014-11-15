@@ -24,9 +24,12 @@ class AliasResolver {
 
 	private $globalClassAliases;
 
-	public function __construct($addons, $aliases)
+	public function __construct(array $addons, array $aliases)
 	{
-		$this->addons = $addons;
+		$this->addons = [
+			Addon::createApp(),
+		];
+		$this->addons += $addons;
 		$this->globalClassAliases = $aliases;
 	}
 
