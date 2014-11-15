@@ -9,8 +9,14 @@ class Addon {
 		$pathComponents = explode('/', $path);
 		$name = $pathComponents[count($pathComponents) - 1];
 
-		// TODO エラーチェック
-		$config = require $path.'/config/addon.php';
+		$configFilePath = $path.'/config/addon.php';
+		if (file_exists($configFilePath)) {
+			$config = require $configFilePath;
+		}
+		else {
+//			throw new \Exception(sprintf('"%s" not found.', $configFilePath));
+			$config = [];
+		}
 
 		return new static($name, $path, $config);
 	}
@@ -21,7 +27,6 @@ class Addon {
 
 		$path = app_path();
 
-//		$config = require app('path.config') . '/addon.php';
 		$config = [
 			'namespace' => Application::getNamespace(),
 		];
@@ -60,12 +65,16 @@ class Addon {
 		return $this->config('version', 4);
 	}
 
+	/**
+	 * get config value.
+	 *
+	 * @param  string $name
+	 * @param  mixed  $default
+	 * @return integer
+	 */
 	public function config($name, $default = null)
 	{
-		if (isset($this->config[$name]))
-			return $this->config[$name];
-		else
-			return $default;
+		return array_get($this->config, $name, $default);
 	}
 
 	/**

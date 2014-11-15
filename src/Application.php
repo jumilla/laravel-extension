@@ -36,7 +36,7 @@ class Application {
 		$commands = [];
 
 		foreach (static::getAddons() as $addon) {
-			$commands = array_merge($commands, $addon->config('console.commands'));
+			$commands = array_merge($commands, $addon->config('console.commands', []));
 		}
 
 		return $commands;
@@ -50,7 +50,7 @@ class Application {
 		$middlewares = [];
 
 		foreach (static::getAddons() as $addon) {
-			$middlewares = array_merge($middlewares, $addon->config('http.middlewares'));
+			$middlewares = array_merge($middlewares, $addon->config('http.middlewares', []));
 		}
 
 		return $middlewares;

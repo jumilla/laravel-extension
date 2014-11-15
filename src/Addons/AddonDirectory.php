@@ -7,7 +7,16 @@ class AddonDirectory {
 
 	public static function path()
 	{
-		return base_path().'/'.\Config::get('addon.path', 'addons');
+		$configFilePath = app('path.config') . '/addon.php';
+
+		if (file_exists($configFilePath)) {
+			$config = require $configFilePath;
+		}
+		else {
+			$config = [];
+		}
+
+		return array_get($config, 'path', 'addons');
 	}
 
 	public static function classToPath($relativeClassName)
