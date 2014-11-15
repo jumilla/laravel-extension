@@ -118,7 +118,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 		// regist package
 		$this->package($packageName, $addon->name, $addon->path);
 		if (is_dir($addon->path.'/specs'))
-			$this->app['specs']->package($packageName, $this->path.'/specs', $addon->name);
+			$this->app['specs']->package($packageName, $addon->path.'/specs', $addon->name);
 
 		// boot addon
 		$addon->boot($this->app);

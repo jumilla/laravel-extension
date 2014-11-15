@@ -4,15 +4,6 @@ use Jumilla\LaravelExtension\Application;
 
 class Addon {
 
-	/**
-	 * @var string $name
-	 */
-	public $name;
-
-	public $path;
-
-	public $config;
-
 	public static function create($path)
 	{
 		$pathComponents = explode('/', $path);
@@ -38,6 +29,15 @@ class Addon {
 		return new static($name, $path, $config);
 	}
 
+	/**
+	 * @var string $name
+	 */
+	public $name;
+
+	public $path;
+
+	public $config;
+
 	public function __construct($name, $path, array $config)
 	{
 		$this->name = $name;
@@ -48,6 +48,16 @@ class Addon {
 	public function relativePath()
 	{
 		return substr($this->path, strlen(base_path()) + 1);
+	}
+
+	/**
+	 * get version.
+	 *
+	 * @return integer
+	 */
+	public function version()
+	{
+		return $this->config('version', 4);
 	}
 
 	public function config($name, $default = null)
@@ -64,6 +74,45 @@ class Addon {
 	 * @return void
 	 */
 	public function boot($app)
+	{
+		$version = $this->version();
+		if ($version == 4) {
+			$this->boot4();
+		}
+		else if ($version == 5) {
+			$this->boot5();
+		}
+		else {
+			throw new \Exception($version . ': Illigal addon version.');
+		}
+	}
+
+	/**
+	 * boot addon version 4.
+	 *
+	 * @return void
+	 */
+	private function boot4($app)
+	{
+		// regist service providers
+		$providers = $this->config('providers', []);
+		foreach ($providers as $provider) {
+			if (!starts_with($provider, '\\'))
+				$provider = sprintf('%s\%s', $this->config('namespace'), $provider);
+
+			$app->register($provider);
+		}
+
+		// load *.php on addon's root directory
+		$this->loadFiles($app);
+	}
+
+	/**
+	 * boot addon version 5.
+	 *
+	 * @return void
+	 */
+	private function boot5($app)
 	{
 		// regist service providers
 		$providers = $this->config('providers', []);
@@ -93,4 +142,5 @@ class Addon {
 			}
 		}
 	}
+
 }
