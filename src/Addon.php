@@ -1,11 +1,10 @@
 <?php namespace Jumilla\LaravelExtension;
 
-use Illuminate\Console\AppNamespaceDetectorTrait;
-
 class Addon {
 
-	use AppNamespaceDetectorTrait;
-
+	/**
+	 * @var string $name
+	 */
 	public $name;
 
 	public $path;
@@ -30,11 +29,10 @@ class Addon {
 		$path = app_path();
 
 //		$config = require app('path.config') . '/addon.php';
-		$config = [
-			'namespace' => $this->getAppNamespace(),
-		];
 
-		return new static($name, $path, $config);
+		$instance = new static($name, $path, []);
+		$instance->config['namespace'] = Application::getNamespace();
+		return $instance;
 	}
 
 	public function __construct($name, $path, array $config)
