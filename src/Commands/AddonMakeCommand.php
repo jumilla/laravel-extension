@@ -118,8 +118,8 @@ class AddonMakeCommand extends AbstractCommand {
 				'seeds' => 'database/seeds',
 			],
 			'providers' => [
-				'classes/Providers/AddonServiceProvider',
-				'classes/Providers/RouteServiceProvider',
+				'Providers\AddonServiceProvider',
+				'Providers\RouteServiceProvider',
 			],
 			'commands' => [
 			],
@@ -204,6 +204,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider {
+
 	/**
 	 * All of the application's route middleware keys.
 	 *
@@ -217,14 +218,26 @@ class RouteServiceProvider extends ServiceProvider {
 //	protected \$scanWhenLocal = true;
 
 	/**
+	 * Called before routes are registered.
+	 *
+	 * Register any model bindings or pattern based filters.
+	 *
+	 * @return void
+	 */
+	public function before(/* add any injection */)
+	{
+	}
+
+	/**
 	 * Define the routes for the addon.
 	 *
-	 * @param  \Illuminate\Routing\Router  \$router
+	 * @param  \Illuminate\Routing\Router  \$router  (injection)
 	 * @return void
 	 */
 	public function map(Router \$router)
 	{
 	}
+
 }
 SRC;
 		$this->makePhpSource('classes/Providers/RouteServiceProvider.php', $source, $namespace.'\\Providers');
