@@ -1,7 +1,7 @@
 <?php namespace Jumilla\LaravelExtension;
 
 use Illuminate\Console\AppNamespaceDetectorTrait;
-use Jumilla\LaravelExtension\Addons\Addon;
+use Jumilla\LaravelExtension\Addons\AddonDirectory;
 
 class Application {
 
@@ -15,9 +15,31 @@ class Application {
 	/**
 	 * @return array
 	 */
+	private static $addons = null;
+
+	/**
+	 * @return array
+	 */
+	public static function getAddons()
+	{
+		if (static::$addons === null) {
+			static::$addons = AddonDirectory::addons();
+		}
+		return static::$addons;
+	}
+
+	/**
+	 * @return array
+	 */
 	public static function getAddonConsoleCommands()
 	{
-		return [];
+		$commands = [];
+
+		foreach (static::getAddons() as $addon) {
+			$commands = array_merge($commands, $addon->config('console.commands'));
+		}
+
+		return $commands;
 	}
 
 	/**
@@ -25,7 +47,13 @@ class Application {
 	 */
 	public static function getAddonHttpMiddlewares()
 	{
-		return [];
+		$middlewares = [];
+
+		foreach (static::getAddons() as $addon) {
+			$middlewares = array_merge($middlewares, $addon->config('http.middlewares'));
+		}
+
+		return $middlewares;
 	}
 
 }

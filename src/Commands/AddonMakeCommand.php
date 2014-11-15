@@ -121,9 +121,13 @@ class AddonMakeCommand extends AbstractCommand {
 				'Providers\AddonServiceProvider',
 				'Providers\RouteServiceProvider',
 			],
-			'commands' => [
+			'console' => [
+				'commands' => [
+				],
 			],
-			'middlewares' => [
+			'http' => [
+				'middlewares' => [
+				],
 			],
 			'includes_global_aliases' => true,
 			'aliases' => [

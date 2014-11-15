@@ -77,10 +77,10 @@ class Addon {
 	{
 		$version = $this->version();
 		if ($version == 4) {
-			$this->boot4();
+			$this->boot4($app);
 		}
 		else if ($version == 5) {
-			$this->boot5();
+			$this->boot5($app);
 		}
 		else {
 			throw new \Exception($version . ': Illigal addon version.');

@@ -29,11 +29,12 @@ class AddonDirectory {
 	{
 		$files = new Filesystem;
 
-		$addonsDirectory = self::path();
+		$addonsDirectory = static::path();
 
 		// make addons/
-		if (!$files->exists($addonsDirectory))
+		if (!$files->exists($addonsDirectory)) {
 			$files->makeDirectory($addonsDirectory);
+		}
 
 		$addons = [];
 		foreach ($files->directories($addonsDirectory) as $dir) {

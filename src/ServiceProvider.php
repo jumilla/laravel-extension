@@ -41,8 +41,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->addons = AddonDirectory::addons();
-
 		$this->app['specs'] = $this->app->share(function($app) {
 			$loader = new Config\FileLoader(new Filesystem, $app['path'].'/specs');
 			return new Config\Repository($loader, $app['env']);
@@ -51,8 +49,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 		// MEMO 現在はクラスファイルの解決を動的に行うモードのみ実装している。
 //		$this->loadAutoloadFiles(AddonDirectory::path());
 
-		AddonClassLoader::register($this->addons);
-		AliasResolver::register($this->addons, $this->app['config']->get('app.aliases'));
+		AddonClassLoader::register(Application::getAddons());
+		AliasResolver::register(Application::getAddons(), $this->app['config']->get('app.aliases'));
 	}
 
 	/**
@@ -100,7 +98,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	function bootAddons()
 	{
-		foreach ($this->addons as $addon) {
+		foreach (Application::getAddons() as $addon) {
 			$this->bootAddon($addon);
 		}
 	}
