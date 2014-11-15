@@ -6,10 +6,13 @@ use Illuminate\Config;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
+	/**
+	 * @var array
+	 */
 	private static $commands = [
-		['name' => 'commands.package.setup', 'class' => 'Jumilla\LaravelExtension\Commands\AddonSetupCommand'],
-		['name' => 'commands.package.make', 'class' => 'Jumilla\LaravelExtension\Commands\AddonMakeCommand'],
-		['name' => 'commands.package.check', 'class' => 'Jumilla\LaravelExtension\Commands\AddonCheckCommand'],
+		['name' => 'commands.addon.setup', 'class' => 'Jumilla\LaravelExtension\Commands\AddonSetupCommand'],
+		['name' => 'commands.addon.make', 'class' => 'Jumilla\LaravelExtension\Commands\AddonMakeCommand'],
+		['name' => 'commands.addon.check', 'class' => 'Jumilla\LaravelExtension\Commands\AddonCheckCommand'],
 // migrate
 // publish
 // dump-autoload
@@ -23,6 +26,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	protected $defer = false;
 
+	/**
+	 * @var array
+	 */
 	private $addons;
 
 	/**

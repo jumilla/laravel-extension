@@ -29,10 +29,11 @@ class Addon {
 		$path = app_path();
 
 //		$config = require app('path.config') . '/addon.php';
+		$config = [
+			'namespace' => Application::getNamespace(),
+		];
 
-		$instance = new static($name, $path, []);
-		$instance->config['namespace'] = Application::getNamespace();
-		return $instance;
+		return new static($name, $path, $config);
 	}
 
 	public function __construct($name, $path, array $config)
