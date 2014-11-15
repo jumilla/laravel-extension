@@ -5,13 +5,14 @@
 
 * アドオン機能の追加
 	* 次期リリースバージョンLaravel5.0に対応しています。
-	* Laravel4.0〜4.2のappディレクトリを複製するイメージで使うことができます。
+	* Laravel5.0のディレクトリ構造を複製するイメージで使うことができます。
 	* パッケージに独自の名前空間(PSR-4)を一つ持たせることができます。
 	* Laravel4のパッケージとして扱えます。
 		* config, viewの識別子の名前空間表記`{addon-name}::`が使えます。
 	* アドオンの追加はディレクトリをコピーするだけ。`app/config/app.php`にコードを追加する必要はありません。
 
 * 名前空間内でのファサード問題の解決
+	* appディレクトリ下の名前空間付きクラスの中でファサードが使えます。(バックスラッシュやuse宣言不要)
 	* アドオンの名前空間の中からも同じ記述方法でファサードが扱えます。
 
 ## インストール方法
@@ -20,10 +21,10 @@
 行末のカンマはJSON記法に合わせて設定してください。
 ``` composer.json
 	"require": [
-		"laravel/framework": "4.*",
+		"laravel/framework": "5.*",
 		...
 		↓追加する
-		"jumilla/laravel-extension": "1.*"
+		"jumilla/laravel-extension": "2.*"
 	],
 ```
 
@@ -39,10 +40,11 @@ $ php composer.phar update
 `app/config/app.config`ファイルを編集します。
 ``` app/config/app.config
 	'providers' => [
-		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
-		...
 		↓追加する
 		'Jumilla\LaravelExtension\ServiceProvider',
+		...
+		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
+		...
 	],
 ```
 
@@ -61,7 +63,7 @@ $ php artisan addon:make wiki
 
 ルーティング設定を確認してください。
 ```
-$ php artisan route
+$ php artisan route:list
 ```
 
 ローカルサーバーを立ち上げ、ブラウザで`http://localhost:8000/addons/wiki`にアクセスします。
