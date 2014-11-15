@@ -136,7 +136,6 @@ class AddonMakeCommand extends AbstractCommand {
 
 		// controllers/Http/Controllers/BaseController.php
 		$source = <<<SRC
-
 use Illuminate\Routing\Controller;
 
 class BaseController extends Controller {
@@ -149,7 +148,8 @@ SRC;
 		$source = <<<SRC
 class SampleController extends BaseController {
 
-	public function index() {
+	public function index()
+	{
 		return View::make('{$addonName}::sample');
 	}
 
@@ -240,6 +240,10 @@ class RouteServiceProvider extends ServiceProvider {
 	 */
 	public function map(Router \$router)
 	{
+		\$router->group(['namespace' => '{$namespace}\Http\Controllers'], function(\$router)
+		{
+			require __DIR__ . '/../Http/routes.php';
+		});
 	}
 
 }
@@ -254,7 +258,7 @@ SRC;
 
 		// routes.php
 		$source = <<<SRC
-Route::get('addons/{$addonName}', ['uses' => '{$namespacePrefix}SampleController@index']);
+Route::get('addons/{$addonName}', ['uses' => 'SampleController@index']);
 SRC;
 		$this->makePhpSource('classes/Http/routes.php', $source);
 

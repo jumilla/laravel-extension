@@ -28,10 +28,7 @@ class AliasResolver {
 
 	public function __construct(array $addons, array $aliases)
 	{
-		$this->addons = [
-			Addon::createApp(),
-		];
-		$this->addons += $addons;
+		$this->addons = array_merge([Addon::createApp()], $addons);
 		$this->globalClassAliases = $aliases;
 	}
 

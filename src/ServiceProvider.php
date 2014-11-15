@@ -111,15 +111,44 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	function bootAddon(Addon $addon)
 	{
-		$packageName = 'addons/'.$addon->name;
-
-		// regist package
-		$this->package($packageName, $addon->name, $addon->path);
-		if (is_dir($addon->path.'/specs'))
-			$this->app['specs']->package($packageName, $addon->path.'/specs', $addon->name);
+		// register package
+		$this->registerPackage('addons/'.$addon->name, $addon->name, $addon);
 
 		// boot addon
 		$addon->boot($this->app);
+	}
+
+	/**
+	 * Register the package's component namespaces.
+	 *
+	 * @param  string  $package
+	 * @param  string  $namespace
+	 * @param  string  $path
+	 * @return void
+	 */
+	function registerPackage($package, $namespace, $addon)
+	{
+		$namespace = $this->getPackageNamespace($package, $namespace);
+
+		$config = $addon->path.'/config';
+		if (is_dir($config)) {
+			$this->app['config']->package($package, $config, $namespace);
+		}
+
+		$lang = $addon->path.'/'.$addon->config('paths.lang', 'lang');
+		if (is_dir($lang)) {
+			$this->app['translator']->addNamespace($namespace, $lang);
+		}
+
+		$view = $addon->path.'/'.$addon->config('paths.views', 'views');
+		if (is_dir($view)) {
+			$this->app['view']->addNamespace($namespace, $view);
+		}
+
+		$spec = $addon->path.'/specs';
+		if (is_dir($spec)) {
+			$this->app['specs']->package($package, $spec, $addon->name);
+		}
 	}
 
 	/**
