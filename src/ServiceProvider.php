@@ -17,9 +17,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 		['name' => 'commands.addon.make', 'class' => 'Jumilla\LaravelExtension\Commands\AddonMakeCommand'],
 		['name' => 'commands.addon.check', 'class' => 'Jumilla\LaravelExtension\Commands\AddonCheckCommand'],
 // migrate
+//		['name' => 'commands.addon.migrate.generate', 'class' => 'Jumilla\LaravelExtension\Commands\MigrateGenerateCommand'],
 // publish
 // dump-autoload
-//		['name' => 'commands.migrate.generate', 'class' => 'Jumilla\LaravelExtension\Commands\MigrateGenerateCommand'],
+		['name' => 'commands.app.container.list', 'class' => 'Jumilla\LaravelExtension\Commands\AppContainerListCommand'],
 	];
 
 	/**
