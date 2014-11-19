@@ -1,4 +1,4 @@
-<?php namespace Jumilla\LaravelExtension\Specs;
+<?php namespace LaravelPlus\Extension\Specs;
 
 class FormModel {
 

@@ -1,4 +1,4 @@
-<?php namespace Jumilla\LaravelExtension\Commands;
+<?php namespace LaravelPlus\Extension\Commands;
 
 use Illuminate\Console\Command;
 

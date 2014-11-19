@@ -1,4 +1,4 @@
-<?php namespace Jumilla\LaravelExtension\Hooks;
+<?php namespace LaravelPlus\Extension\Hooks;
 
 use Illuminate\Foundation\Application as LaravelApplication;
 

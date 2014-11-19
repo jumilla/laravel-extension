@@ -1,4 +1,4 @@
-<?php namespace Jumilla\LaravelExtension;
+<?php namespace LaravelPlus\Extension;
 
 class Addon {
 

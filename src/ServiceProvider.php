@@ -1,4 +1,4 @@
-<?php namespace Jumilla\LaravelExtension;
+<?php namespace LaravelPlus\Extension;
 
 use Symfony\Component\Finder\Finder;
 use Illuminate\Filesystem\Filesystem;
@@ -7,14 +7,14 @@ use Illuminate\Config;
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 	private static $commands = [
-		['name' => 'commands.package.setup', 'class' => 'Jumilla\LaravelExtension\Commands\AddonSetupCommand'],
-		['name' => 'commands.package.make', 'class' => 'Jumilla\LaravelExtension\Commands\AddonMakeCommand'],
-		['name' => 'commands.package.check', 'class' => 'Jumilla\LaravelExtension\Commands\AddonCheckCommand'],
+		['name' => 'commands.package.setup', 'class' => 'LaravelPlus\Extension\Commands\AddonSetupCommand'],
+		['name' => 'commands.package.make', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeCommand'],
+		['name' => 'commands.package.check', 'class' => 'LaravelPlus\Extension\Commands\AddonCheckCommand'],
 // migrate
-//		['name' => 'commands.addon.migrate.generate', 'class' => 'Jumilla\LaravelExtension\Commands\MigrateGenerateCommand'],
+//		['name' => 'commands.addon.migrate.generate', 'class' => 'LaravelPlus\Extension\Commands\MigrateGenerateCommand'],
 // publish
 // dump-autoload
-		['name' => 'commands.app.container.list', 'class' => 'Jumilla\LaravelExtension\Commands\AppContainerListCommand'],
+		['name' => 'commands.app.container.list', 'class' => 'LaravelPlus\Extension\Commands\AppContainerListCommand'],
 	];
 
 	/**
@@ -100,7 +100,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	/**
 	 * setup & boot addon.
 	 *
-	 * @param  $addon \Jumilla\LaravelExtension\Addon
+	 * @param  $addon \LaravelPlus\Extension\Addon
 	 * @return void
 	 */
 	function bootAddon($addon)
@@ -128,7 +128,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	/**
 	 * load addon initial script files.
 	 *
-	 * @param  $addon \Jumilla\LaravelExtension\Addon
+	 * @param  $addon \LaravelPlus\Extension\Addon
 	 * @return void
 	 */
 	function loadFiles($addon)
