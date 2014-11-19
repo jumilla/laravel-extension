@@ -24,7 +24,7 @@
 		"laravel/framework": "5.*",
 		...
 		↓追加する
-		"jumilla/laravel-extension": "2.*"
+		"laravel-plus/extension": "2.*"
 	],
 ```
 
@@ -41,7 +41,7 @@ $ php composer.phar update
 ``` app/config/app.config
 	'providers' => [
 		↓追加する
-		'Jumilla\LaravelExtension\ServiceProvider',
+		'LaravelPlus\Extension\ServiceProvider',
 		...
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		...

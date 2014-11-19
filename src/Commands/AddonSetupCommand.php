@@ -1,10 +1,10 @@
-<?php namespace Jumilla\LaravelExtension\Commands;
+<?php namespace LaravelPlus\Extension\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Jumilla\LaravelExtension\Addons\AddonDirectory;
+use LaravelPlus\Extension\Addons\AddonDirectory;
 
 /**
 * Modules console commands

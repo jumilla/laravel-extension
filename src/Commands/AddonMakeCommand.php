@@ -1,8 +1,8 @@
-<?php namespace Jumilla\LaravelExtension\Commands;
+<?php namespace LaravelPlus\Extension\Commands;
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Jumilla\LaravelExtension\Addons\AddonDirectory;
+use LaravelPlus\Extension\Addons\AddonDirectory;
 
 /**
 * Modules console commands

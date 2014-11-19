@@ -1,9 +1,9 @@
-<?php namespace Jumilla\LaravelExtension\Commands;
+<?php namespace LaravelPlus\Extension\Commands;
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Finder\Finder;
-use Jumilla\LaravelExtension\Addons\AddonDirectory;
+use LaravelPlus\Extension\Addons\AddonDirectory;
 
 class AddonCheckCommand extends AbstractCommand {
 

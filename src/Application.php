@@ -1,7 +1,7 @@
-<?php namespace Jumilla\LaravelExtension;
+<?php namespace LaravelPlus\Extension;
 
 use Illuminate\Console\AppNamespaceDetectorTrait;
-use Jumilla\LaravelExtension\Addons\AddonDirectory;
+use LaravelPlus\Extension\Addons\AddonDirectory;
 
 class Application {
 

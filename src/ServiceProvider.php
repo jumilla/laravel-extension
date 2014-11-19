@@ -1,11 +1,11 @@
-<?php namespace Jumilla\LaravelExtension;
+<?php namespace LaravelPlus\Extension;
 
 use Symfony\Component\Finder\Finder;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Config;
-use Jumilla\LaravelExtension\Addons\Addon;
-use Jumilla\LaravelExtension\Addons\AddonDirectory;
-use Jumilla\LaravelExtension\Addons\AddonClassLoader;
+use LaravelPlus\Extension\Addons\Addon;
+use LaravelPlus\Extension\Addons\AddonDirectory;
+use LaravelPlus\Extension\Addons\AddonClassLoader;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
@@ -13,14 +13,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 * @var array
 	 */
 	private static $commands = [
-		['name' => 'commands.addon.setup', 'class' => 'Jumilla\LaravelExtension\Commands\AddonSetupCommand'],
-		['name' => 'commands.addon.make', 'class' => 'Jumilla\LaravelExtension\Commands\AddonMakeCommand'],
-		['name' => 'commands.addon.check', 'class' => 'Jumilla\LaravelExtension\Commands\AddonCheckCommand'],
+		['name' => 'commands.addon.setup', 'class' => 'LaravelPlus\Extension\Commands\AddonSetupCommand'],
+		['name' => 'commands.addon.make', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeCommand'],
+		['name' => 'commands.addon.check', 'class' => 'LaravelPlus\Extension\Commands\AddonCheckCommand'],
 // migrate
-//		['name' => 'commands.addon.migrate.generate', 'class' => 'Jumilla\LaravelExtension\Commands\MigrateGenerateCommand'],
+//		['name' => 'commands.addon.migrate.generate', 'class' => 'LaravelPlus\Extension\Commands\MigrateGenerateCommand'],
 // publish
 // dump-autoload
-		['name' => 'commands.app.container.list', 'class' => 'Jumilla\LaravelExtension\Commands\AppContainerListCommand'],
+		['name' => 'commands.app.container.list', 'class' => 'LaravelPlus\Extension\Commands\AppContainerListCommand'],
 	];
 
 	/**
@@ -61,7 +61,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	public function boot()
 	{
-//		$this->package('jumilla/laravel', 'laravel-extension', __DIR__);
+//		$this->package('laravel-plus/extension', 'laravel-extension', __DIR__);
 
 		// Add package commands
 		$this->setupCommands(static::$commands);
@@ -107,7 +107,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	/**
 	 * setup & boot addon.
 	 *
-	 * @param  $addon \Jumilla\LaravelExtension\Addon
+	 * @param  $addon \LaravelPlus\Extension\Addon
 	 * @return void
 	 */
 	function bootAddon(Addon $addon)

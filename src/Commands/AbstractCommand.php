@@ -1,6 +1,6 @@
-<?php namespace Jumilla\LaravelExtension\Commands;
+<?php namespace LaravelPlus\Extension\Commands;
 
-use Jumilla\LaravelExtension\PhpSettingGenerator;
+use LaravelPlus\Extension\PhpSettingGenerator;
 use Illuminate\Console\Command;
 
 abstract class AbstractCommand extends Command {

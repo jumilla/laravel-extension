@@ -17,9 +17,9 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Jumilla\\LaravelExtension\\": "src/"
+			"LaravelPlus\\Extension\\": "src/"
 		}
 	},
-	"minimum-stability": "dev",
+	"minimum-stability": "stable",
 	"prefer-stable": true
 }

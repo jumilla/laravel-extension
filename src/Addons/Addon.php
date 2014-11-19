@@ -1,6 +1,6 @@
-<?php namespace Jumilla\LaravelExtension\Addons;
+<?php namespace LaravelPlus\Extension\Addons;
 
-use Jumilla\LaravelExtension\Application;
+use LaravelPlus\Extension\Application;
 
 class Addon {
 

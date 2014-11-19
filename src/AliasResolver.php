@@ -1,6 +1,6 @@
-<?php namespace Jumilla\LaravelExtension;
+<?php namespace LaravelPlus\Extension;
 
-use Jumilla\LaravelExtension\Addons\Addon;
+use LaravelPlus\Extension\Addons\Addon;
 
 class AliasResolver {
 
