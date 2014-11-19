@@ -1,5 +1,5 @@
 {
-	"name": "laravel+/extension",
+	"name": "laravel-plus/extension",
     "type": "framework-extension",
 	"description": "Laravel Extension Pack",
 	"license": "MIT",
