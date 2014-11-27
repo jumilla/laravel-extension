@@ -13,14 +13,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 * @var array
 	 */
 	private static $commands = [
-		['name' => 'commands.addon.setup', 'class' => 'LaravelPlus\Extension\Commands\AddonSetupCommand'],
-		['name' => 'commands.addon.make', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeCommand'],
-		['name' => 'commands.addon.check', 'class' => 'LaravelPlus\Extension\Commands\AddonCheckCommand'],
+// app
+		['name' => 'command.app.container.list', 'class' => 'LaravelPlus\Extension\Commands\AppContainerListCommand'],
+		['name' => 'command.app.serve', 'class' => 'LaravelPlus\Extension\Commands\ServeCommand'],
+// addon
+		['name' => 'command.addon.setup', 'class' => 'LaravelPlus\Extension\Commands\AddonSetupCommand'],
+		['name' => 'command.addon.make', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeCommand'],
+		['name' => 'command.addon.check', 'class' => 'LaravelPlus\Extension\Commands\AddonCheckCommand'],
 // migrate
-//		['name' => 'commands.addon.migrate.generate', 'class' => 'LaravelPlus\Extension\Commands\MigrateGenerateCommand'],
+//		['name' => 'command.addon.migrate.run', 'class' => 'LaravelPlus\Extension\Commands\AddonMigrateRunCommand'],
 // publish
 // dump-autoload
-		['name' => 'commands.app.container.list', 'class' => 'LaravelPlus\Extension\Commands\AppContainerListCommand'],
 	];
 
 	/**

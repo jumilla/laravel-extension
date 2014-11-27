@@ -56,4 +56,18 @@ class Application {
 		return $middlewares;
 	}
 
+	/**
+	 * @return array
+	 */
+	public static function getAddonRouteMiddlewares()
+	{
+		$middlewares = [];
+
+		foreach (static::getAddons() as $addon) {
+			$middlewares = array_merge($middlewares, $addon->config('http.route_middlewares', []));
+		}
+
+		return $middlewares;
+	}
+
 }

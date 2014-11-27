@@ -13,6 +13,10 @@ abstract class HttpKernel extends Kernel {
 	{
 		$this->middleware = array_merge($this->middleware, Application::getAddonHttpMiddlewares());
 
+		foreach (Application::getAddonRouteMiddlewares() as $key => $middleware) {
+			$this->router($key, $middleware);
+		}
+
 		parent::bootstrap();
 	}
 

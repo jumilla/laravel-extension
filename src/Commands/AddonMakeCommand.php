@@ -109,6 +109,7 @@ class AddonMakeCommand extends AbstractCommand {
 			'namespace' => $namespace,
 			'directories' => [
 				'classes',
+				'database/seeds',
 			],
 			'paths' => [
 				'assets' => 'resources/assets',
@@ -127,6 +128,8 @@ class AddonMakeCommand extends AbstractCommand {
 			],
 			'http' => [
 				'middlewares' => [
+				],
+				'route_middlewares' => [
 				],
 			],
 			'includes_global_aliases' => true,
@@ -222,14 +225,25 @@ class RouteServiceProvider extends ServiceProvider {
 //	protected \$scanWhenLocal = true;
 
 	/**
-	 * Called before routes are registered.
+	 * This namespace is applied to the controller routes in your routes file.
 	 *
-	 * Register any model bindings or pattern based filters.
+	 * In addition, it is set as the URL generator's root namespace.
 	 *
+	 * @var string
+	 */
+	protected \$namespace = '{$namespace}\Http\Controllers';
+
+	/**
+	 * Define your route model bindings, pattern filters, etc.
+	 *
+	 * @param  \Illuminate\Routing\Router  \$router
 	 * @return void
 	 */
-	public function before(/* add any injection */)
+	public function boot(Router \$router)
 	{
+		parent::boot(\$router);
+
+		//
 	}
 
 	/**
@@ -240,7 +254,7 @@ class RouteServiceProvider extends ServiceProvider {
 	 */
 	public function map(Router \$router)
 	{
-		\$router->group(['namespace' => '{$namespace}\Http\Controllers'], function(\$router)
+		\$router->group(['prefix' => '', namespace' => $this->namespace], function(\$router)
 		{
 			require __DIR__ . '/../Http/routes.php';
 		});
