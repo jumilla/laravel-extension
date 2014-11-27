@@ -38,15 +38,15 @@ class AddonDirectory {
 	{
 		$files = new Filesystem;
 
-		$addonsDirectory = static::path();
+		$addonsDirectoryPath = app('path.base') .'/'. static::path();
 
 		// make addons/
-		if (!$files->exists($addonsDirectory)) {
-			$files->makeDirectory($addonsDirectory);
+		if (!$files->exists($addonsDirectoryPath)) {
+			$files->makeDirectory($addonsDirectoryPath);
 		}
 
 		$addons = [];
-		foreach ($files->directories($addonsDirectory) as $dir) {
+		foreach ($files->directories($addonsDirectoryPath) as $dir) {
 			$addons[] = Addon::create($dir);
 		}
 		return $addons;
