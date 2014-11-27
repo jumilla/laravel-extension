@@ -86,6 +86,7 @@ class AddonMakeCommand extends AbstractCommand {
 			'resources/lang',
 			'resources/lang/en',
 			'resources/views',
+			'tests',
 		]);
 		if ($translator->getLocale() !== 'en') {
 			$this->makeDirectories([
