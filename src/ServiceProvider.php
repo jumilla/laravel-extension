@@ -13,16 +13,20 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 * @var array
 	 */
 	private static $commands = [
-// app
-		['name' => 'command.app.container.list', 'class' => 'LaravelPlus\Extension\Commands\AppContainerListCommand'],
-		['name' => 'command.app.serve', 'class' => 'LaravelPlus\Extension\Commands\ServeCommand'],
-// addon
-		['name' => 'command.addon.setup', 'class' => 'LaravelPlus\Extension\Commands\AddonSetupCommand'],
-		['name' => 'command.addon.make', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeCommand'],
-		['name' => 'command.addon.check', 'class' => 'LaravelPlus\Extension\Commands\AddonCheckCommand'],
-// migrate
+// app:
+		['name' => 'command+.app.container.list', 'class' => 'LaravelPlus\Extension\Commands\AppContainerListCommand'],
+		['name' => 'command+.app.serve', 'class' => 'LaravelPlus\Extension\Commands\ServeCommand'],
+// addon:
+		['name' => 'command+.addon.setup', 'class' => 'LaravelPlus\Extension\Commands\AddonSetupCommand'],
+		['name' => 'command+.addon.make', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeCommand'],
+		['name' => 'command+.addon.check', 'class' => 'LaravelPlus\Extension\Commands\AddonCheckCommand'],
+//		['name' => 'command+.addon.make.class', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeClassCommand'],
+// +migrate:
 //		['name' => 'command.addon.migrate.run', 'class' => 'LaravelPlus\Extension\Commands\AddonMigrateRunCommand'],
 // publish
+// hash
+		['name' => 'command+.hash.make', 'class' => 'LaravelPlus\Extension\Commands\HashMakeCommand'],
+		['name' => 'command+.hash.check', 'class' => 'LaravelPlus\Extension\Commands\HashCheckCommand'],
 // dump-autoload
 	];
 
