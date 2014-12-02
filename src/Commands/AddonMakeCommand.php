@@ -120,8 +120,8 @@ class AddonMakeCommand extends AbstractCommand {
 				'seeds' => 'database/seeds',
 			],
 			'providers' => [
-				'Providers\AddonServiceProvider',
-				'Providers\RouteServiceProvider',
+				$namespace.'\Providers\AddonServiceProvider',
+				$namespace.'\Providers\RouteServiceProvider',
 			],
 			'console' => [
 				'commands' => [
