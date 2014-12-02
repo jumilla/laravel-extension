@@ -273,7 +273,7 @@ SRC;
 
 		// routes.php
 		$source = <<<SRC
-Route::get('addons/{$addonName}', ['uses' => 'SampleController@index']);
+\$router->get('addons/{$addonName}', ['uses' => 'SampleController@index']);
 SRC;
 		$this->makePhpSource('classes/Http/routes.php', $source);
 
