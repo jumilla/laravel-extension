@@ -35,7 +35,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 *
 	 * @var bool
 	 */
-	protected $defer = false;
+	protected $defer = true;
 
 	/**
 	 * @var array
@@ -59,6 +59,58 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 		AddonClassLoader::register(Application::getAddons());
 		AliasResolver::register(Application::getAddons(), $this->app['config']->get('app.aliases'));
+
+		// register all addons
+		$this->registerAddons();
+	}
+
+	/**
+	 * setup & boot addons.
+	 *
+	 * @return void
+	 */
+	function registerAddons()
+	{
+		foreach (Application::getAddons() as $addon) {
+			// register package
+			$this->registerPackage('addons/'.$addon->name, $addon->name, $addon);
+
+			// register addon
+			$addon->register($this->app);
+		}
+	}
+
+	/**
+	 * Register the package's component namespaces.
+	 *
+	 * @param  string  $package
+	 * @param  string  $namespace
+	 * @param  string  $path
+	 * @return void
+	 */
+	function registerPackage($package, $namespace, $addon)
+	{
+		$namespace = $this->getPackageNamespace($package, $namespace);
+
+		$config = $addon->path.'/config';
+		if (is_dir($config)) {
+			$this->app['config']->package($package, $config, $namespace);
+		}
+
+		$lang = $addon->path.'/'.$addon->config('paths.lang', 'lang');
+		if (is_dir($lang)) {
+			$this->app['translator']->addNamespace($namespace, $lang);
+		}
+
+		$view = $addon->path.'/'.$addon->config('paths.views', 'views');
+		if (is_dir($view)) {
+			$this->app['view']->addNamespace($namespace, $view);
+		}
+
+		$spec = $addon->path.'/specs';
+		if (is_dir($spec)) {
+			$this->app['specs']->package($package, $spec, $addon->name);
+		}
 	}
 
 	/**
@@ -107,55 +159,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	function bootAddons()
 	{
 		foreach (Application::getAddons() as $addon) {
-			$this->bootAddon($addon);
-		}
-	}
-
-	/**
-	 * setup & boot addon.
-	 *
-	 * @param  $addon \LaravelPlus\Extension\Addon
-	 * @return void
-	 */
-	function bootAddon(Addon $addon)
-	{
-		// register package
-		$this->registerPackage('addons/'.$addon->name, $addon->name, $addon);
-
-		// boot addon
-		$addon->boot($this->app);
-	}
-
-	/**
-	 * Register the package's component namespaces.
-	 *
-	 * @param  string  $package
-	 * @param  string  $namespace
-	 * @param  string  $path
-	 * @return void
-	 */
-	function registerPackage($package, $namespace, $addon)
-	{
-		$namespace = $this->getPackageNamespace($package, $namespace);
-
-		$config = $addon->path.'/config';
-		if (is_dir($config)) {
-			$this->app['config']->package($package, $config, $namespace);
-		}
-
-		$lang = $addon->path.'/'.$addon->config('paths.lang', 'lang');
-		if (is_dir($lang)) {
-			$this->app['translator']->addNamespace($namespace, $lang);
-		}
-
-		$view = $addon->path.'/'.$addon->config('paths.views', 'views');
-		if (is_dir($view)) {
-			$this->app['view']->addNamespace($namespace, $view);
-		}
-
-		$spec = $addon->path.'/specs';
-		if (is_dir($spec)) {
-			$this->app['specs']->package($package, $spec, $addon->name);
+			// boot addon
+			$addon->boot($this->app);
 		}
 	}
 

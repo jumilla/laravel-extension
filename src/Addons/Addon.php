@@ -78,18 +78,72 @@ class Addon {
 	}
 
 	/**
+	 * register addon.
+	 *
+	 * @param  Illuminate\Foundation\Application $app
+	 * @return void
+	 */
+	public function register($app)
+	{
+		$version = $this->version();
+		if ($version == 4) {
+			$this->registerV4($app);
+		}
+		else if ($version == 5) {
+			$this->registerV5($app);
+		}
+		else {
+			throw new \Exception($version . ': Illigal addon version.');
+		}
+	}
+
+	/**
+	 * register addon version 4.
+	 *
+	 * @param  Illuminate\Foundation\Application $app
+	 * @return void
+	 */
+	private function registerV4($app)
+	{
+		// regist service providers
+		$providers = $this->config('providers', []);
+		foreach ($providers as $provider) {
+			if (!starts_with($provider, '\\'))
+				$provider = sprintf('%s\%s', $this->config('namespace'), $provider);
+
+			$app->register($provider);
+		}
+	}
+
+	/**
+	 * register addon version 5.
+	 *
+	 * @param  Illuminate\Foundation\Application $app
+	 * @return void
+	 */
+	private function registerV5($app)
+	{
+		// regist service providers
+		$providers = $this->config('providers', []);
+		foreach ($providers as $provider) {
+			$app->register($provider);
+		}
+	}
+
+	/**
 	 * boot addon.
 	 *
+	 * @param  Illuminate\Foundation\Application $app
 	 * @return void
 	 */
 	public function boot($app)
 	{
 		$version = $this->version();
 		if ($version == 4) {
-			$this->boot4($app);
+			$this->bootV4($app);
 		}
 		else if ($version == 5) {
-			$this->boot5($app);
+			$this->bootV5($app);
 		}
 		else {
 			throw new \Exception($version . ': Illigal addon version.');
@@ -99,19 +153,11 @@ class Addon {
 	/**
 	 * boot addon version 4.
 	 *
+	 * @param  Illuminate\Foundation\Application $app
 	 * @return void
 	 */
-	private function boot4($app)
+	private function bootV4($app)
 	{
-		// regist service providers
-		$providers = $this->config('providers', []);
-		foreach ($providers as $provider) {
-			if (!starts_with($provider, '\\'))
-				$provider = sprintf('%s\%s', $this->config('namespace'), $provider);
-
-			$app->register($provider);
-		}
-
 		// load *.php on addon's root directory
 		$this->loadFiles($app);
 	}
@@ -119,22 +165,11 @@ class Addon {
 	/**
 	 * boot addon version 5.
 	 *
+	 * @param  Illuminate\Foundation\Application $app
 	 * @return void
 	 */
-	private function boot5($app)
+	private function bootV5($app)
 	{
-		// regist service providers
-		$providers = $this->config('providers', []);
-		foreach ($providers as $provider) {
-			// TODO: 埋め込み変数形式に変更する
-			if (!starts_with($provider, '\\'))
-				$provider = sprintf('%s\%s', $this->config('namespace'), $provider);
-
-			$app->register($provider);
-		}
-
-		// load *.php on addon's root directory
-		$this->loadFiles($app);
 	}
 
 	/**
