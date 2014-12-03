@@ -3,38 +3,60 @@
 class FormModel {
 
 	/**
-	 *	Form name for HTML Element
-	 *	@param string
+	 * Form name for HTML Element
+	 * @var string
 	 */
 	protected $id;
 
 	/**
-	 *	Form spec
-	 *	@param InputSpec
+	 * Form spec
+	 * @var \LaravelPlus\Extension\Specs\InputSpec
 	 */
 	protected $spec;
 
-	public static function make($id, $spec)
+	/**
+	 * @param  string $id
+	 * @param  string $specPath
+	 * @return \LaravelPlus\Extension\Specs\FormModel
+	 */
+	public static function make($id, $specPath)
 	{
-		return new static($id, $spec);
+		return new static($id, $specPath);
 	}
 
-	public function __construct($id, $spec)
+	/**
+	 * @param  string $id
+	 * @param  string $specPath
+	 * @return void
+	 */
+	public function __construct($id, $specPath)
 	{
 		$this->id = $id;
-		$this->spec = new InputSpec($spec);
+		$this->spec = new InputSpec($specPath);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function id()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * @param  string $fieldName
+	 * @return string
+	 */
 	public function fieldId($fieldName)
 	{
 		return $this->id.'-'.$fieldName;
 	}
 
+	/**
+	 * @param  string $method
+	 * @param  array  $parameters
+	 * @return mixed
+	 */
 	public function __call($method, $parameters)
 	{
 		return call_user_func_array([$this->spec, $method], $parameters);

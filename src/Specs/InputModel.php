@@ -2,24 +2,41 @@
 
 class InputModel {
 
+	/**
+	 * @var \LaravelPlus\Extension\Specs\InputModel
+	 */
 	private $spec;
 
+	/**
+	 * @var array
+	 */
 	private $in;
 
+	/**
+	 * @var \Illuminate\Validation\Validator
+	 */
 	private $validator;
 
-	public static function make($spec, array $in = null)
+	/**
+	 * @param  string $path
+	 * @param  array  $in
+	 * @return \LaravelPlus\Extension\Specs\InputModel
+	 */
+	public static function make($path, array $in = null)
 	{
-		$instance = new static($spec, $in);
+		$instance = new static($path, $in);
 
 		return $instance;
 	}
 
+	/**
+	 * @param  string $path
+	 * @param  array  $in
+	 * @return void
+	 */
 	public function __construct($path, array $in = null)
 	{
-		if (is_string($path)) {
-			$spec = InputSpec::make($path);
-		}
+		$spec = InputSpec::make($path);
 
 		$this->spec = $spec;
 		$this->in = $in ?: $this->getInput();
@@ -38,6 +55,9 @@ class InputModel {
 		$this->validator = \Validator::make($this->in, $rules, $ruleMessages, $labels);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getInput()
 	{
 		return \Input::only($this->spec->attributes());
@@ -66,21 +86,35 @@ class InputModel {
 		$this->in[$key] = $value;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function passes()
 	{
 		return $this->validator->passes();
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function fails()
 	{
 		return $this->validator->fails();
 	}
 
+	/**
+	 * An alternative more semantic shortcut to the message container.
+	 *
+	 * @return \Illuminate\Support\MessageBag
+	 */
 	public function errors()
 	{
 		return $this->validator->errors();
 	}
 
+	/**
+	 * @return \Illuminate\Validation\Validator
+	 */
 	public function validator()
 	{
 		return $this->validator;
