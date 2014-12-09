@@ -67,8 +67,7 @@ class AddonMakeCommand extends AbstractCommand {
 		$files->makeDirectory($basePath);
 
 		$this->makeDirectories([
-			'config',
-			'specs',
+			'assets',
 			'classes',
 			'classes/Console',
 			'classes/Console/Commands',
@@ -78,19 +77,19 @@ class AddonMakeCommand extends AbstractCommand {
 			'classes/Http/Requests',
 			'classes/Providers',
 			'classes/Services',
+			'config',
 			'database',
 			'database/migrations',
 			'database/seeds',
-			'resources',
-			'resources/assets',
-			'resources/lang',
-			'resources/lang/en',
-			'resources/views',
+			'lang',
+			'lang/en',
+			'specs',
 			'tests',
+			'views',
 		]);
 		if ($translator->getLocale() !== 'en') {
 			$this->makeDirectories([
-				'resources/lang/'.$translator->getLocale(),
+				'lang/'.$translator->getLocale(),
 			]);
 		}
 
@@ -113,9 +112,9 @@ class AddonMakeCommand extends AbstractCommand {
 				'database/seeds',
 			],
 			'paths' => [
-				'assets' => 'resources/assets',
-				'lang' => 'resources/lang',
-				'views' => 'resources/views',
+				'assets' => 'assets',
+				'lang' => 'lang',
+				'views' => 'views',
 				'migrations' => 'database/migrations',
 				'seeds' => 'database/seeds',
 			],
