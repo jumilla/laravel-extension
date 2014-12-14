@@ -2,10 +2,10 @@
 
 use Symfony\Component\Finder\Finder;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Config;
 use LaravelPlus\Extension\Addons\Addon;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 use LaravelPlus\Extension\Addons\AddonClassLoader;
+use LaravelPlus\Extension\Repository;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
@@ -50,8 +50,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	public function register()
 	{
 		$this->app['specs'] = $this->app->share(function($app) {
-			$loader = new Config\FileLoader(new Filesystem, $app['path'].'/specs');
-			return new Config\Repository($loader, $app['env']);
+			$loader = new Repository\FileLoader($this->app['files'], $app['path'].'/specs');
+			return new Repository\Repository($loader);
 		});
 
 		// MEMO 現在はクラスファイルの解決を動的に行うモードのみ実装している。
@@ -124,7 +124,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	{
 		foreach (Application::getAddons() as $addon) {
 			// register package
-			$this->registerPackage('addons/'.$addon->name, $addon->name, $addon);
+			$this->registerPackage($addon->name, $addon);
 
 			// boot addon
 			$addon->boot($this->app);
@@ -134,19 +134,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	/**
 	 * Register the package's component namespaces.
 	 *
-	 * @param  string  $package
 	 * @param  string  $namespace
 	 * @param  string  $path
 	 * @return void
 	 */
-	function registerPackage($package, $namespace, $addon)
+	function registerPackage($namespace, $addon)
 	{
-		$namespace = $this->getPackageNamespace($package, $namespace);
-
-		$config = $addon->path.'/config';
-		if (is_dir($config)) {
-			$this->app['config']->package($package, $config, $namespace);
-		}
+		// TODO merge all config.
+#		$config = $addon->path.'/config';
+#		if (is_dir($config)) {
+#			$this->app['config']->package($package, $config, $namespace);
+#		}
 
 		$lang = $addon->path.'/'.$addon->config('paths.lang', 'lang');
 		if (is_dir($lang)) {
@@ -160,7 +158,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 		$spec = $addon->path.'/specs';
 		if (is_dir($spec)) {
-			$this->app['specs']->package($package, $spec, $addon->name);
+			$this->app['specs']->addNamespace($namespace, $spec);
 		}
 	}
 
