@@ -101,7 +101,7 @@ class AddonMakeCommand extends AbstractCommand {
 		]);
 */
 
-		$this->makePhpConfig('config/config.php', [
+		$this->makePhpConfig('lang/en/messages.php', [
 			'sample_title' => 'Addon: '.$addonName,
 		]);
 		$this->makePhpConfig('config/addon.php', [
@@ -268,7 +268,7 @@ SRC;
 
 		// templates/sample.blade.php
 		$source = <<<SRC
-<h1>{{ Config::get('{$addonName}::sample_title') }}</h1>
+<h1>{{ trans('{$addonName}::messages.sample_title') }}</h1>
 SRC;
 		$this->makeTextFile('templates/sample.blade.php', $source);
 
