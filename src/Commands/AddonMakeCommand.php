@@ -268,7 +268,7 @@ SRC;
 
 		// templates/sample.blade.php
 		$source = <<<SRC
-<h1>{{ trans('{$addonName}::messages.sample_title') }}</h1>
+<h1>{{ addon_trans('{$addonName}', 'messages.sample_title') }}</h1>
 SRC;
 		$this->makeTextFile('templates/sample.blade.php', $source);
 
