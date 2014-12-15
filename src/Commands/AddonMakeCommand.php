@@ -139,7 +139,7 @@ class AddonMakeCommand extends AbstractCommand {
 			],
 		]);
 
-		// controllers/Http/Controllers/BaseController.php
+		// classes/Http/Controllers/BaseController.php
 		$source = <<<SRC
 use Illuminate\Routing\Controller;
 
@@ -162,7 +162,7 @@ class SampleController extends BaseController {
 SRC;
 		$this->makePhpSource('classes/Http/Controllers/SampleController.php', $source, $namespace.'\\Http\\Controllers');
 
-		// controllers/Providers/AddonServiceProvider.php
+		// classes/Providers/AddonServiceProvider.php
 		$source = <<<SRC
 
 class AddonServiceProvider extends \Illuminate\Support\ServiceProvider {
@@ -206,7 +206,7 @@ class AddonServiceProvider extends \Illuminate\Support\ServiceProvider {
 SRC;
 		$this->makePhpSource('classes/Providers/AddonServiceProvider.php', $source, $namespace.'\\Providers');
 
-		// controllers/Providers/ServiceProvider.php
+		// classes/Providers/RouteServiceProvider.php
 		$source = <<<SRC
 
 use Illuminate\Routing\Router;
@@ -266,11 +266,11 @@ class RouteServiceProvider extends ServiceProvider {
 SRC;
 		$this->makePhpSource('classes/Providers/RouteServiceProvider.php', $source, $namespace.'\\Providers');
 
-		// views/sample.blade.php
+		// templates/sample.blade.php
 		$source = <<<SRC
 <h1>{{ Config::get('{$addonName}::sample_title') }}</h1>
 SRC;
-		$this->makeTextFile('resources/views/sample.blade.php', $source);
+		$this->makeTextFile('templates/sample.blade.php', $source);
 
 		// routes.php
 		$source = <<<SRC
