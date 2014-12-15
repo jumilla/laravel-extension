@@ -35,15 +35,15 @@ class AliasResolver {
 	public function load($className)
 	{
 		foreach ($this->addons as $addon) {
-			$namespace = $addon->config('namespace');
+			$namespace = $addon->config('addon.namespace');
 
 			// 名前空間のないパッケージはエイリアス解決をする必要がない
 			if (empty($namespace))
 				continue;
 
 			$namespacePrefix = $namespace.'\\';
-			$includesGlobalAliases = $addon->config('includes_global_aliases', true);
-			$addonAliases = $addon->config('aliases', []);
+			$includesGlobalAliases = $addon->config('addon.includes_global_aliases', true);
+			$addonAliases = $addon->config('addon.aliases', []);
 
 			// アドオンの名前空間下のクラスでないなら
 			if (!starts_with($className, $namespacePrefix))

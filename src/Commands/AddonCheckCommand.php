@@ -66,7 +66,7 @@ class AddonCheckCommand extends AbstractCommand {
 	{
 		$this->info(sprintf('Addon "%s"', $addon->name));
 		$this->info(sprintf('Path: %s', $addon->relativePath()));
-		$this->info(sprintf('PHP namespace: %s', $addon->config('namespace')));
+		$this->info(sprintf('PHP namespace: %s', $addon->config('addon.namespace')));
 	}
 
 	function dumpClasses($addon)
@@ -75,7 +75,7 @@ class AddonCheckCommand extends AbstractCommand {
 		$files = $this->laravel['files'];
 
 		// 全ディレクトリ下を探索する (PSR-4)
-		foreach ($addon->config('directories') as $directory) {
+		foreach ($addon->config('addon.directories') as $directory) {
 			$this->info(sprintf('PHP classes on "%s"', $directory));
 
 			$classDirectoryPath = $addon->path.'/'.$directory;
@@ -91,7 +91,7 @@ class AddonCheckCommand extends AbstractCommand {
 			foreach ($phpFilePaths as $phpFilePath) {
 				$relativePath = substr($phpFilePath, strlen($classDirectoryPath) + 1);
 
-				$classFullName = $addon->config('namespace').'\\'.AddonDirectory::pathToClass($relativePath);
+				$classFullName = $addon->config('addon.namespace').'\\'.AddonDirectory::pathToClass($relativePath);
 
 				$this->line(sprintf('  "%s" => %s', $relativePath, $classFullName));
 			}

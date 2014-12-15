@@ -29,6 +29,14 @@ class Application {
 	}
 
 	/**
+	 * @return LaravelPlus\Extension\Addons\Addon|null
+	 */
+	public static function getAddon($name)
+	{
+		return array_get(static::getAddons(), $name);
+	}
+
+	/**
 	 * @return array
 	 */
 	public static function getAddonConsoleCommands()
@@ -36,7 +44,7 @@ class Application {
 		$commands = [];
 
 		foreach (static::getAddons() as $addon) {
-			$commands = array_merge($commands, $addon->config('console.commands', []));
+			$commands = array_merge($commands, $addon->config('addon.console.commands', []));
 		}
 
 		return $commands;
@@ -50,7 +58,7 @@ class Application {
 		$middlewares = [];
 
 		foreach (static::getAddons() as $addon) {
-			$middlewares = array_merge($middlewares, $addon->config('http.middlewares', []));
+			$middlewares = array_merge($middlewares, $addon->config('addon.http.middlewares', []));
 		}
 
 		return $middlewares;
@@ -64,7 +72,7 @@ class Application {
 		$middlewares = [];
 
 		foreach (static::getAddons() as $addon) {
-			$middlewares = array_merge($middlewares, $addon->config('http.route_middlewares', []));
+			$middlewares = array_merge($middlewares, $addon->config('addon.http.route_middlewares', []));
 		}
 
 		return $middlewares;

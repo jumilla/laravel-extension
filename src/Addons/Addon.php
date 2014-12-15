@@ -1,22 +1,18 @@
 <?php namespace LaravelPlus\Extension\Addons;
 
+use Illuminate\Config\Repository;
 use LaravelPlus\Extension\Application;
+use LaravelPlus\Extension\Repository\ConfigLoader;
 
 class Addon {
 
 	public static function create($path)
 	{
 		$pathComponents = explode('/', $path);
+
 		$name = $pathComponents[count($pathComponents) - 1];
 
-		$configFilePath = $path.'/config/addon.php';
-		if (file_exists($configFilePath)) {
-			$config = require $configFilePath;
-		}
-		else {
-//			throw new \Exception(sprintf('"%s" not found.', $configFilePath));
-			$config = [];
-		}
+		$config = ConfigLoader::load($path.'/config');
 
 		return new static($name, $path, $config);
 	}
@@ -27,29 +23,67 @@ class Addon {
 
 		$path = app_path();
 
-		$config = [
-			'namespace' => Application::getNamespace(),
-		];
+		$config = new Repository([
+			'addon' => [
+				'namespace' => Application::getNamespace(),
+			],
+		]);
 
 		return new static($name, $path, $config);
 	}
 
 	/**
-	 * @var string $name
+	 * @var string
 	 */
-	public $name;
+	protected $name;
 
-	public $path;
+	/**
+	 * @var string
+	 */
+	protected $path;
 
-	public $config;
+	/**
+	 * @var \Illuminate\Config\Repository
+	 */
+	protected $config;
 
-	public function __construct($name, $path, array $config)
+	public function __construct($name, $path, Repository $config)
 	{
 		$this->name = $name;
 		$this->path = $path;
 		$this->config = $config;
 	}
 
+	/**
+	 * get name
+	 *
+	 * @return string
+	 */
+	public function name()
+	{
+		return $this->name;
+	}
+
+	/**
+	 * get fullpath
+	 *
+	 * @return string
+	 */
+	public function path($path)
+	{
+		if (func_num_args() == 0) {
+			return $this->path;
+		}
+		else {
+			return $this->path . '/' . $path;
+		}
+	}
+
+	/**
+	 * get relative path
+	 *
+	 * @return string
+	 */
 	public function relativePath()
 	{
 		return substr($this->path, strlen(base_path()) + 1);
@@ -62,7 +96,7 @@ class Addon {
 	 */
 	public function version()
 	{
-		return $this->config('version', 4);
+		return $this->config('addon.version', 4);
 	}
 
 	/**
@@ -74,7 +108,7 @@ class Addon {
 	 */
 	public function config($name, $default = null)
 	{
-		return array_get($this->config, $name, $default);
+		return $this->config->get($name, $default);
 	}
 
 	/**
@@ -114,10 +148,10 @@ class Addon {
 		];
 
 		// regist service providers
-		$providers = $this->config('providers', []);
+		$providers = $this->config('addon.providers', []);
 		foreach ($providers as $provider) {
 			if (!starts_with($provider, '\\'))
-				$provider = sprintf('%s\%s', $this->config('namespace'), $provider);
+				$provider = sprintf('%s\%s', $this->config('addon.namespace'), $provider);
 
 			$app->register($provider);
 		}
@@ -132,7 +166,7 @@ class Addon {
 	private function registerV5($app)
 	{
 		// regist service providers
-		$providers = $this->config('providers', []);
+		$providers = $this->config('addon.providers', []);
 		foreach ($providers as $provider) {
 			$app->register($provider);
 		}

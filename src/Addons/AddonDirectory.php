@@ -47,7 +47,9 @@ class AddonDirectory {
 
 		$addons = [];
 		foreach ($files->directories($addonsDirectoryPath) as $dir) {
-			$addons[] = Addon::create($dir);
+			$addon = Addon::create($dir);
+
+			$addons[$addon->name()] = $addon;
 		}
 		return $addons;
 	}

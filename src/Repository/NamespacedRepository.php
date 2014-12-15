@@ -4,7 +4,7 @@ use Closure;
 use ArrayAccess;
 use Illuminate\Support\NamespacedItemResolver;
 
-class Repository extends NamespacedItemResolver implements ArrayAccess {
+class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess {
 
 	/**
 	 * The loader implementation.

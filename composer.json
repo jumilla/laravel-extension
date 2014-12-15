@@ -1,6 +1,6 @@
 {
 	"name": "laravel-plus/extension",
-    "type": "framework-extension",
+	"type": "framework-extension",
 	"description": "Laravel Extension Pack",
 	"license": "MIT",
 	"keywords": ["Laravel", "Laravel4", "addon", "architecture", "facade"],
@@ -18,7 +18,10 @@
 	"autoload": {
 		"psr-4": {
 			"LaravelPlus\\Extension\\": "src/"
-		}
+		},
+		"files": [
+			"src/helpers.php"
+		]
 	},
 	"minimum-stability": "stable",
 	"prefer-stable": true

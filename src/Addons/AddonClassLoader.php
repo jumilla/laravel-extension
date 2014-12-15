@@ -30,7 +30,7 @@ class AddonClassLoader {
 	public function load($className)
 	{
 		foreach ($this->addons as $addon) {
-			$namespace = $addon->config('namespace');
+			$namespace = $addon->config('addon.namespace');
 
 			$namespacePrefix = $namespace ? $namespace.'\\' : '';
 
@@ -45,8 +45,8 @@ class AddonClassLoader {
 			$relativePath = AddonDirectory::classToPath($relativeClassName);
 
 			// 全ディレクトリ下を探索する (PSR-4)
-			foreach ($addon->config('directories') as $directory) {
-				$path = $addon->path.'/'.$directory.'/'.$relativePath;
+			foreach ($addon->config('addon.directories') as $directory) {
+				$path = $addon->path($directory.'/'.$relativePath);
 				if (file_exists($path)) {
 					require_once $path;
 					return true;

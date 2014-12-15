@@ -50,16 +50,23 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	public function register()
 	{
+		$app = $this->app;
+
+		// register spec path for app
+		$app['path.specs'] = $app->basePath().'/resources/specs';
+
+		// register spec repository
 		$this->app['specs'] = $this->app->share(function($app) {
-			$loader = new Repository\FileLoader($this->app['files'], $app['path'].'/specs');
-			return new Repository\Repository($loader);
+			$loader = new Repository\FileLoader($app['files'], $app['path.specs']);
+
+			return new Repository\NamespacedRepository($loader);
 		});
 
 		// MEMO 現在はクラスファイルの解決を動的に行うモードのみ実装している。
 //		$this->loadAutoloadFiles(AddonDirectory::path());
 
 		AddonClassLoader::register(Application::getAddons());
-		AliasResolver::register(Application::getAddons(), $this->app['config']->get('app.aliases'));
+		AliasResolver::register(Application::getAddons(), $app['config']->get('app.aliases'));
 
 		// register all addons
 		$this->registerAddons();
@@ -127,6 +134,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	function registerBladeExtensions()
 	{
 		\Blade::extend(BladeExtension::comment());
+
+		\Blade::extend(BladeExtension::plain());
 	}
 
 	/**
@@ -136,9 +145,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	function bootAddons()
 	{
-		foreach (Application::getAddons() as $addon) {
+		foreach (Application::getAddons() as $name => $addon) {
 			// register package
-			$this->registerPackage($addon->name, $addon);
+			$this->registerPackage($name, $addon);
 
 			// boot addon
 			$addon->boot($this->app);
@@ -154,23 +163,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	function registerPackage($namespace, $addon)
 	{
-		// TODO merge all config.
-#		$config = $addon->path.'/config';
-#		if (is_dir($config)) {
-#			$this->app['config']->package($package, $config, $namespace);
-#		}
-
-		$lang = $addon->path.'/'.$addon->config('paths.lang', 'lang');
+		$lang = $addon->path($addon->config('addon.paths.lang', 'lang'));
 		if (is_dir($lang)) {
 			$this->app['translator']->addNamespace($namespace, $lang);
 		}
 
-		$view = $addon->path.'/'.$addon->config('paths.templates', 'templates');
+		$view = $addon->path($addon->config('addon.paths.templates', 'templates'));
 		if (is_dir($view)) {
 			$this->app['view']->addNamespace($namespace, $view);
 		}
 
-		$spec = $addon->path.'/'.$addon->config('paths.specs', 'specs');
+		$spec = $addon->path($addon->config('addon.paths.specs', 'specs'));
 		if (is_dir($spec)) {
 			$this->app['specs']->addNamespace($namespace, $spec);
 		}

@@ -16,4 +16,18 @@ class BladeExtension {
 		};
 	}
 
+	/**
+	 * Compile Blade plain code into valid PHP.
+	 *
+	 * @return \Closure
+	 */
+	public static function plain()
+	{
+		return function ($value) {
+			$pattern = sprintf('/%s((.|\s)*?)%s/', '{@', '@}');
+
+			return preg_replace($pattern, '<?php $1; ?>', $value);
+		};
+	}
+
 }
