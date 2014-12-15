@@ -6,6 +6,7 @@ use LaravelPlus\Extension\Addons\Addon;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 use LaravelPlus\Extension\Addons\AddonClassLoader;
 use LaravelPlus\Extension\Repository;
+use LaravelPlus\Extension\Templates\BladeExtension;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
@@ -89,6 +90,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 		// Add package commands
 		$this->setupCommands(static::$commands);
 
+		//
+		$this->registerBladeExtensions();
+
 		// setup all addons
 		$this->bootAddons();
 	}
@@ -113,6 +117,16 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 		// Now register all the commands
 		$this->commands($names);
+	}
+
+	/**
+	 * register blade extensions.
+	 *
+	 * @return void
+	 */
+	function registerBladeExtensions()
+	{
+		\Blade::extend(BladeExtension::comment());
 	}
 
 	/**
@@ -151,12 +165,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 			$this->app['translator']->addNamespace($namespace, $lang);
 		}
 
-		$view = $addon->path.'/'.$addon->config('paths.views', 'views');
+		$view = $addon->path.'/'.$addon->config('paths.templates', 'templates');
 		if (is_dir($view)) {
 			$this->app['view']->addNamespace($namespace, $view);
 		}
 
-		$spec = $addon->path.'/specs';
+		$spec = $addon->path.'/'.$addon->config('paths.specs', 'specs');
 		if (is_dir($spec)) {
 			$this->app['specs']->addNamespace($namespace, $spec);
 		}

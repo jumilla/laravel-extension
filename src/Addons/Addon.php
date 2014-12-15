@@ -105,6 +105,14 @@ class Addon {
 	 */
 	private function registerV4($app)
 	{
+		$this->config['paths'] = [
+			'lang' => 'lang',
+			'templates' => 'views',
+			'migrations' => 'database/migrations',
+			'seeds' => 'database/seeds',
+			'specs' => 'specs',
+		];
+
 		// regist service providers
 		$providers = $this->config('providers', []);
 		foreach ($providers as $provider) {

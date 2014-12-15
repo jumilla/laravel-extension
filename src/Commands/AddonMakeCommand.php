@@ -84,8 +84,8 @@ class AddonMakeCommand extends AbstractCommand {
 			'lang',
 			'lang/en',
 			'specs',
+			'templates',
 			'tests',
-			'views',
 		]);
 		if ($translator->getLocale() !== 'en') {
 			$this->makeDirectories([
@@ -114,9 +114,11 @@ class AddonMakeCommand extends AbstractCommand {
 			'paths' => [
 				'assets' => 'assets',
 				'lang' => 'lang',
-				'views' => 'views',
+				'templates' => 'templates',
 				'migrations' => 'database/migrations',
 				'seeds' => 'database/seeds',
+				'specs' => 'specs',
+				'tests' => 'tests',
 			],
 			'providers' => [
 				$namespace.'\Providers\AddonServiceProvider',
