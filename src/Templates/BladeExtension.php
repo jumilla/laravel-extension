@@ -17,11 +17,11 @@ class BladeExtension {
 	}
 
 	/**
-	 * Compile Blade plain code into valid PHP.
+	 * Compile Blade script into valid PHP.
 	 *
 	 * @return \Closure
 	 */
-	public static function plain()
+	public static function script()
 	{
 		return function ($value) {
 			$pattern = sprintf('/%s((.|\s)*?)%s/', '{@', '@}');

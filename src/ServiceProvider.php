@@ -136,7 +136,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	{
 		\Blade::extend(BladeExtension::comment());
 
-		\Blade::extend(BladeExtension::plain());
+		\Blade::extend(BladeExtension::script());
 	}
 
 	/**
