@@ -17,6 +17,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 // app:
 		['name' => 'command+.app.container.list', 'class' => 'LaravelPlus\Extension\Commands\AppContainerListCommand'],
 		['name' => 'command+.app.serve', 'class' => 'LaravelPlus\Extension\Commands\ServeCommand'],
+		['name' => 'command+.app.tail', 'class' => 'LaravelPlus\Extension\Commands\TailCommand'],
 // addon:
 		['name' => 'command+.addon.setup', 'class' => 'LaravelPlus\Extension\Commands\AddonSetupCommand'],
 		['name' => 'command+.addon.make', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeCommand'],

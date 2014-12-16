@@ -23,7 +23,7 @@ class HashCheckCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Check hashed value.';
+	protected $description = '[+]Check hashed value.';
 
 	/**
 	 * Execute the console command.

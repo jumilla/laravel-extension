@@ -17,7 +17,7 @@ class ServeCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = "Serve the application on the PHP development server";
+	protected $description = "[+]Serve the application on the PHP development server";
 
 	/**
 	 * Execute the console command.

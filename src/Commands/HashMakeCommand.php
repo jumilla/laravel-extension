@@ -23,7 +23,7 @@ class HashMakeCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Make hashed value.';
+	protected $description = '[+]Make hashed value.';
 
 	/**
 	 * Execute the console command.

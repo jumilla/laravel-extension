@@ -19,7 +19,7 @@ class AddonCheckCommand extends AbstractCommand {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Check addon information.';
+	protected $description = '[+]Check addon information.';
 
 	/**
 	 * IoC

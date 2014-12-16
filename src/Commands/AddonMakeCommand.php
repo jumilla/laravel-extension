@@ -22,7 +22,7 @@ class AddonMakeCommand extends AbstractCommand {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Make addon.';
+	protected $description = '[+]Make addon.';
 
 	/**
 	 * Execute the console command.

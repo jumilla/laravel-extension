@@ -24,7 +24,7 @@ class AddonSetupCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Setup addon architecture.';
+	protected $description = '[+]Setup addon architecture.';
 
 	/**
 	 * IoC
