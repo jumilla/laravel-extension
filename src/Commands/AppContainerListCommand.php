@@ -26,11 +26,26 @@ class AppContainerListCommand extends Command {
 	protected $description = '[+] Lists object in application container';
 
 	/**
-	 * IoC
+	 * Get the console command arguments.
 	 *
-	 * @var Illuminate\Filesystem\Filesystem
+	 * @return array
 	 */
-	protected $files;
+	protected function getArguments()
+	{
+		return [
+		];
+	}
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return [
+		];
+	}
 
 	/**
 	 * Execute the console command.
@@ -75,30 +90,6 @@ class AppContainerListCommand extends Command {
 		else 
 			echo '(unknown) ', $instance, '';
 		echo "\n";
-	}
-
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments()
-	{
-		return [
-//			array('example', InputArgument::REQUIRED, 'An example argument.'),
-		];
-	}
-
-	/**
-	 * Get the console command options.
-	 *
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return [
-//			array('example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null),
-		];
 	}
 
 }

@@ -25,6 +25,31 @@ class AddonMakeCommand extends AbstractCommand {
 	protected $description = '[+] Make addon';
 
 	/**
+	 * Get the console command arguments.
+	 *
+	 * @return array
+	 */
+	protected function getArguments()
+	{
+		return [
+			['name', InputArgument::REQUIRED, 'Addon name.'],
+		];
+	}
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return [
+			['namespace', null, InputOption::VALUE_OPTIONAL, 'Addon namespace.', null],
+			['no-namespace', null, InputOption::VALUE_NONE, 'Addon namespace nothing.', null],
+		];
+	}
+
+	/**
 	 * Execute the console command.
 	 *
 	 * @return mixed
@@ -67,7 +92,6 @@ class AddonMakeCommand extends AbstractCommand {
 		$files->makeDirectory($basePath);
 
 		$this->makeDirectories([
-			'assets',
 			'classes',
 			'classes/Console',
 			'classes/Console/Commands',
@@ -81,15 +105,17 @@ class AddonMakeCommand extends AbstractCommand {
 			'database',
 			'database/migrations',
 			'database/seeds',
-			'lang',
-			'lang/en',
-			'specs',
-			'templates',
+			'resources',
+			'resources/assets',
+			'resources/lang',
+			'resources/lang/en',
+			'resources/specs',
+			'resources/templates',
 			'tests',
 		]);
 		if ($translator->getLocale() !== 'en') {
 			$this->makeDirectories([
-				'lang/'.$translator->getLocale(),
+				'resources/lang/'.$translator->getLocale(),
 			]);
 		}
 
@@ -101,9 +127,6 @@ class AddonMakeCommand extends AbstractCommand {
 		]);
 */
 
-		$this->makePhpConfig('lang/en/messages.php', [
-			'sample_title' => 'Addon: '.$addonName,
-		]);
 		$this->makePhpConfig('config/addon.php', [
 			'version' => 5,
 			'namespace' => $namespace,
@@ -137,6 +160,10 @@ class AddonMakeCommand extends AbstractCommand {
 			'includes_global_aliases' => true,
 			'aliases' => [
 			],
+		]);
+
+		$this->makePhpConfig('resources/lang/en/messages.php', [
+			'sample_title' => 'Addon: '.$addonName,
 		]);
 
 		// classes/Http/Controllers/BaseController.php
@@ -266,44 +293,19 @@ class RouteServiceProvider extends ServiceProvider {
 SRC;
 		$this->makePhpSource('classes/Providers/RouteServiceProvider.php', $source, $namespace.'\\Providers');
 
-		// templates/sample.blade.php
+		// resources/templates/sample.blade.php
 		$source = <<<SRC
 <h1>{{ addon_trans('{$addonName}', 'messages.sample_title') }}</h1>
 SRC;
-		$this->makeTextFile('templates/sample.blade.php', $source);
+		$this->makeTextFile('resources/templates/sample.blade.php', $source);
 
-		// routes.php
+		// classes/Http/routes.php
 		$source = <<<SRC
 Route::get('addons/{$addonName}', ['uses' => 'SampleController@index']);
 SRC;
 		$this->makePhpSource('classes/Http/routes.php', $source);
 
 		$this->info('Addon Generated');
-	}
-
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments()
-	{
-		return [
-			['name', InputArgument::REQUIRED, 'Addon name.'],
-		];
-	}
-
-	/**
-	 * Get the console command options.
-	 *
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return [
-			['namespace', null, InputOption::VALUE_OPTIONAL, 'Addon namespace.', null],
-			['no-namespace', null, InputOption::VALUE_NONE, 'Addon namespace nothing.', null],
-		];
 	}
 
 }

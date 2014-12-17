@@ -26,34 +26,6 @@ class AddonSetupCommand extends Command {
 	protected $description = '[+] Setup addon architecture';
 
 	/**
-	 * IoC
-	 *
-	 * @var Illuminate\Filesystem\Filesystem
-	 */
-	protected $files;
-
-	/**
-	 * Execute the console command.
-	 *
-	 * @return mixed
-	 */
-	public function fire()
-	{
-		$this->files = $this->laravel['files'];
-
-		// make addons/
-		$addonsDirectory = AddonDirectory::path();
-		if (!$this->files->exists($addonsDirectory))
-			$this->files->makeDirectory($addonsDirectory);
-
-		// copy app/config/addon.php
-		$addonConfigSourceFile = __DIR__ . '/../../config/addon.php';
-		$addonConfigFile = app('path.config').'/addon.php';
-		if (!$this->files->exists($addonConfigFile))
-			$this->files->copy($addonConfigSourceFile, $addonConfigFile);
-	}
-
-	/**
 	 * Get the console command arguments.
 	 *
 	 * @return array
@@ -75,6 +47,35 @@ class AddonSetupCommand extends Command {
 		return [
 //			array('example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null),
 		];
+	}
+
+	/**
+	 * Execute the console command.
+	 *
+	 * @return mixed
+	 */
+	public function fire()
+	{
+		$files = $this->laravel['files'];
+
+		// make addons/
+		$addonsDirectory = AddonDirectory::path();
+		if (!$files->exists($addonsDirectory)) {
+			$files->makeDirectory($addonsDirectory);
+
+			$this->info('make directory: ' . $addonsDirectory);
+		}
+
+		// copy app/config/addon.php
+		$addonConfigSourceFile = __DIR__ . '/../../config/addon.php';
+		$addonConfigFile = app('path.config').'/addon.php';
+		if (!$files->exists($addonConfigFile)) {
+			$files->copy($addonConfigSourceFile, $addonConfigFile);
+
+			$this->info('make config: ' . $addonConfigFile);
+		}
+
+		$this->info('Setup Succeeded.');
 	}
 
 }

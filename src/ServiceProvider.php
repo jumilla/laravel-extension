@@ -30,7 +30,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 // hash
 		['name' => 'command+.hash.make', 'class' => 'LaravelPlus\Extension\Commands\HashMakeCommand'],
 		['name' => 'command+.hash.check', 'class' => 'LaravelPlus\Extension\Commands\HashCheckCommand'],
-// dump-autoload
 	];
 
 	/**

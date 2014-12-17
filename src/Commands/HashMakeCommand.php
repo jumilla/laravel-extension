@@ -5,7 +5,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
-* Modules console commands
 * @author Fumio Furukawa <fumio.furukawa@gmail.com>
 */
 class HashMakeCommand extends Command {
@@ -23,22 +22,6 @@ class HashMakeCommand extends Command {
 	 * @var string
 	 */
 	protected $description = '[+] Make hashed value';
-
-	/**
-	 * Execute the console command.
-	 *
-	 * @return mixed
-	 */
-	public function fire()
-	{
-		$cost = $this->option('cost');
-
-		$hashed = app('hash')->make($this->argument('string'), [
-			'rounds' => $cost,
-		]);
-
-		$this->info(sprintf('Generated hash: "%s"', $hashed));
-	}
 
 	/**
 	 * Get the console command arguments.
@@ -62,6 +45,22 @@ class HashMakeCommand extends Command {
 		return [
 			['cost', 'c', InputOption::VALUE_OPTIONAL, 'Generate cost.', 10],
 		];
+	}
+
+	/**
+	 * Execute the console command.
+	 *
+	 * @return mixed
+	 */
+	public function fire()
+	{
+		$cost = $this->option('cost');
+
+		$hashed = app('hash')->make($this->argument('string'), [
+			'rounds' => $cost,
+		]);
+
+		$this->info(sprintf('Generated hash: "%s"', $hashed));
 	}
 
 }

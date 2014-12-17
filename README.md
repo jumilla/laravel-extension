@@ -149,15 +149,6 @@ function index()
 * アドオンディレクトリ直下の.phpファイルを全てrequireします。
 * `addons/{addon-name}/config/addon.php` の `namespace`を見て、`directories`に指定された全てのディレクトリに対しPSR-4規約に基づくクラスオートロードの設定をします。
 
-## 機能追加予定
-
-* アドオン
-	* ~~ServiceProviderの設定~~ ***完了***
-	* assetsのpublish
-	* migration
-* ビュー
-	* ビュー引数を明示的に宣言する方法とチェック機能の追加
-
 ## 著者
 
 Fumio Furukawa (fumio.furukawa@gmail.com)

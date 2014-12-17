@@ -5,7 +5,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
-* Modules console commands
 * @author Fumio Furukawa <fumio.furukawa@gmail.com>
 */
 class HashCheckCommand extends Command {
@@ -23,6 +22,31 @@ class HashCheckCommand extends Command {
 	 * @var string
 	 */
 	protected $description = '[+] Check hashed value';
+
+	/**
+	 * Get the console command arguments.
+	 *
+	 * @return array
+	 */
+	protected function getArguments()
+	{
+		return [
+			['string1', InputArgument::REQUIRED, 'Plain or Hashed string.'],
+			['string2', InputArgument::REQUIRED, 'Plain or Hashed string.'],
+		];
+	}
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return [
+			['cost', 'c', InputOption::VALUE_OPTIONAL, 'Generate cost.', 10],
+		];
+	}
 
 	/**
 	 * Execute the console command.
@@ -58,31 +82,6 @@ class HashCheckCommand extends Command {
 	protected function isHashed($string)
 	{
 		return strlen($string) == 60 && starts_with($string, '$2y$');
-	}
-
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments()
-	{
-		return [
-			['string1', InputArgument::REQUIRED, 'Plain or Hashed string.'],
-			['string2', InputArgument::REQUIRED, 'Plain or Hashed string.'],
-		];
-	}
-
-	/**
-	 * Get the console command options.
-	 *
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return [
-			['cost', 'c', InputOption::VALUE_OPTIONAL, 'Generate cost.', 10],
-		];
 	}
 
 }

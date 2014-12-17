@@ -20,6 +20,17 @@ class ServeCommand extends Command {
 	protected $description = "[+] Serve the application on the PHP development server";
 
 	/**
+	 * Get the console command arguments.
+	 *
+	 * @return array
+	 */
+	protected function getArguments()
+	{
+		return [
+		];
+	}
+
+	/**
 	 * Get the console command options.
 	 *
 	 * @return array

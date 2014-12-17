@@ -2,6 +2,7 @@
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Finder\Finder;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 
 class AddonCheckCommand extends AbstractCommand {
@@ -21,11 +22,26 @@ class AddonCheckCommand extends AbstractCommand {
 	protected $description = '[+] Check addon information';
 
 	/**
-	 * IoC
+	 * Get the console command arguments.
 	 *
-	 * @var Illuminate\Filesystem\Filesystem
+	 * @return array
 	 */
-	protected $files;
+	protected function getArguments()
+	{
+		return [
+		];
+	}
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return [
+		];
+	}
 
 	/**
 	 * Execute the console command.
@@ -34,12 +50,12 @@ class AddonCheckCommand extends AbstractCommand {
 	 */
 	public function fire()
 	{
-		$this->files = $this->laravel['files'];
+		$files = $this->laravel['files'];
 
 		// make addons/
 		$addonsDirectory = AddonDirectory::path();
-		if (!$this->files->exists($addonsDirectory)) {
-			$this->files->makeDirectory($addonsDirectory);
+		if (!$files->exists($addonsDirectory)) {
+			$files->makeDirectory($addonsDirectory);
 		}
 
 		$this->output->writeln('> Check Start.');
@@ -64,7 +80,7 @@ class AddonCheckCommand extends AbstractCommand {
 
 	function dumpProperties($addon)
 	{
-		$this->info(sprintf('Addon "%s"', $addon->name));
+		$this->info(sprintf('Addon "%s"', $addon->name()));
 		$this->info(sprintf('Path: %s', $addon->relativePath()));
 		$this->info(sprintf('PHP namespace: %s', $addon->config('addon.namespace')));
 	}
@@ -78,7 +94,7 @@ class AddonCheckCommand extends AbstractCommand {
 		foreach ($addon->config('addon.directories') as $directory) {
 			$this->info(sprintf('PHP classes on "%s"', $directory));
 
-			$classDirectoryPath = $addon->path.'/'.$directory;
+			$classDirectoryPath = $addon->path($directory);
 
 			if (!file_exists($classDirectoryPath)) {
 				$this->line(sprintf('Warning: Class directory "%s" not found', $directory));
