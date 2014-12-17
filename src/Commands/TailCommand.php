@@ -2,8 +2,8 @@
 
 use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Carbon\Carbon;
 
 class TailCommand extends Command {
@@ -20,7 +20,7 @@ class TailCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = "[+]Tail a log file on a remote server";
+	protected $description = "[+] Tail a log file";
 
 	/**
 	 * Get the console command arguments.
@@ -29,9 +29,9 @@ class TailCommand extends Command {
 	 */
 	protected function getArguments()
 	{
-		return array(
-			array('connection', InputArgument::OPTIONAL, 'The remote connection name'),
-		);
+		return [
+			['connection', InputArgument::OPTIONAL, 'The remote connection name'],
+		];
 	}
 
 	/**
@@ -41,11 +41,10 @@ class TailCommand extends Command {
 	 */
 	protected function getOptions()
 	{
-		return array(
-			array('path', null, InputOption::VALUE_OPTIONAL, 'The fully qualified path to the log file.'),
-
-			array('lines', null, InputOption::VALUE_OPTIONAL, 'The number of lines to tail.', 20),
-		);
+		return [
+			['path', null, InputOption::VALUE_OPTIONAL, 'The fully qualified path to the log file.', null],
+			['lines', null, InputOption::VALUE_OPTIONAL, 'The number of lines to tail.', 20],
+		];
 	}
 
 	/**

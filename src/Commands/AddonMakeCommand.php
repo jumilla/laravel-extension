@@ -1,7 +1,7 @@
 <?php namespace LaravelPlus\Extension\Commands;
 
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 
 /**
@@ -22,7 +22,7 @@ class AddonMakeCommand extends AbstractCommand {
 	 *
 	 * @var string
 	 */
-	protected $description = '[+]Make addon.';
+	protected $description = '[+] Make addon';
 
 	/**
 	 * Execute the console command.

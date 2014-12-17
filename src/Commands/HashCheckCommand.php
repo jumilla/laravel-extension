@@ -1,9 +1,8 @@
 <?php namespace LaravelPlus\Extension\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Foundation\Application;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
 * Modules console commands
@@ -23,7 +22,7 @@ class HashCheckCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = '[+]Check hashed value.';
+	protected $description = '[+] Check hashed value';
 
 	/**
 	 * Execute the console command.

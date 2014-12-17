@@ -15,7 +15,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	private static $commands = [
 // app:
-		['name' => 'command+.app.container.list', 'class' => 'LaravelPlus\Extension\Commands\AppContainerListCommand'],
+		['name' => 'command+.app.container', 'class' => 'LaravelPlus\Extension\Commands\AppContainerListCommand'],
+		['name' => 'command+.app.route', 'class' => 'LaravelPlus\Extension\Commands\RouteListCommand'],
 		['name' => 'command+.app.serve', 'class' => 'LaravelPlus\Extension\Commands\ServeCommand'],
 		['name' => 'command+.app.tail', 'class' => 'LaravelPlus\Extension\Commands\TailCommand'],
 // addon:

@@ -7,7 +7,8 @@ abstract class AbstractCommand extends Command {
 
 	protected $files;
 
-	public function setLaravel($laravel) {
+	public function setLaravel($laravel)
+	{
 		parent::setLaravel($laravel);
 
 		$this->files = 	$this->laravel['files'];

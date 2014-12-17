@@ -17,7 +17,20 @@ class ServeCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = "[+]Serve the application on the PHP development server";
+	protected $description = "[+] Serve the application on the PHP development server";
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return [
+			['host', null, InputOption::VALUE_OPTIONAL, 'The host address to serve the application on.', 'localhost'],
+			['port', null, InputOption::VALUE_OPTIONAL, 'The port to serve the application on.', 8000],
+		];
+	}
 
 	/**
 	 * Execute the console command.
@@ -54,20 +67,6 @@ class ServeCommand extends Command {
 		{
 			throw new \Exception('This PHP binary is not version 5.4 or greater.');
 		}
-	}
-
-	/**
-	 * Get the console command options.
-	 *
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return array(
-			array('host', null, InputOption::VALUE_OPTIONAL, 'The host address to serve the application on.', 'localhost'),
-
-			array('port', null, InputOption::VALUE_OPTIONAL, 'The port to serve the application on.', 8000),
-		);
 	}
 
 }

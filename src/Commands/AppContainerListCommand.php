@@ -16,14 +16,14 @@ class AppContainerListCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $name = 'app:container:list';
+	protected $name = 'app:container';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = '[+]Lists object in application container.';
+	protected $description = '[+] Lists object in application container';
 
 	/**
 	 * IoC

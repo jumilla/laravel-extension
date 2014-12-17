@@ -1,8 +1,7 @@
 <?php namespace LaravelPlus\Extension\Commands;
 
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Finder\Finder;
+use Symfony\Component\Console\Input\InputOption;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 
 class AddonCheckCommand extends AbstractCommand {
@@ -19,7 +18,7 @@ class AddonCheckCommand extends AbstractCommand {
 	 *
 	 * @var string
 	 */
-	protected $description = '[+]Check addon information.';
+	protected $description = '[+] Check addon information';
 
 	/**
 	 * IoC
@@ -39,8 +38,9 @@ class AddonCheckCommand extends AbstractCommand {
 
 		// make addons/
 		$addonsDirectory = AddonDirectory::path();
-		if (!$this->files->exists($addonsDirectory))
+		if (!$this->files->exists($addonsDirectory)) {
 			$this->files->makeDirectory($addonsDirectory);
+		}
 
 		$this->output->writeln('> Check Start.');
 		$this->output->writeln('--------');
