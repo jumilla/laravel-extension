@@ -73,7 +73,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 * @param  $command array
 	 * @return void
 	 */
-	function setupCommands($commands)
+	protected function setupCommands($commands)
 	{
 		$names = [];
 
@@ -94,7 +94,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 *
 	 * @return void
 	 */
-	function bootAddons()
+	protected function bootAddons()
 	{
 		foreach ($this->addons as $addon) {
 			$this->bootAddon($addon);
@@ -107,7 +107,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 * @param  $addon \LaravelPlus\Extension\Addon
 	 * @return void
 	 */
-	function bootAddon($addon)
+	protected function bootAddon($addon)
 	{
 		$packageName = 'addons/'.$addon->name;
 
@@ -135,7 +135,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 * @param  $addon \LaravelPlus\Extension\Addon
 	 * @return void
 	 */
-	function loadFiles($addon)
+	protected function loadFiles($addon)
 	{
 		$files = $this->app['files'];
 		foreach ($files->files($addon->path) as $file) {
@@ -151,7 +151,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 * @param  $path string
 	 * @return void
 	 */
-	function loadAutoloadFiles($path)
+	protected function loadAutoloadFiles($path)
 	{
 		// We will use the finder to locate all "autoload.php" files in the workbench
 		// directory, then we will include them each so that they are able to load
