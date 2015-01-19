@@ -140,11 +140,12 @@ class Addon {
 	private function registerV4($app)
 	{
 		$this->config['paths'] = [
+			'assets' => 'assets',
 			'lang' => 'lang',
-			'templates' => 'views',
-			'migrations' => 'database/migrations',
-			'seeds' => 'database/seeds',
+			'migrations' => 'migrations',
+			'seeds' => 'seeds',
 			'specs' => 'specs',
+			'views' => 'views',
 		];
 
 		// regist service providers

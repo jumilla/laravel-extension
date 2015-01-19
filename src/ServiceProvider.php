@@ -78,7 +78,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 *
 	 * @return void
 	 */
-	function registerAddons()
+	protected function registerAddons()
 	{
 		foreach (Application::getAddons() as $addon) {
 			// register addon
@@ -93,8 +93,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	public function boot()
 	{
-//		$this->package('laravel-plus/extension', 'laravel-extension', __DIR__);
-
 		// Add package commands
 		$this->setupCommands(static::$commands);
 
@@ -111,7 +109,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 * @param  $command array
 	 * @return void
 	 */
-	function setupCommands($commands)
+	protected function setupCommands($commands)
 	{
 		$names = [];
 
@@ -132,7 +130,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 *
 	 * @return void
 	 */
-	function registerBladeExtensions()
+	protected function registerBladeExtensions()
 	{
 		\Blade::extend(BladeExtension::comment());
 
@@ -144,7 +142,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 *
 	 * @return void
 	 */
-	function bootAddons()
+	protected function bootAddons()
 	{
 		foreach (Application::getAddons() as $name => $addon) {
 			// register package
@@ -162,14 +160,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 * @param  string  $path
 	 * @return void
 	 */
-	function registerPackage($namespace, $addon)
+	protected function registerPackage($namespace, $addon)
 	{
 		$lang = $addon->path($addon->config('addon.paths.lang', 'lang'));
 		if (is_dir($lang)) {
 			$this->app['translator']->addNamespace($namespace, $lang);
 		}
 
-		$view = $addon->path($addon->config('addon.paths.templates', 'templates'));
+		$view = $addon->path($addon->config('addon.paths.views', 'views'));
 		if (is_dir($view)) {
 			$this->app['view']->addNamespace($namespace, $view);
 		}
@@ -186,7 +184,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 * @param  $path string
 	 * @return void
 	 */
-	function loadAutoloadFiles($path)
+	protected function loadAutoloadFiles($path)
 	{
 		// We will use the finder to locate all "autoload.php" files in the workbench
 		// directory, then we will include them each so that they are able to load

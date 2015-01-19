@@ -62,7 +62,7 @@ class AddonMakeCommand extends AbstractCommand {
 
 		// load command arguments
 		$addonName = $this->argument('name');
-		$namespace = $this->option('namespace');
+		$namespace = str_replace('/', '\\', $this->option('namespace'));
 		if (empty($namespace))
 			$namespace = ucfirst(studly_case($addonName));
 		if ($this->option('no-namespace'))
@@ -76,7 +76,6 @@ class AddonMakeCommand extends AbstractCommand {
 		$this->line(sprintf('PHP namespace: "%s"', $namespace));
 
 		$addonsDirectory = AddonDirectory::path();
-//		$templateDirectory = dirname(dirname(__DIR__)).'/templates/addon';
 
 		// make addons/
 		if (!$files->exists($addonsDirectory))
@@ -101,16 +100,16 @@ class AddonMakeCommand extends AbstractCommand {
 			'classes/Http/Requests',
 			'classes/Providers',
 			'classes/Services',
+			'classes/Database',
 			'config',
 			'database',
 			'database/migrations',
-			'database/seeds',
 			'resources',
 			'resources/assets',
 			'resources/lang',
 			'resources/lang/en',
 			'resources/specs',
-			'resources/templates',
+			'resources/views',
 			'tests',
 		]);
 		if ($translator->getLocale() !== 'en') {
@@ -132,20 +131,18 @@ class AddonMakeCommand extends AbstractCommand {
 			'namespace' => $namespace,
 			'directories' => [
 				'classes',
-				'database/seeds',
 			],
 			'paths' => [
-				'assets' => 'assets',
-				'lang' => 'lang',
-				'templates' => 'templates',
 				'migrations' => 'database/migrations',
-				'seeds' => 'database/seeds',
-				'specs' => 'specs',
+				'assets' => 'resources/assets',
+				'lang' => 'resources/lang',
+				'specs' => 'resources/specs',
+				'views' => 'resources/views',
 				'tests' => 'tests',
 			],
 			'providers' => [
-				$namespace.'\Providers\AddonServiceProvider',
-				$namespace.'\Providers\RouteServiceProvider',
+				$namespace.'\\Providers\\AddonServiceProvider',
+				$namespace.'\\Providers\\RouteServiceProvider',
 			],
 			'console' => [
 				'commands' => [
@@ -293,11 +290,11 @@ class RouteServiceProvider extends ServiceProvider {
 SRC;
 		$this->makePhpSource('classes/Providers/RouteServiceProvider.php', $source, $namespace.'\\Providers');
 
-		// resources/templates/sample.blade.php
+		// resources/views/sample.blade.php
 		$source = <<<SRC
 <h1>{{ addon_trans('{$addonName}', 'messages.sample_title') }}</h1>
 SRC;
-		$this->makeTextFile('resources/templates/sample.blade.php', $source);
+		$this->makeTextFile('resources/views/sample.blade.php', $source);
 
 		// classes/Http/routes.php
 		$source = <<<SRC

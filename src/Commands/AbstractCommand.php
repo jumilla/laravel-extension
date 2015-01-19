@@ -1,7 +1,7 @@
 <?php namespace LaravelPlus\Extension\Commands;
 
-use LaravelPlus\Extension\PhpSettingGenerator;
 use Illuminate\Console\Command;
+use LaravelPlus\Extension\Generators\PhpSettingGenerator;
 
 abstract class AbstractCommand extends Command {
 
