@@ -4,7 +4,7 @@ use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use LaravelPlus\Extension\AddonManager;
+use LaravelPlus\Extension\Addons\AddonManager;
 
 /**
 * Modules console commands
@@ -24,7 +24,7 @@ class AddonSetupCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Setup addon architecture.';
+	protected $description = '[+] Setup addon architecture.';
 
 	/**
 	 * IoC

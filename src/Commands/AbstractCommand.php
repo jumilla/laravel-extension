@@ -1,6 +1,7 @@
 <?php namespace LaravelPlus\Extension\Commands;
 
 use Illuminate\Console\Command;
+use LaravelPlus\Extension\Generators\PhpSettingGenerator;
 
 abstract class AbstractCommand extends Command {
 
@@ -31,7 +32,7 @@ abstract class AbstractCommand extends Command {
 
 	protected function makePhpConfig($path, $data)
 	{
-		$this->files->prepend($this->basePath.'/'.$path, "<?php\n\nreturn ".var_export($data, true).";\n");
+		$this->files->prepend($this->basePath.'/'.$path, PhpSettingGenerator::generateText($data));
 	}
 
 	protected function makePhpSource($path, $source, $namespace = null)

@@ -3,18 +3,22 @@
 use Symfony\Component\Finder\Finder;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Config;
+use LaravelPlus\Extension\Addons\AddonManager;
+use LaravelPlus\Extension\Addons\AddonClassLoader;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 	private static $commands = [
-		['name' => 'commands.package.setup', 'class' => 'LaravelPlus\Extension\Commands\AddonSetupCommand'],
-		['name' => 'commands.package.make', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeCommand'],
-		['name' => 'commands.package.check', 'class' => 'LaravelPlus\Extension\Commands\AddonCheckCommand'],
+		['name' => 'command+.package.setup', 'class' => 'LaravelPlus\Extension\Commands\AddonSetupCommand'],
+		['name' => 'command+.package.make', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeCommand'],
+		['name' => 'command+.package.check', 'class' => 'LaravelPlus\Extension\Commands\AddonCheckCommand'],
 // migrate
 //		['name' => 'commands.addon.migrate.generate', 'class' => 'LaravelPlus\Extension\Commands\MigrateGenerateCommand'],
 // publish
-// dump-autoload
-		['name' => 'commands.app.container.list', 'class' => 'LaravelPlus\Extension\Commands\AppContainerListCommand'],
+		['name' => 'command+.app.container.list', 'class' => 'LaravelPlus\Extension\Commands\AppContainerListCommand'],
+// hash
+		['name' => 'command+.hash.make', 'class' => 'LaravelPlus\Extension\Commands\HashMakeCommand'],
+		['name' => 'command+.hash.check', 'class' => 'LaravelPlus\Extension\Commands\HashCheckCommand'],
 	];
 
 	/**

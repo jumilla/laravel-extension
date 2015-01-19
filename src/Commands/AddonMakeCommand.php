@@ -2,7 +2,7 @@
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use LaravelPlus\Extension\AddonManager;
+use LaravelPlus\Extension\Addons\AddonManager;
 
 /**
 * Modules console commands
@@ -22,7 +22,7 @@ class AddonMakeCommand extends AbstractCommand {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Make addon.';
+	protected $description = '[+] Make addon.';
 
 	/**
 	 * Execute the console command.
@@ -37,7 +37,7 @@ class AddonMakeCommand extends AbstractCommand {
 
 		// load command arguments
 		$addonName = $this->argument('name');
-		$namespace = $this->option('namespace');
+		$namespace = str_replace('/', '\\', $this->option('namespace'));
 		if (empty($namespace))
 			$namespace = ucfirst(studly_case($addonName));
 		if ($this->option('no-namespace'))
@@ -112,7 +112,6 @@ class AddonMakeCommand extends AbstractCommand {
 
 		// controllers/BaseController.php
 		$source = <<<SRC
-
 use Illuminate\Routing\Controller;
 
 class BaseController extends Controller {
@@ -125,7 +124,9 @@ SRC;
 		$source = <<<SRC
 class SampleController extends BaseController {
 
-	public function index() {
+	public function index()
+	{
+		Log::debug('{$addonName}::sample');
 		return View::make('{$addonName}::sample');
 	}
 
@@ -135,7 +136,6 @@ SRC;
 
 		// controllers/SampleController.php
 		$source = <<<SRC
-
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 	/**

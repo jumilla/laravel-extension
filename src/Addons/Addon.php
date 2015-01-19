@@ -1,4 +1,4 @@
-<?php namespace LaravelPlus\Extension;
+<?php namespace LaravelPlus\Extension\Addons;
 
 class Addon {
 

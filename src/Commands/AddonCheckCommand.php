@@ -3,7 +3,7 @@
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Finder\Finder;
-use LaravelPlus\Extension\AddonManager;
+use LaravelPlus\Extension\Addons\AddonManager;
 
 class AddonCheckCommand extends AbstractCommand {
 
@@ -19,7 +19,7 @@ class AddonCheckCommand extends AbstractCommand {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Check addon information.';
+	protected $description = '[+] Check addon information.';
 
 	/**
 	 * IoC

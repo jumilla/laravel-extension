@@ -23,7 +23,7 @@ class AppContainerListCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Lists object in application container.';
+	protected $description = '[+] Lists object in application container.';
 
 	/**
 	 * IoC
