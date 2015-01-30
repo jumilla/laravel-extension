@@ -1,13 +1,20 @@
 <?php namespace LaravelPlus\Extension\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Foundation\Application as LaravelApplication;
 use LaravelPlus\Extension\Generators\PhpSettingGenerator;
 
 abstract class AbstractCommand extends Command {
 
 	protected $files;
 
-	public function setLaravel($laravel)
+	/**
+	 * Set the Laravel application instance.
+	 *
+	 * @param  \Illuminate\Contracts\Foundation\Application  $laravel
+	 * @return void
+	 */
+	public function setLaravel(LaravelApplication $laravel)
 	{
 		parent::setLaravel($laravel);
 
