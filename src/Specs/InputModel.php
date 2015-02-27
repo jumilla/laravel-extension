@@ -32,7 +32,6 @@ class InputModel {
 	/**
 	 * @param  string $path
 	 * @param  array  $in
-	 * @return void
 	 */
 	public function __construct($path, array $in = null)
 	{
@@ -52,7 +51,7 @@ class InputModel {
 		if (!is_array($labels)) {
 			throw new \InvalidArgumentException('rule labels for "'.$path.'" must array.');
 		}
-		$this->validator = \Validator::make($this->in, $rules, $ruleMessages, $labels);
+		$this->validator = \Validator::make([], $rules, $ruleMessages, $labels);
 	}
 
 	/**
@@ -71,7 +70,7 @@ class InputModel {
 	 */
 	public function __get($key)
 	{
-		return $this->in[$key];
+		return isset($this->in[$key]) ? $this->in[$key] : null;
 	}
 
 	/**
@@ -91,6 +90,7 @@ class InputModel {
 	 */
 	public function passes()
 	{
+		$this->validator->setData($this->in);
 		return $this->validator->passes();
 	}
 
@@ -99,6 +99,7 @@ class InputModel {
 	 */
 	public function fails()
 	{
+		$this->validator->setData($this->in);
 		return $this->validator->fails();
 	}
 
