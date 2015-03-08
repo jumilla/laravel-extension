@@ -23,11 +23,6 @@
 			"src/helpers.php"
 		]
 	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "2.0"
-		}
-	},
 	"minimum-stability": "stable",
 	"prefer-stable": true
 }
