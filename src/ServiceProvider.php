@@ -15,7 +15,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 // migrate
 //		['name' => 'commands.addon.migrate.generate', 'class' => 'LaravelPlus\Extension\Commands\MigrateGenerateCommand'],
 // publish
-		['name' => 'command+.app.container', 'class' => 'LaravelPlus\Extension\Commands\AppContainerListCommand'],
+		['name' => 'command+.app.container', 'class' => 'LaravelPlus\Extension\Commands\AppContainerCommand'],
 // hash
 		['name' => 'command+.hash.make', 'class' => 'LaravelPlus\Extension\Commands\HashMakeCommand'],
 		['name' => 'command+.hash.check', 'class' => 'LaravelPlus\Extension\Commands\HashCheckCommand'],
