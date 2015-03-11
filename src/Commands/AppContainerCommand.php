@@ -9,14 +9,14 @@ use LaravelPlus\Extension\Hooks\ApplicationHook;
 /**
 * @author Fumio Furukawa <fumio.furukawa@gmail.com>
 */
-class AppContainerListCommand extends Command {
+class AppContainerCommand extends Command {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'app:container:list';
+	protected $name = 'app:container';
 
 	/**
 	 * The console command description.
