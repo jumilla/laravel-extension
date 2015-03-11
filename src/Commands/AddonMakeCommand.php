@@ -94,12 +94,15 @@ class AddonMakeCommand extends AbstractCommand {
 			'sample_title' => 'Addon: '.$addonName,
 		]);
 		$this->makePhpConfig('config/addon.php', [
+			'version' => 4,
 			'namespace' => $namespace,
 			'directories' => [
 				'controllers',
-				'migrations',
 				'models',
 				'services',
+			],
+			'files' => [
+				'routes.php',
 			],
 			'providers' => [
 			],

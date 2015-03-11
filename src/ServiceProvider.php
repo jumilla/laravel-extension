@@ -138,11 +138,25 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	protected function loadFiles($addon)
 	{
-		$files = $this->app['files'];
-		foreach ($files->files($addon->path) as $file) {
-			if (ends_with($file, '.php')) {
-				require $file;
+		$filenames = $addon->config('files');
+
+		$files = [];
+		if ($filenames === null) {
+			$fs = $this->app['files'];
+			foreach ($fs->files($addon->path) as $path) {
+				if (ends_with($path, '.php')) {
+					$files[] = $path;
+				}
 			}
+		}
+		else {
+			foreach ($filenames as $filename) {
+				$files[] = $addon->path . '/' . $filename;
+			}
+		}
+
+		foreach ($files as $file) {
+			require $file;
 		}
 	}
 
