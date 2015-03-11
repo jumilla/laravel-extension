@@ -35,6 +35,9 @@ class AddonMakeCommand extends AbstractCommand {
 		$files = $this->laravel['files'];
 		$translator = $this->laravel['translator'];
 
+		// setup addon environment
+		$this->call('addon:setup');
+
 		// load command arguments
 		$addonName = $this->argument('name');
 		$namespace = str_replace('/', '\\', $this->option('namespace'));
@@ -51,11 +54,6 @@ class AddonMakeCommand extends AbstractCommand {
 		$this->line(sprintf('PHP namespace: "%s"', $namespace));
 
 		$addonsDirectory = AddonManager::path();
-//		$templateDirectory = dirname(dirname(__DIR__)).'/templates/addon';
-
-		// make addons/
-		if (!$files->exists($addonsDirectory))
-			$files->makeDirectory($addonsDirectory);
 
 		$basePath = $this->basePath = $addonsDirectory.'/'.$addonName;
 

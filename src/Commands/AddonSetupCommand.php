@@ -10,7 +10,7 @@ use LaravelPlus\Extension\Addons\AddonManager;
 * Modules console commands
 * @author Fumio Furukawa <fumio.furukawa@gmail.com>
 */
-class AddonSetupCommand extends Command {
+class AddonSetupCommand extends AbstractCommand {
 
 	/**
 	 * The console command name.
@@ -27,31 +27,24 @@ class AddonSetupCommand extends Command {
 	protected $description = '[+] Setup addon architecture.';
 
 	/**
-	 * IoC
-	 *
-	 * @var Illuminate\Filesystem\Filesystem
-	 */
-	protected $files;
-
-	/**
 	 * Execute the console command.
 	 *
 	 * @return mixed
 	 */
 	public function fire()
 	{
-		$this->files = $this->laravel['files'];
-
 		// make addons/
 		$addonsDirectory = AddonManager::path();
-		if (!$this->files->exists($addonsDirectory))
+		if (!$this->files->exists($addonsDirectory)) {
 			$this->files->makeDirectory($addonsDirectory);
+		}
 
 		// copy app/config/addon.php
-		$addonConfigSourceFile = __DIR__ . '/../../config/addon.php';
+		$templateConfigFile = __DIR__ . '/../../config/addon.php';
 		$addonConfigFile = app('path').'/config/addon.php';
-		if (!$this->files->exists($addonConfigFile))
-			$this->files->copy($addonConfigSourceFile, $addonConfigFile);
+		if (!$this->files->exists($addonConfigFile)) {
+			$this->files->copy($templateConfigFile, $addonConfigFile);
+		}
 	}
 
 	/**
@@ -62,7 +55,8 @@ class AddonSetupCommand extends Command {
 	protected function getArguments()
 	{
 		return [
-//			array('example', InputArgument::REQUIRED, 'An example argument.'),
+//			['example', InputArgument::REQUIRED, 'An example argument.'],
+//			['example', InputArgument::OPTION, 'An example argument.', 'option value'],
 		];
 	}
 
@@ -74,7 +68,8 @@ class AddonSetupCommand extends Command {
 	protected function getOptions()
 	{
 		return [
-//			array('example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null),
+//			['example', null, InputOption::VALUE_NONE, 'An example option.', null],
+//			['example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null],
 		];
 	}
 

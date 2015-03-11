@@ -5,28 +5,21 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Finder\Finder;
 use LaravelPlus\Extension\Addons\AddonManager;
 
-class AddonCheckCommand extends AbstractCommand {
+class AddonListCommand extends AbstractCommand {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'addon:check';
+	protected $name = 'addon:list';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = '[+] Check addon information.';
-
-	/**
-	 * IoC
-	 *
-	 * @var Illuminate\Filesystem\Filesystem
-	 */
-	protected $files;
+	protected $description = '[+] List up addon information.';
 
 	/**
 	 * Execute the console command.
@@ -35,12 +28,8 @@ class AddonCheckCommand extends AbstractCommand {
 	 */
 	public function fire()
 	{
-		$this->files = $this->laravel['files'];
-
-		// make addons/
-		$addonsDirectory = AddonManager::path();
-		if (!$this->files->exists($addonsDirectory))
-			$this->files->makeDirectory($addonsDirectory);
+		// setup addon environment
+		$this->call('addon:setup');
 
 		$this->output->writeln('> Check Start.');
 		$this->output->writeln('--------');
@@ -53,7 +42,7 @@ class AddonCheckCommand extends AbstractCommand {
 		$this->output->writeln('> Check Finished!');
 	}
 
-	function dump($addon)
+	protected function dump($addon)
 	{
 		$this->dumpProperties($addon);
 		$this->dumpClasses($addon);
@@ -62,14 +51,14 @@ class AddonCheckCommand extends AbstractCommand {
 		$this->output->writeln('--------');
 	}
 
-	function dumpProperties($addon)
+	protected function dumpProperties($addon)
 	{
 		$this->info(sprintf('Addon "%s"', $addon->name));
 		$this->info(sprintf('Path: %s', $addon->relativePath()));
 		$this->info(sprintf('PHP namespace: %s', $addon->config('namespace')));
 	}
 
-	function dumpClasses($addon)
+	protected function dumpClasses($addon)
 	{
 		// load laravel services
 		$files = $this->laravel['files'];
@@ -98,9 +87,31 @@ class AddonCheckCommand extends AbstractCommand {
 		}
 	}
 
-	function dumpServiceProviders($addon)
+	protected function dumpServiceProviders($addon)
 	{
 		
+	}
+
+	/**
+	 * Get the console command arguments.
+	 *
+	 * @return array
+	 */
+	protected function getArguments()
+	{
+		return [
+		];
+	}
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return [
+		];
 	}
 
 }

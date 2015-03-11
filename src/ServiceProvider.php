@@ -9,12 +9,13 @@ use LaravelPlus\Extension\Addons\AddonClassLoader;
 class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 
 	private static $commands = [
-		['name' => 'command+.package.setup', 'class' => 'LaravelPlus\Extension\Commands\AddonSetupCommand'],
-		['name' => 'command+.package.make', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeCommand'],
-		['name' => 'command+.package.check', 'class' => 'LaravelPlus\Extension\Commands\AddonCheckCommand'],
-// migrate
-//		['name' => 'commands.addon.migrate.generate', 'class' => 'LaravelPlus\Extension\Commands\MigrateGenerateCommand'],
-// publish
+// addon
+		['name' => 'command+.addon.setup', 'class' => 'LaravelPlus\Extension\Commands\AddonSetupCommand'],
+		['name' => 'command+.addon.list', 'class' => 'LaravelPlus\Extension\Commands\AddonListCommand'],
+		['name' => 'command+.addon.make', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeCommand'],
+		['name' => 'command+.addon.remove', 'class' => 'LaravelPlus\Extension\Commands\AddonRemoveCommand'],
+		['name' => 'command+.addon.publish', 'class' => 'LaravelPlus\Extension\Commands\AddonPublishCommand'],
+// app
 		['name' => 'command+.app.container', 'class' => 'LaravelPlus\Extension\Commands\AppContainerCommand'],
 // hash
 		['name' => 'command+.hash.make', 'class' => 'LaravelPlus\Extension\Commands\HashMakeCommand'],

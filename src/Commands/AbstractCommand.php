@@ -5,6 +5,11 @@ use LaravelPlus\Extension\Generators\PhpSettingGenerator;
 
 abstract class AbstractCommand extends Command {
 
+	/**
+	 * File service
+	 *
+	 * @var \Illuminate\Filesystem\Filesystem
+	 */
 	protected $files;
 
 	public function setLaravel($laravel) {

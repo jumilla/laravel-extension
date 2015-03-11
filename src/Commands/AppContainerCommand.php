@@ -26,9 +26,9 @@ class AppContainerCommand extends Command {
 	protected $description = '[+] Lists object in application container.';
 
 	/**
-	 * IoC
+	 * File Service
 	 *
-	 * @var Illuminate\Filesystem\Filesystem
+	 * @var \Illuminate\Filesystem\Filesystem
 	 */
 	protected $files;
 
