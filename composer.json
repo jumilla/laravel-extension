@@ -18,8 +18,11 @@
 	"autoload": {
 		"psr-4": {
 			"LaravelPlus\\Extension\\": "src/"
-		}
+		},
+ 		"files": [
+			"src/helpers.php"
+		]
 	},
-	"minimum-stability": "dev",
+	"minimum-stability": "stable",
 	"prefer-stable": true
 }
