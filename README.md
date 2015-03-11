@@ -31,9 +31,6 @@
 ```
 $ composer update
 
-もしくは、
-
-$ php composer.phar update
 ```
 
 `app/config/app.config`ファイルを編集します。
@@ -99,8 +96,18 @@ $ php artisan serve
 		* sample.blade.php
 	* routes.php
 
-### php artisan addon:check
-全てのアドオンをチェックします。
+### php artisan addon:list
+全てのアドオンの一覧を表示します。
+
+### php artisan addon:publish
+アドオン内の以下のディレクトリをコピーします。
+
+* assets/* -> /public/assets/*
+* migrations/* -> /app/migrations/*
+
+### php artisan addon:remove &lt;addon-name&gt; {--force}
+アドオンを削除します。
+単純に指定のアドオンディレクトリを削除するだけです。
 
 ## ファサードの拡張
 Laravel4のエイリアスローダーはグローバル名前空間にしか作用しないため、名前空間の中からファサードを扱うにはクラス名の先頭に`\`を付けなければなりません。
@@ -138,15 +145,6 @@ function index()
 
 * アドオンディレクトリ直下の.phpファイルを全てrequireします。
 * `addons/{addon-name}/config/addon.php` の `namespace`を見て、`directories`に指定された全てのディレクトリに対しPSR-4規約に基づくクラスオートロードの設定をします。
-
-## 機能追加予定
-
-* アドオン
-	* ~~ServiceProviderの設定~~ ***完了***
-	* assetsのpublish
-	* migration
-* ビュー
-	* ビュー引数を明示的に宣言する方法とチェック機能の追加
 
 ## 著者
 
