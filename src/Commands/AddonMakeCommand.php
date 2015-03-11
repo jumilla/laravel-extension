@@ -124,8 +124,8 @@ class SampleController extends BaseController {
 
 	public function index()
 	{
-		Log::debug('{$addonName}::sample');
-		return View::make('{$addonName}::sample');
+		Log::debug(addon_name() . ' sample');
+		return View::make(addon_namespace() . 'sample');
 	}
 
 }
