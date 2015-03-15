@@ -100,7 +100,7 @@ $ php artisan serve
 全てのアドオンの一覧を表示します。
 
 ### php artisan addon:publish
-アドオン内の以下のディレクトリをコピーします。
+アドオン内の以下のディレクトリ内のファイルをコピーします。
 
 * assets/* -> /public/assets/*
 * migrations/* -> /app/migrations/*
@@ -151,12 +151,12 @@ function index()
 
 ## 起動時の動き
 
-* アドオンディレクトリ直下の.phpファイルを全てrequireします。
+* `addons/{addon-name}/config/addon.php` の `files` が指定されている場合、配列で指定されたすべてのファイルをrequireします。`files`が指定されていない場合、アドオンディレクトリ直下の.phpファイルを全てrequireします。
 * `addons/{addon-name}/config/addon.php` の `namespace`を見て、`directories`に指定された全てのディレクトリに対しPSR-4規約に基づくクラスオートロードの設定をします。
 
 ## 著者
 
-Fumio Furukawa (fumio.furukawa@gmail.com)
+Fumio Furukawa (fumio@jumilla.me)
 
 ## ライセンス
 
