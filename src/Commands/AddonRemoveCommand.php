@@ -22,6 +22,30 @@ class AddonRemoveCommand extends AbstractCommand {
 	protected $description = '[+] Remove addon.';
 
 	/**
+	 * Get the console command arguments.
+	 *
+	 * @return array
+	 */
+	protected function getArguments()
+	{
+		return [
+			['name', InputArgument::REQUIRED, 'Name of addon.'],
+		];
+	}
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return [
+			['force', 'f', InputOption::VALUE_NONE, 'Force remove.', null],
+		];
+	}
+
+	/**
 	 * Execute the console command.
 	 *
 	 * @return mixed
@@ -51,30 +75,6 @@ class AddonRemoveCommand extends AbstractCommand {
 		$this->files->deleteDirectory(AddonManager::path($addonName));
 
 		$this->info(sprintf('Addon "%s" removed.', $addonName));
-	}
-
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments()
-	{
-		return [
-			['name', InputArgument::REQUIRED, 'Name of addon.'],
-		];
-	}
-
-	/**
-	 * Get the console command options.
-	 *
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return [
-			['force', 'f', InputOption::VALUE_NONE, 'Force remove.', null],
-		];
 	}
 
 }

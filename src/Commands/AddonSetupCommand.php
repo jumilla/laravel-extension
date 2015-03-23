@@ -27,27 +27,6 @@ class AddonSetupCommand extends AbstractCommand {
 	protected $description = '[+] Setup addon architecture.';
 
 	/**
-	 * Execute the console command.
-	 *
-	 * @return mixed
-	 */
-	public function fire()
-	{
-		// make addons/
-		$addonsDirectory = AddonManager::path();
-		if (!$this->files->exists($addonsDirectory)) {
-			$this->files->makeDirectory($addonsDirectory);
-		}
-
-		// copy app/config/addon.php
-		$templateConfigFile = __DIR__ . '/../../config/addon.php';
-		$addonConfigFile = app('path').'/config/addon.php';
-		if (!$this->files->exists($addonConfigFile)) {
-			$this->files->copy($templateConfigFile, $addonConfigFile);
-		}
-	}
-
-	/**
 	 * Get the console command arguments.
 	 *
 	 * @return array
@@ -71,6 +50,27 @@ class AddonSetupCommand extends AbstractCommand {
 //			['example', null, InputOption::VALUE_NONE, 'An example option.', null],
 //			['example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null],
 		];
+	}
+
+	/**
+	 * Execute the console command.
+	 *
+	 * @return mixed
+	 */
+	public function fire()
+	{
+		// make addons/
+		$addonsDirectory = AddonManager::path();
+		if (!$this->files->exists($addonsDirectory)) {
+			$this->files->makeDirectory($addonsDirectory);
+		}
+
+		// copy app/config/addon.php
+		$templateConfigFile = __DIR__ . '/../../config/addon.php';
+		$addonConfigFile = app('path').'/config/addon.php';
+		if (!$this->files->exists($addonConfigFile)) {
+			$this->files->copy($templateConfigFile, $addonConfigFile);
+		}
 	}
 
 }

@@ -22,6 +22,29 @@ class AddonPublishCommand extends AbstractCommand {
 	protected $description = '[+] Publish addon migrations & assets.';
 
 	/**
+	 * Get the console command arguments.
+	 *
+	 * @return array
+	 */
+	protected function getArguments()
+	{
+		return [
+			['name', InputArgument::OPTIONAL, 'Name of addon.'],
+		];
+	}
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return [
+		];
+	}
+
+	/**
 	 * Execute the console command.
 	 *
 	 * @return mixed
@@ -81,29 +104,6 @@ class AddonPublishCommand extends AbstractCommand {
 		$destPath = $this->laravel['path.public'] . '/assets';
 
 		$this->files->copyDirectory($srcPath, $destPath);
-	}
-
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments()
-	{
-		return [
-			['name', InputArgument::OPTIONAL, 'Name of addon.'],
-		];
-	}
-
-	/**
-	 * Get the console command options.
-	 *
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return [
-		];
 	}
 
 }

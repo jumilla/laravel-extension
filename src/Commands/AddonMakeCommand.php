@@ -25,6 +25,31 @@ class AddonMakeCommand extends AbstractCommand {
 	protected $description = '[+] Make addon.';
 
 	/**
+	 * Get the console command arguments.
+	 *
+	 * @return array
+	 */
+	protected function getArguments()
+	{
+		return [
+			['name', InputArgument::REQUIRED, 'Addon name.'],
+		];
+	}
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return [
+			['namespace', null, InputOption::VALUE_OPTIONAL, 'Addon namespace.', null],
+			['no-namespace', null, InputOption::VALUE_NONE, 'Addon namespace nothing.', null],
+		];
+	}
+
+	/**
 	 * Execute the console command.
 	 *
 	 * @return mixed
@@ -191,31 +216,6 @@ SRC;
 		$this->makePhpSource('routes.php', $source);
 
 		$this->info('Addon Generated');
-	}
-
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments()
-	{
-		return [
-			['name', InputArgument::REQUIRED, 'Addon name.'],
-		];
-	}
-
-	/**
-	 * Get the console command options.
-	 *
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return [
-			['namespace', null, InputOption::VALUE_OPTIONAL, 'Addon namespace.', null],
-			['no-namespace', null, InputOption::VALUE_NONE, 'Addon namespace nothing.', null],
-		];
 	}
 
 }
