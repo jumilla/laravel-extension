@@ -5,35 +5,58 @@ use Illuminate\Filesystem\Filesystem;
 // Addon Directory
 class AddonDirectory {
 
-	public static function path()
+	/**
+	 * @param  string  $name
+	 * @return string
+	 */
+	public static function path($name = null)
 	{
-		$configFilePath = app('path.config') . '/addon.php';
-
-		if (file_exists($configFilePath)) {
-			$config = require $configFilePath;
+		if ($name) {
+			return self::path() . '/' . $name;
 		}
 		else {
-			$config = [];
+			return config('addon.path', 'addons');
 		}
-
-		return array_get($config, 'path', 'addons');
 	}
 
+	/**
+	 * @param  string  $name
+	 * @return bool
+	 */
+	public static function exists($name)
+	{
+		return is_dir(self::path($name));
+	}
+
+	/**
+	 * @param  string  $relativeClassName
+	 * @return string
+	 */
 	public static function classToPath($relativeClassName)
 	{
 		return str_replace('\\', '/', $relativeClassName).'.php';
 	}
 
+	/**
+	 * @param  string  $relativePath
+	 * @return mixed
+	 */
 	public static function pathToClass($relativePath)
 	{
-		if (strpos($relativePath, '/') !== false)
+		if (strpos($relativePath, '/') !== false) {
 			$relativePath = dirname($relativePath).'/'.basename($relativePath, '.php');
-		else
+		}
+		else {
 			$relativePath = basename($relativePath, '.php');
+		}
 
 		return str_replace('/', '\\', $relativePath);
 	}
 
+	/**
+	 * @param  string  $name
+	 * @return Addon|null
+	 */
 	public static function addons()
 	{
 		$files = new Filesystem;

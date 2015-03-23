@@ -15,18 +15,16 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
 	 */
 	private static $commands = [
 // app:
-		['name' => 'command+.app.container', 'class' => 'LaravelPlus\Extension\Commands\AppContainerListCommand'],
+		['name' => 'command+.app.container', 'class' => 'LaravelPlus\Extension\Commands\AppContainerCommand'],
 		['name' => 'command+.app.route', 'class' => 'LaravelPlus\Extension\Commands\RouteListCommand'],
 		['name' => 'command+.app.serve', 'class' => 'LaravelPlus\Extension\Commands\ServeCommand'],
 		['name' => 'command+.app.tail', 'class' => 'LaravelPlus\Extension\Commands\TailCommand'],
 // addon:
 		['name' => 'command+.addon.setup', 'class' => 'LaravelPlus\Extension\Commands\AddonSetupCommand'],
+		['name' => 'command+.addon.list', 'class' => 'LaravelPlus\Extension\Commands\AddonListCommand'],
 		['name' => 'command+.addon.make', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeCommand'],
+		['name' => 'command+.addon.remove', 'class' => 'LaravelPlus\Extension\Commands\AddonRemoveCommand'],
 		['name' => 'command+.addon.check', 'class' => 'LaravelPlus\Extension\Commands\AddonCheckCommand'],
-//		['name' => 'command+.addon.make.class', 'class' => 'LaravelPlus\Extension\Commands\AddonMakeClassCommand'],
-// +migrate:
-//		['name' => 'command.addon.migrate.run', 'class' => 'LaravelPlus\Extension\Commands\AddonMigrateRunCommand'],
-// publish
 // hash
 		['name' => 'command+.hash.make', 'class' => 'LaravelPlus\Extension\Commands\HashMakeCommand'],
 		['name' => 'command+.hash.check', 'class' => 'LaravelPlus\Extension\Commands\HashCheckCommand'],

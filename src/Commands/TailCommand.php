@@ -52,7 +52,7 @@ class TailCommand extends Command {
 	 *
 	 * @return void
 	 */
-	public function fire()
+	public function handle()
 	{
 		// syslog not support
 		if ($this->laravel['config']['app.log'] === 'syslog') {

@@ -19,7 +19,7 @@ class AddonCheckCommand extends AbstractCommand {
 	 *
 	 * @var string
 	 */
-	protected $description = '[+] Check addon information';
+	protected $description = '[+] Check addons';
 
 	/**
 	 * Get the console command arguments.
@@ -48,7 +48,7 @@ class AddonCheckCommand extends AbstractCommand {
 	 *
 	 * @return mixed
 	 */
-	public function fire()
+	public function handle()
 	{
 		$files = $this->laravel['files'];
 
@@ -69,7 +69,7 @@ class AddonCheckCommand extends AbstractCommand {
 		$this->output->writeln('> Check Finished!');
 	}
 
-	function dump($addon)
+	protected function dump($addon)
 	{
 		$this->dumpProperties($addon);
 		$this->dumpClasses($addon);
@@ -78,14 +78,14 @@ class AddonCheckCommand extends AbstractCommand {
 		$this->output->writeln('--------');
 	}
 
-	function dumpProperties($addon)
+	protected function dumpProperties($addon)
 	{
 		$this->info(sprintf('Addon "%s"', $addon->name()));
 		$this->info(sprintf('Path: %s', $addon->relativePath()));
 		$this->info(sprintf('PHP namespace: %s', $addon->config('addon.namespace')));
 	}
 
-	function dumpClasses($addon)
+	protected function dumpClasses($addon)
 	{
 		// load laravel services
 		$files = $this->laravel['files'];
@@ -114,7 +114,7 @@ class AddonCheckCommand extends AbstractCommand {
 		}
 	}
 
-	function dumpServiceProviders($addon)
+	protected function dumpServiceProviders($addon)
 	{
 		
 	}

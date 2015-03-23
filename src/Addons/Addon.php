@@ -14,6 +14,11 @@ class Addon {
 
 		$config = ConfigLoader::load($path.'/config');
 
+		if (file_exists($path.'/addon.json')) {
+			$addonConfig = json_decode(file_get_contents($path.'/addon.json'), true);
+			$config->set('addon', $addonConfig);
+		}
+
 		return new static($name, $path, $config);
 	}
 
@@ -69,7 +74,7 @@ class Addon {
 	 *
 	 * @return string
 	 */
-	public function path($path)
+	public function path($path = null)
 	{
 		if (func_num_args() == 0) {
 			return $this->path;
@@ -114,7 +119,7 @@ class Addon {
 	/**
 	 * register addon.
 	 *
-	 * @param  Illuminate\Foundation\Application $app
+	 * @param  \Illuminate\Foundation\Application $app
 	 * @return void
 	 */
 	public function register($app)
@@ -134,7 +139,7 @@ class Addon {
 	/**
 	 * register addon version 4.
 	 *
-	 * @param  Illuminate\Foundation\Application $app
+	 * @param  \Illuminate\Foundation\Application $app
 	 * @return void
 	 */
 	private function registerV4($app)
@@ -161,7 +166,7 @@ class Addon {
 	/**
 	 * register addon version 5.
 	 *
-	 * @param  Illuminate\Foundation\Application $app
+	 * @param  \Illuminate\Foundation\Application $app
 	 * @return void
 	 */
 	private function registerV5($app)
@@ -176,7 +181,7 @@ class Addon {
 	/**
 	 * boot addon.
 	 *
-	 * @param  Illuminate\Foundation\Application $app
+	 * @param  \Illuminate\Foundation\Application $app
 	 * @return void
 	 */
 	public function boot($app)
@@ -196,37 +201,69 @@ class Addon {
 	/**
 	 * boot addon version 4.
 	 *
-	 * @param  Illuminate\Foundation\Application $app
+	 * @param  \Illuminate\Foundation\Application $app
 	 * @return void
 	 */
 	private function bootV4($app)
 	{
-		// load *.php on addon's root directory
-		$this->loadFiles($app);
+		$filenames = $this->config('files');
+
+		$files = [];
+
+		if ($filenames !== null) {
+			foreach ($filenames as $filename) {
+				$files[] = $addon->path . '/' . $filename;
+			}
+		}
+		else {
+			// load *.php on addon's root directory
+			foreach ($app['files']->files($this->path) as $file) {
+				if (ends_with($file, '.php')) {
+					require $file;
+				}
+			}
+		}
+
+		$this->loadFiles($files);
 	}
 
 	/**
 	 * boot addon version 5.
 	 *
-	 * @param  Illuminate\Foundation\Application $app
+	 * @param  \Illuminate\Foundation\Application  $app
 	 * @return void
 	 */
 	private function bootV5($app)
 	{
+		$filenames = $this->config('files');
+
+		$files = [];
+
+		if ($filenames !== null) {
+			foreach ($filenames as $filename) {
+				$files[] = $addon->path . '/' . $filename;
+			}
+		}
+
+		$this->loadFiles($files);
 	}
 
 	/**
 	 * load addon initial script files.
 	 *
+	 * @param  array  $files
 	 * @return void
 	 */
-	private function loadFiles($app)
+	private function loadFiles(array $files)
 	{
-		$files = $app['files'];
-		foreach ($files->files($this->path) as $file) {
-			if (ends_with($file, '.php')) {
-				require $file;
+		foreach ($files as $file) {
+			include $file;
+/*			if (! file_exists($file)) {
+				echo "Warfile '{$file}' not found.", PHP_EOL;
 			}
+			else {
+				require $file;
+			}*/
 		}
 	}
 

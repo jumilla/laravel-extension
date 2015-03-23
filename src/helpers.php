@@ -1,5 +1,55 @@
 <?php
 
+if (! function_exists('addon_name')) {
+	/**
+	 * @param  string  $class
+	 * @return string|null
+	 */
+	function addon_name($class = null)
+	{
+		if (! $class) {
+			list(, $caller) = debug_backtrace(false, 2);
+
+			if (! isset($caller['class'])) {
+				return null;
+			}
+
+			$class = $caller['class'];
+		}
+
+		foreach (\LaravelPlus\Extension\Application::getAddons() as $addon) {
+			if (starts_with($class, $addon->config('addon.namespace'))) {
+				return $addon->name();
+			}
+		}
+
+		return null;
+	}
+}
+
+if (! function_exists('addon_namespace')) {
+	/**
+	 * @param  string  $class
+	 * @return string|null
+	 */
+	function addon_namespace($class = null)
+	{
+		if (! $class) {
+			list(, $caller) = debug_backtrace(false, 2);
+
+			if (! isset($caller['class'])) {
+				return '';
+			}
+
+			$class = $caller['class'];
+		}
+
+		$name = addon_name($class);
+
+		return $name ? $name . '::' : '';
+	}
+}
+
 if (! function_exists('addon')) {
 	/**
 	 * @param  string  $name Addon name.
@@ -8,6 +58,18 @@ if (! function_exists('addon')) {
 	function addon($name)
 	{
 		return \LaravelPlus\Extension\Application::getAddon($name);
+	}
+}
+
+if (! function_exists('addon_path')) {
+	/**
+	 * @param  string  $name Addon name.
+	 * @param  string|null  $path
+	 * @return mixed
+	 */
+	function addon_path($name, $path = null)
+	{
+		return addon($name)->path($path);
 	}
 }
 

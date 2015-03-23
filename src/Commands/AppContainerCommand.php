@@ -9,7 +9,7 @@ use LaravelPlus\Extension\Hooks\ApplicationHook;
 /**
 * @author Fumio Furukawa <fumio.furukawa@gmail.com>
 */
-class AppContainerListCommand extends Command {
+class AppContainerCommand extends Command {
 
 	/**
 	 * The console command name.
@@ -52,7 +52,7 @@ class AppContainerListCommand extends Command {
 	 *
 	 * @return mixed
 	 */
-	public function fire()
+	public function handle()
 	{
 		$app = new ApplicationHook(app());
 

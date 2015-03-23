@@ -9,7 +9,7 @@ use LaravelPlus\Extension\Addons\AddonDirectory;
 * Modules console commands
 * @author Fumio Furukawa <fumio.furukawa@gmail.com>
 */
-class AddonSetupCommand extends Command {
+class AddonSetupCommand extends AbstractCommand {
 
 	/**
 	 * The console command name.
@@ -54,14 +54,12 @@ class AddonSetupCommand extends Command {
 	 *
 	 * @return mixed
 	 */
-	public function fire()
+	public function handle()
 	{
-		$files = $this->laravel['files'];
-
 		// make addons/
 		$addonsDirectory = AddonDirectory::path();
-		if (!$files->exists($addonsDirectory)) {
-			$files->makeDirectory($addonsDirectory);
+		if (!$this->files->exists($addonsDirectory)) {
+			$this->files->makeDirectory($addonsDirectory);
 
 			$this->info('make directory: ' . $addonsDirectory);
 		}
@@ -69,8 +67,8 @@ class AddonSetupCommand extends Command {
 		// copy app/config/addon.php
 		$addonConfigSourceFile = __DIR__ . '/../../config/addon.php';
 		$addonConfigFile = app('path.config').'/addon.php';
-		if (!$files->exists($addonConfigFile)) {
-			$files->copy($addonConfigSourceFile, $addonConfigFile);
+		if (!$this->files->exists($addonConfigFile)) {
+			$this->files->copy($addonConfigSourceFile, $addonConfigFile);
 
 			$this->info('make config: ' . $addonConfigFile);
 		}

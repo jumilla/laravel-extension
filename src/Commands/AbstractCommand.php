@@ -28,14 +28,9 @@ abstract class AbstractCommand extends Command {
 		}
 	}
 
-	protected function makeComposerJson($namespace, $subPaths)
+	protected function makeJson($path, array $data)
 	{
-		$data = [
-			'autoload' => [
-				'psr-4' => [$namespace.'\\' => $subPaths],
-			],
-		];
-		$this->files->prepend($this->basePath.'/composer.json', json_encode($data, JSON_PRETTY_PRINT));
+		$this->files->prepend($this->basePath.'/'.$path, json_encode($data, JSON_PRETTY_PRINT));
 	}
 
 	protected function makePhpConfig($path, array $data)

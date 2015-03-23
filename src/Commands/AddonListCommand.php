@@ -1,27 +1,25 @@
 <?php namespace LaravelPlus\Extension\Commands;
 
-use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Finder\Finder;
+use LaravelPlus\Extension\Addons\AddonDirectory;
 
-/**
-* @author Fumio Furukawa <fumio.furukawa@gmail.com>
-*/
-class HashMakeCommand extends Command {
+class AddonListCommand extends AbstractCommand {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'hash:make';
+	protected $name = 'addon:list';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = '[+] Make hashed value';
+	protected $description = '[+] List up addon information';
 
 	/**
 	 * Get the console command arguments.
@@ -31,7 +29,6 @@ class HashMakeCommand extends Command {
 	protected function getArguments()
 	{
 		return [
-			['string', InputArgument::REQUIRED, 'Plain string.'],
 		];
 	}
 
@@ -43,7 +40,6 @@ class HashMakeCommand extends Command {
 	protected function getOptions()
 	{
 		return [
-			['cost', 'c', InputOption::VALUE_OPTIONAL, 'Generate cost.', 10],
 		];
 	}
 
@@ -54,13 +50,23 @@ class HashMakeCommand extends Command {
 	 */
 	public function handle()
 	{
-		$cost = $this->option('cost');
+		$files = $this->laravel['files'];
 
-		$hashed = app('hash')->make($this->argument('string'), [
-			'rounds' => $cost,
-		]);
+		// make addons/
+		$addonsDirectory = AddonDirectory::path();
+		if (!$files->exists($addonsDirectory)) {
+			$files->makeDirectory($addonsDirectory);
+		}
 
-		$this->info(sprintf('Generated hash: "%s"', $hashed));
+		$addons = AddonDirectory::addons();
+		foreach ($addons as $addon) {
+			$this->dump($addon);
+		}
+	}
+
+	protected function dump($addon)
+	{
+		$this->output->writeln($addon->name());
 	}
 
 }

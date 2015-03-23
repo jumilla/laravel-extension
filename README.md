@@ -8,8 +8,8 @@
 	* Laravel5.0のディレクトリ構造を複製するイメージで使うことができます。
 	* パッケージに独自の名前空間(PSR-4)を一つ持たせることができます。
 	* Laravel5のパッケージとして扱えます。
-		* config, viewの識別子の名前空間表記`{addon-name}::`が使えます。
-	* アドオンの追加はディレクトリをコピーするだけ。`app/config/app.php`にコードを追加する必要はありません。
+		* lang, viewの識別子の名前空間表記`{addon-name}::`が使えます。
+	* アドオンの追加はディレクトリをコピーするだけ。`config/app.php`にコードを追加する必要はありません。
 
 * 名前空間内でのファサード問題の解決
 	* appディレクトリ下の名前空間付きクラスの中でファサードが使えます。(バックスラッシュやuse宣言不要)
@@ -19,8 +19,8 @@
 
 ### 組み込み済みのLaravelプロジェクトをダウンロードする
 
-``` Laravel5.0-dev版
-$> composer create-project laravel-plus/laravel5=dev-master <project-name>
+``` Laravel5.0版
+$> composer create-project laravel-plus/laravel5 <project-name>
 ```
 
 ### 既存のプロジェクトにインストールする
@@ -45,8 +45,8 @@ $ composer update
 $ php composer.phar update
 ```
 
-`app/config/app.config`ファイルを編集します。
-``` app/config/app.config
+`config/app.config`ファイルを編集します。
+``` config/app.config
 	'providers' => [
 		↓追加する
 		'LaravelPlus\Extension\ServiceProvider',
@@ -91,29 +91,37 @@ $ php artisan serve
 アドオンを作成します。
 * addonsディレクトリ下に、**addon-name**という名前でディレクトリを作成する。
 * 以下のディレクトリ構成を作成する。
-	* assets/
+	* app/
+		* Console/
+			* Commands/
+			* Kernel.php
+		* Http/
+			* Controllers/
+			* Middleware/
+			* Requests/
+			* Kernel.php
+			* routes.php
+		* Providers/
+		* Services/
 	* config/
-		* config.php
-		* addon.php
-	* controllers/
-		* BaseController.php
-		* SampleController.php
-	* lang/
-		* en/
-		* `Lang::getLocale()`/
-	* migrations/
-	* models/
-	* services/
-		* ServiceProvider.php
-	* views/
-		* sample.blade.php
-	* routes.php
+	* database/
+		* migrations/
+		* seeds/
+	* resources/
+		* assets/
+		* lang/
+			* en/
+			* `Lang::getLocale()`/
+		* specs/
+		* views/
+			* sample.blade.php
+	* addon.json
 
-### php artisan addon:check
-全てのアドオンをチェックします。
+### php artisan addon:list
+全てのアドオンをリストアップします。
 
 ## ファサードの拡張
-Laravel4のエイリアスローダーはグローバル名前空間にしか作用しないため、名前空間の中からファサードを扱うにはクラス名の先頭に`\`を付けなければなりません。
+Laravel5のエイリアスローダーはグローバル名前空間にしか作用しないため、名前空間の中からファサードを扱うにはクラス名の先頭に`\`を付けなければなりません。
 
 ```
 function index()
@@ -146,12 +154,12 @@ function index()
 
 ## 起動時の動き
 
-* アドオンディレクトリ直下の.phpファイルを全てrequireします。
-* `addons/{addon-name}/config/addon.php` の `namespace`を見て、`directories`に指定された全てのディレクトリに対しPSR-4規約に基づくクラスオートロードの設定をします。
+* `addons/{addon-name}/addon.json` の `files`のファイルをrequireします。
+* `addons/{addon-name}/addon.json` の `namespace`を見て、`directories`に指定された全てのディレクトリに対しPSR-4規約に基づくクラスオートロードの設定をします。
 
 ## 著者
 
-Fumio Furukawa (fumio.furukawa@gmail.com)
+Fumio Furukawa (fumio@jumilla.me)
 
 ## ライセンス
 
