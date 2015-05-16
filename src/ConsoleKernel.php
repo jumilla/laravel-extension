@@ -11,9 +11,9 @@ abstract class ConsoleKernel extends Kernel {
 	 */
 	public function bootstrap()
 	{
-		$this->commands = array_merge($this->commands, Application::getAddonConsoleCommands());
-
 		parent::bootstrap();
+
+		$this->commands = array_merge($this->commands, Application::getAddonConsoleCommands());
 	}
 
 }
