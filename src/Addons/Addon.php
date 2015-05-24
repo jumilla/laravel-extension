@@ -16,6 +16,11 @@ class Addon {
 
 		if (file_exists($path.'/addon.json')) {
 			$addonConfig = json_decode(file_get_contents($path.'/addon.json'), true);
+
+			if ($addonConfig === null) {
+				throw new \RuntimeException('Invalid json format at ' . $path.'/addon.json');
+			}
+
 			$config->set('addon', $addonConfig);
 		}
 
