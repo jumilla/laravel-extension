@@ -28,6 +28,22 @@ abstract class AbstractCommand extends Command {
 		}
 	}
 
+	protected function makeDirectoryKeepFiles($subPaths)
+	{
+		foreach ($subPaths as $path) {
+			$items = $this->files->glob($this->basePath.'/'.$path.'/*');
+
+			if (count($items) == 0) {
+				$this->makeDirectoryKeepFile($path);
+			}
+		}
+	}
+
+	protected function makeDirectoryKeepFile($path)
+	{
+		$this->makeTextFile($path . '/.gitkeep', '');
+	}
+
 	protected function makeJson($path, array $data)
 	{
 		$this->files->prepend($this->basePath.'/'.$path, json_encode($data, JSON_PRETTY_PRINT));

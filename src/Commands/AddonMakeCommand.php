@@ -57,8 +57,10 @@ class AddonMakeCommand extends AbstractCommand {
 	public function handle()
 	{
 		// load laravel services
-		$files = $this->laravel['files'];
-		$translator = $this->laravel['translator'];
+		$this->files =
+			$files = $this->laravel['files'];
+		$this->translator =
+			$translator = $this->laravel['translator'];
 
 		// load command arguments
 		$addonName = $this->argument('name');
@@ -67,6 +69,7 @@ class AddonMakeCommand extends AbstractCommand {
 			$namespace = ucfirst(studly_case($addonName));
 		if ($this->option('no-namespace'))
 			$namespace = '';
+		$locale = $translator->getLocale();
 
 		$namespacePrefix = $namespace ? $namespace.'\\' : '';
 
@@ -90,7 +93,7 @@ class AddonMakeCommand extends AbstractCommand {
 
 		$files->makeDirectory($basePath);
 
-		$this->makeDirectories([
+		$addonDirectorStructure = [
 			'app',
 			'app/Console',
 			'app/Console/Commands',
@@ -111,12 +114,39 @@ class AddonMakeCommand extends AbstractCommand {
 			'resources/specs',
 			'resources/views',
 			'tests',
-		]);
+		];
 		if ($translator->getLocale() !== 'en') {
-			$this->makeDirectories([
-				'resources/lang/'.$translator->getLocale(),
-			]);
+			$addonDirectorStructure[] = 'resources/lang/'.$translator->getLocale();
 		}
+
+		$this->makeDirectories($addonDirectorStructure);
+
+		$arguments = compact('addonName', 'namespace', 'locale');
+
+		$this->makeAddonJson($arguments);
+
+		$this->makeConfigurations($arguments);
+
+		$this->makeProviders($arguments);
+
+		$this->makeConsoleCommands($arguments);
+
+		$this->makeRoutes($arguments);
+
+		$this->makeControllers($arguments);
+
+		$this->makeViews($arguments);
+
+		$this->makeTranslations($arguments);
+
+		$this->makeDirectoryKeepFiles($addonDirectorStructure);
+
+		$this->info('Addon Generated');
+	}
+
+	protected function makeAddonJson(array $arguments)
+	{
+		extract($arguments);
 
 		$this->makeJson('addon.json', [
 			'version' => 5,
@@ -150,38 +180,22 @@ class AddonMakeCommand extends AbstractCommand {
 			'aliases' => [
 			],
 		]);
-
-		$this->makePhpConfig('resources/lang/en/messages.php', [
-			'sample_title' => 'Addon: '.$addonName,
-		]);
-
-		// app/Http/Controllers/BaseController.php
-		$source = <<<SRC
-use Illuminate\Routing\Controller;
-
-class BaseController extends Controller {
-
-}
-SRC;
-		$this->makePhpSource('app/Http/Controllers/BaseController.php', $source, $namespace.'\\Http\\Controllers');
-
-		// controllers/Http/Controllers/SampleController.php
-		$source = <<<SRC
-class SampleController extends BaseController {
-
-	public function index()
-	{
-		return addon_view(addon_namespace(), 'sample');
 	}
 
-}
-SRC;
-		$this->makePhpSource('app/Http/Controllers/SampleController.php', $source, $namespace.'\\Http\\Controllers');
+	protected function makeConfigurations(array $arguments)
+	{
+		extract($arguments);
+	}
+
+	protected function makeProviders(array $arguments)
+	{
+		extract($arguments);
 
 		// app/Providers/AddonServiceProvider.php
 		$source = <<<SRC
+use Illuminate\Support\ServiceProvider;
 
-class AddonServiceProvider extends \Illuminate\Support\ServiceProvider {
+class AddonServiceProvider extends ServiceProvider {
 
 	/**
 	 * Indicates if loading of the provider is deferred.
@@ -221,14 +235,30 @@ class AddonServiceProvider extends \Illuminate\Support\ServiceProvider {
 }
 SRC;
 		$this->makePhpSource('app/Providers/AddonServiceProvider.php', $source, $namespace.'\\Providers');
+	}
+
+	protected function makeConsoleCommands(array $arguments)
+	{
+		extract($arguments);
+	}
+
+	protected function makeRoutes(array $arguments)
+	{
+		extract($arguments);
 
 		// app/Providers/RouteServiceProvider.php
 		$source = <<<SRC
-
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider {
+
+	/**
+	 * Routing group prefix.
+	 *
+	 * @var string
+	 */
+	protected \$prefix = 'addons/{$addonName}';
 
 	/**
 	 * This namespace is applied to the controller routes in your routes file.
@@ -248,8 +278,6 @@ class RouteServiceProvider extends ServiceProvider {
 	public function boot(Router \$router)
 	{
 		parent::boot(\$router);
-
-		//
 	}
 
 	/**
@@ -260,7 +288,7 @@ class RouteServiceProvider extends ServiceProvider {
 	 */
 	public function map(Router \$router)
 	{
-		\$router->group(['prefix' => '', 'namespace' => \$this->namespace], function(\$router)
+		\$router->group(['prefix' => \$this->prefix, 'namespace' => \$this->namespace], function(\$router)
 		{
 			require __DIR__ . '/../Http/routes.php';
 		});
@@ -270,19 +298,75 @@ class RouteServiceProvider extends ServiceProvider {
 SRC;
 		$this->makePhpSource('app/Providers/RouteServiceProvider.php', $source, $namespace.'\\Providers');
 
-		// resources/views/sample.blade.php
-		$source = <<<SRC
-<h1>{{ addon_trans(addon_name(), 'messages.sample_title') }}</h1>
-SRC;
-		$this->makeTextFile('resources/views/sample.blade.php', $source);
-
 		// app/Http/routes.php
 		$source = <<<SRC
-Route::get('addons/{$addonName}', ['uses' => 'SampleController@index']);
+Route::get('', ['uses' => 'SampleController@index']);
 SRC;
 		$this->makePhpSource('app/Http/routes.php', $source);
+	}
 
-		$this->info('Addon Generated');
+	protected function makeControllers(array $arguments)
+	{
+		extract($arguments);
+
+		// app/Http/Controllers/BaseController.php
+		$source = <<<SRC
+use Illuminate\Routing\Controller;
+
+class BaseController extends Controller {
+
+	public function __construct()
+	{
+		View::share('__addon_name', addon_name());
+	}
+
+}
+SRC;
+		$this->makePhpSource('app/Http/Controllers/BaseController.php', $source, $namespace.'\\Http\\Controllers');
+
+		// app/Http/Controllers/SampleController.php
+		$source = <<<SRC
+class SampleController extends BaseController {
+
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
+	public function index()
+	{
+		return addon_view(addon_name(), 'sample');
+	}
+
+}
+SRC;
+		$this->makePhpSource('app/Http/Controllers/SampleController.php', $source, $namespace.'\\Http\\Controllers');
+	}
+
+	protected function makeViews(array $arguments)
+	{
+		extract($arguments);
+
+		// resources/views/sample.blade.php
+		$source = <<<SRC
+<h1>{{ addon_trans(\$__addon_name, 'messages.sample_title') }}</h1>
+SRC;
+		$this->makeTextFile('resources/views/sample.blade.php', $source);
+	}
+
+	protected function makeTranslations(array $arguments)
+	{
+		extract($arguments);
+
+		$this->makePhpConfig('resources/lang/en/messages.php', [
+			'sample_title' => 'Welcome addon: '.$addonName,
+		]);
+
+		if ($arguments['locale'] !== 'en') {
+			$this->makePhpConfig('resources/lang/' . $arguments['locale'] . '/messages.php', [
+				'sample_title' => 'アドオン '.$addonName.' へようこそ。',
+			]);
+		}
 	}
 
 }
