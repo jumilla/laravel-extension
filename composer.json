@@ -3,7 +3,7 @@
 	"type": "framework-extension",
 	"description": "Laravel Extension Pack",
 	"license": "MIT",
-	"keywords": ["Laravel", "Laravel 5", "addon", "architecture", "facade"],
+	"keywords": ["Laravel", "Laravel 5", "addon", "migration", "architecture", "facade"],
 	"homepage": "http://laravel.tokyo",
 	"authors": [
 		{
