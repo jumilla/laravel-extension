@@ -1,5 +1,5 @@
 <?php
 
 return [
-	'path' => 'addons',
+    'path' => 'addons',
 ];
