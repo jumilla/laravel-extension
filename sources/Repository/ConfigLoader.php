@@ -46,9 +46,11 @@ class ConfigLoader
     {
         $files = [];
 
-        foreach (Finder::create()->files()->in($directoryPath) as $file) {
-            $group = basename($file->getRealPath(), '.php');
-            $files[$group] = $file->getRealPath();
+        if (is_dir($directoryPath)) {
+            foreach (Finder::create()->files()->in($directoryPath) as $file) {
+                $group = basename($file->getRealPath(), '.php');
+                $files[$group] = $file->getRealPath();
+            }
         }
 
         return $files;

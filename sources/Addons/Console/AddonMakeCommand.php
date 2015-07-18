@@ -17,6 +17,8 @@ class AddonMakeCommand extends AbstractCommand
      */
     protected $signature = 'addon:make
         {name : Name of addon.}
+        {--namespace= : PHP namespace of addon.}
+        {--no-namespace : No PHP namespace.}
     ';
 
     /**

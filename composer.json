@@ -13,7 +13,8 @@
 	],
 	"require": {
 		"php": ">=5.5.9",
-		"laravel/framework": "~5.0"
+		"laravel/framework": "~5.0",
+		"jumilla/laravel-versionia": "~0.2"
 	},
 	"autoload": {
 		"psr-4": {
