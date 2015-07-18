@@ -16,7 +16,7 @@ class AddonDirectory
         if ($name) {
             return self::path().'/'.$name;
         } else {
-            return config('addon.path', 'addons');
+            return app('config')->get('addon.path', 'addons');
         }
     }
 

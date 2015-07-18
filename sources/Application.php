@@ -11,7 +11,7 @@ class Application
 
     public static function getNamespace()
     {
-        return preg_replace('/\\\\+$/', '', (new self)->getAppNamespace());
+        return preg_replace('/\\\\+$/', '', (new static)->getAppNamespace());
     }
 
     /**

@@ -9,6 +9,7 @@ use LaravelPlus\Extension\Addons\AddonDirectory;
 use LaravelPlus\Extension\Addons\AddonClassLoader;
 use LaravelPlus\Extension\Repository;
 use LaravelPlus\Extension\Templates\BladeExtension;
+use Jumilla\Versionia\Laravel\Migrator;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -29,9 +30,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 // database:
         'command+.database.status' => Database\Console\DatabaseStatusCommand::class,
         'command+.database.upgrade' => Database\Console\DatabaseUpgradeCommand::class,
-        'command+.database.clear' => Database\Console\DatabaseClearCommand::class,
-        'command+.database.rollback' => Database\Console\DatabaseRollbackCommand::class,
+        'command+.database.clean' => Database\Console\DatabaseCleanCommand::class,
         'command+.database.refresh' => Database\Console\DatabaseRefreshCommand::class,
+        'command+.database.rollback' => Database\Console\DatabaseRollbackCommand::class,
+        'command+.database.again' => Database\Console\DatabaseAgainCommand::class,
+        'command+.database.seed' => Database\Console\DatabaseSeedCommand::class,
 // hash:
         'command+.hash.make' => Console\HashMakeCommand::class,
         'command+.hash.check' => Console\HashCheckCommand::class,
@@ -68,8 +71,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             return new Repository\NamespacedRepository($loader);
         });
 
-        // MEMO 現在はクラスファイルの解決を動的に行うモードのみ実装している。
-//		$this->loadAutoloadFiles(AddonDirectory::path());
+        // register database migrator
+        $this->app->singleton('database.migrator', function ($app) {
+            return new Migrator($app['db']);
+        });
+        $this->app->alias('database.migrator', Migrator::class);
 
         AddonClassLoader::register(Application::getAddons());
         AliasResolver::register(Application::getAddons(), $app['config']->get('app.aliases'));

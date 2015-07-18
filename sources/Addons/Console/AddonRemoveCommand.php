@@ -13,6 +13,7 @@ class AddonRemoveCommand extends AbstractCommand
      */
     protected $signature = 'addon:remove
         {name : Name of addon.}
+        {--force : Force remove.}
     ';
 
     /**

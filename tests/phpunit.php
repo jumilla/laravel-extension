@@ -1,0 +1,58 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Register The Composer Auto Loader
+|--------------------------------------------------------------------------
+|
+| Composer provides a convenient, automatically generated class loader
+| for our application. We just need to utilize it! We'll require it
+| into the script here so that we do not have to worry about the
+| loading of any our classes "manually". Feels great to relax.
+|
+*/
+
+require __DIR__.'/../vendor/autoload.php';
+
+require __DIR__.'/Assert.php';
+
+require __DIR__.'/ApplicationStub.php';
+
+require __DIR__.'/MockeryTrait.php';
+require __DIR__.'/ConsoleCommandTrait.php';
+
+require __DIR__.'/TestCase.php';
+
+/*
+|--------------------------------------------------------------------------
+| Illuminate Foundation Stub
+|--------------------------------------------------------------------------
+*/
+
+function app($name = null)
+{
+    if ($name === null) {
+        return $GLOBALS['app'];
+    } else {
+        return $GLOBALS['app']->make($name);
+    }
+}
+
+require __DIR__.'/Illuminate_Foundation.php';
+require __DIR__.'/Illuminate_Foundation_Console.php';
+require __DIR__.'/Illuminate_Foundation_Http.php';
+
+/*
+|--------------------------------------------------------------------------
+| Set The Default Timezone
+|--------------------------------------------------------------------------
+|
+| Here we will set the default timezone for PHP. PHP is notoriously mean
+| if the timezone is not explicitly set. This will be used by each of
+| the PHP date and date-time functions throughout the application.
+|
+*/
+
+date_default_timezone_set('UTC');
+
+Carbon\Carbon::setTestNow(Carbon\Carbon::now());

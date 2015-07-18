@@ -2,9 +2,9 @@
 
 namespace LaravelPlus\Extension\Database\Console;
 
-use Jumilla\Versionia\Laravel\Console\DatabaseClearCommand as BaseCommand;
+use Jumilla\Versionia\Laravel\Console\DatabaseSeedCommand as BaseCommand;
 
-class DatabaseClearCommand extends BaseCommand
+class DatabaseSeedCommand extends BaseCommand
 {
     /**
      * Create a new console command instance.
