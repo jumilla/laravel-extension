@@ -17,6 +17,9 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./sources</directory>
+            <exclude>
+                <directory suffix=".php">./sources/Addons/stubs</directory>
+            </exclude>
         </whitelist>
     </filter>
     <php>

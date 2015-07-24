@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Addons\Console\AddonListCommand as Command;
+use LaravelPlus\Extension\Addons\Console\AddonStatusCommand as Command;
 
 class AddonStatusCommandTest extends TestCase
 {
