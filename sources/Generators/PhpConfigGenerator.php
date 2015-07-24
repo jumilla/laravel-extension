@@ -2,37 +2,32 @@
 
 namespace LaravelPlus\Extension\Generators;
 
-class PhpSettingGenerator
+class PhpConfigGenerator
 {
-    public static function generateFile($filepath, array $settings)
-    {
-        file_put_contents($filepath, static::generateText($settings));
-    }
-
-    public static function generateText(array $settings)
+    public static function generateText(array $config)
     {
         $instance = new static;
 
-        return $instance->generate($settings);
+        return $instance->generate($config);
     }
 
-    public function generate(array $settings)
+    public function generate(array $config)
     {
         $this->text = "<?php\n\nreturn [\n";
         $this->indent = 0;
 
-        $this->generateArray($settings);
+        $this->generateArray($config);
 
         $this->writeLine('];');
 
         return $this->text;
     }
 
-    private function generateArray(array $settings)
+    private function generateArray(array $config)
     {
         ++$this->indent;
 
-        foreach ($settings as $key => $value) {
+        foreach ($config as $key => $value) {
             if (is_null($value)) {
                 if (is_string($key)) {
                     $this->writeLine(sprintf("'%s' => %s,", $key, 'null'));

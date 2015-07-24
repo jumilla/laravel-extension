@@ -2,10 +2,11 @@
 
 namespace LaravelPlus\Extension\Addons\Console;
 
+use Illuminate\Console\Command;
 use Symfony\Component\Finder\Finder;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 
-class AddonCheckCommand extends AbstractCommand
+class AddonCheckCommand extends Command
 {
     /**
      * The console command signature.

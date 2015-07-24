@@ -2,13 +2,14 @@
 
 namespace LaravelPlus\Extension\Addons\Console;
 
+use Illuminate\Console\Command;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 
 /**
  * Modules console commands.
  * @author Fumio Furukawa <fumio.furukawa@gmail.com>
  */
-class AddonSetupCommand extends AbstractCommand
+class AddonSetupCommand extends Command
 {
     /**
      * The console command signature.

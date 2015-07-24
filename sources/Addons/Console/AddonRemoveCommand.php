@@ -2,9 +2,10 @@
 
 namespace LaravelPlus\Extension\Addons\Console;
 
+use Illuminate\Console\Command;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 
-class AddonRemoveCommand extends AbstractCommand
+class AddonRemoveCommand extends Command
 {
     /**
      * The console command signature.
@@ -22,30 +23,6 @@ class AddonRemoveCommand extends AbstractCommand
      * @var string
      */
     protected $description = '[+] Remove addon.';
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments()
-    {
-        return [
-            ['name', InputArgument::REQUIRED, 'Name of addon.'],
-        ];
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [
-            ['force', 'f', InputOption::VALUE_NONE, 'Force remove.', null],
-        ];
-    }
 
     /**
      * Execute the console command.

@@ -2,11 +2,12 @@
 
 namespace LaravelPlus\Extension;
 
-use Symfony\Component\Finder\Finder;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Blade;
 use LaravelPlus\Extension\Addons\Addon;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 use LaravelPlus\Extension\Addons\AddonClassLoader;
+use LaravelPlus\Extension\Addons\AddonGenerator;
 use LaravelPlus\Extension\Repository;
 use LaravelPlus\Extension\Templates\BladeExtension;
 use Jumilla\Versionia\Laravel\Migrator;
@@ -23,7 +24,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         'command+.app.tail' => Console\TailCommand::class,
 // addon:
         'command+.addon.setup' => Addons\Console\AddonSetupCommand::class,
-        'command+.addon.list' => Addons\Console\AddonListCommand::class,
+        'command+.addon.status' => Addons\Console\AddonStatusCommand::class,
         'command+.addon.make' => Addons\Console\AddonMakeCommand::class,
         'command+.addon.remove' => Addons\Console\AddonRemoveCommand::class,
         'command+.addon.check' => Addons\Console\AddonCheckCommand::class,
@@ -65,28 +66,41 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $app['path.specs'] = $app->basePath().'/resources/specs';
 
         // register spec repository
-        $this->app['specs'] = $this->app->share(function ($app) {
+        $app->singleton('specs', function ($app) {
             $loader = new Repository\FileLoader($app['files'], $app['path.specs']);
 
             return new Repository\NamespacedRepository($loader);
         });
 
+        // register addon generator
+        $app->singleton('addons.generator', function ($app) {
+            return new AddonGenerator;
+        });
+        $app->alias('addons.generator', AddonGenerator::class);
+
         // register database migrator
-        $this->app->singleton('database.migrator', function ($app) {
+        $app->singleton('database.migrator', function ($app) {
             return new Migrator($app['db']);
         });
-        $this->app->alias('database.migrator', Migrator::class);
+        $app->alias('database.migrator', Migrator::class);
 
-        AddonClassLoader::register(Application::getAddons());
-        AliasResolver::register(Application::getAddons(), $app['config']->get('app.aliases'));
+        $this->registerClassResolvers();
 
         // register all addons
         $this->registerAddons();
     }
 
     /**
-     * setup & boot addons.
-     *
+     * @return void
+     */
+    protected function registerClassResolvers()
+    {
+        AddonClassLoader::register(Application::getAddons());
+
+        AliasResolver::register(Application::getAddons(), $this->app['config']->get('app.aliases'));
+    }
+
+    /**
      * @return void
      */
     protected function registerAddons()
@@ -139,9 +153,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected function registerBladeExtensions()
     {
-        \Blade::extend(BladeExtension::comment());
+        Blade::extend(BladeExtension::comment());
 
-        \Blade::extend(BladeExtension::script());
+        Blade::extend(BladeExtension::script());
     }
 
     /**
@@ -182,26 +196,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $spec = $addon->path($addon->config('addon.paths.specs', 'specs'));
         if (is_dir($spec)) {
             $this->app['specs']->addNamespace($namespace, $spec);
-        }
-    }
-
-    /**
-     * load 'autoload.php' files.
-     *
-     * @param  $path string
-     * @return void
-     */
-    protected function loadAutoloadFiles($path)
-    {
-        // We will use the finder to locate all "autoload.php" files in the workbench
-        // directory, then we will include them each so that they are able to load
-        // the appropriate classes and file used by the given workbench package.
-        $files = $this->app['files'];
-
-        $autoloads = Finder::create()->in($path)->files()->name('autoload.php')->depth('<= 3')->followLinks();
-
-        foreach ($autoloads as $file) {
-            $files->requireOnce($file->getRealPath());
         }
     }
 

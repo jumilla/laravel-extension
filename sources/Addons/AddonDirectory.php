@@ -55,7 +55,7 @@ class AddonDirectory
 
     /**
      * @param  string  $name
-     * @return Addon|null
+     * @return \LaravelPlus\Extension\Addons\Addon
      */
     public static function addons()
     {
