@@ -4,22 +4,35 @@ namespace LaravelPlus\Extension\Specs;
 
 class InputSpec
 {
-    /* @param rule string or array */
+    /**
+     * rule string or array
+     *
+     * @param string $path
+     * @return static
+     */
     public static function make($path)
     {
         return new static($path);
     }
 
-    /* @param string */
+    /**
+     * @var string
+     */
     protected $namespace;
 
-    /* @param string */
+    /**
+     * @param string
+     */
     protected $path;
 
-    /* @param array */
+    /**
+     * @param array
+     */
     protected $rules = [];
 
-    /* @param path string */
+    /**
+     * @param string $path
+     */
     public function __construct($path)
     {
         $rules = app('specs')->get($path);
@@ -39,6 +52,9 @@ class InputSpec
         if (strpos($path, '::') !== false) {
             list($namespace, $path) = explode('::', $path, 2);
         }
+        else {
+            $namespace = '';
+        }
         $this->path = $path;
         $this->namespace = $namespace;
         $this->rules = $rules;
@@ -46,16 +62,25 @@ class InputSpec
         $this->resolveSpecReferences();
     }
 
+    /**
+     * @return array
+     */
     public function attributes()
     {
         return array_keys($this->rules);
     }
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         return $this->rules;
     }
 
+    /**
+     * @return array
+     */
     public function ruleMessages()
     {
         $path = $this->path.'.rules';
@@ -63,6 +88,9 @@ class InputSpec
         return Translator::make($this->namespace)->get($path, []);
     }
 
+    /**
+     * @return array
+     */
     public function labels()
     {
         $path = $this->path.'.attributes';
@@ -70,6 +98,9 @@ class InputSpec
         return Translator::make($this->namespace)->get($path, []);
     }
 
+    /**
+     * @return array
+     */
     public function values()
     {
         $path = $this->path.'.values';
@@ -77,11 +108,19 @@ class InputSpec
         return Translator::make($this->namespace)->get($path, []);
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     */
     public function required($name)
     {
         return $this->hasRule($this->rules[$name], 'required');
     }
 
+    /**
+     * @param string $name
+     * @return string
+     */
     public function label($name)
     {
         $path = $this->path.'.attributes.'.$name;
@@ -89,6 +128,10 @@ class InputSpec
         return Translator::make($this->namespace)->get($path);
     }
 
+    /**
+     * @param string $name
+     * @return string
+     */
     public function helptext($name)
     {
         $path = $this->path.'.helptexts.'.$name;
@@ -96,6 +139,11 @@ class InputSpec
         return Translator::make($this->namespace)->get($path, '');
     }
 
+    /**
+     * @param mixed $ruleOrRules
+     * @param string $name
+     * @return bool
+     */
     protected function hasRule($ruleOrRules, $name)
     {
         if (is_string($ruleOrRules)) {
@@ -107,6 +155,11 @@ class InputSpec
         }
     }
 
+    /**
+     * @param array $rules
+     * @param string $name
+     * @return bool
+     */
     private function hasRuleInArray(array $rules, $name)
     {
         foreach ($rules as $rule) {
@@ -118,6 +171,9 @@ class InputSpec
         return false;
     }
 
+    /**
+     * @return void
+     */
     private function resolveSpecReferences()
     {
         foreach ($this->rules as $key => &$value) {
@@ -135,6 +191,10 @@ class InputSpec
         }
     }
 
+    /**
+     * @param string $path
+     * @return string
+     */
     private function fullpath($path)
     {
         return $this->namespace ? $this->namespace.'::'.$path : $path;

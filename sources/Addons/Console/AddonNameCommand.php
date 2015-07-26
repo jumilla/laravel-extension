@@ -29,13 +29,33 @@ class AddonNameCommand extends Command
     protected $description = '[+] Set the addon PHP namespace';
 
     /**
+     * @var \Illuminate\Filesystem\Filesystem
+     */
+    protected $filesystem;
+
+    /**
+     * @var \LaravelPlus\Extension\Addons\Addon
+     */
+    protected $addon;
+
+    /**
+     * @var string
+     */
+    protected $currentNamespace;
+
+    /**
+     * @var string
+     */
+    protected $newNamespace;
+
+    /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle(Filesystem $filesystem)
     {
-        $this->files = $filesystem;
+        $this->filesystem = $filesystem;
 
         $addonName = $this->argument('addon');
 
@@ -133,7 +153,7 @@ class AddonNameCommand extends Command
     {
         if (file_exists($this->addon->path('composer.php'))) {
             $this->replaceIn(
-                $this->addon->path('composer.json'), $this->currentRoot.'\\\\', str_replace('\\', '\\\\', $this->newNamespace).'\\\\'
+                $this->addon->path('composer.json'), $this->currentNamespace.'\\\\', str_replace('\\', '\\\\', $this->newNamespace).'\\\\'
             );
         }
     }
@@ -221,6 +241,6 @@ class AddonNameCommand extends Command
             $this->line("{$path} ...");
         }
 
-        $this->files->put($path, str_replace($search, $replace, $this->files->get($path)));
+        $this->filesystem->put($path, str_replace($search, $replace, $this->filesystem->get($path)));
     }
 }

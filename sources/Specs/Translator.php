@@ -4,31 +4,51 @@ namespace LaravelPlus\Extension\Specs;
 
 class Translator
 {
+    /**
+     * @param string $path
+     * @param mixed $default
+     * @return mixed
+     */
     public static function translate($path, $default = false)
     {
         $string = app('translator')->get($path);
 
         if ($default !== false) {
             if ($string == $path) {
-                $string = $default;
+                return $default;
             }
         }
 
         return $string;
     }
 
+    /**
+     * @param string $namespace
+     * @return static
+     */
     public static function make($namespace)
     {
         return new static($namespace);
     }
 
+    /**
+     * @var string
+     */
     protected $namespace;
 
+    /**
+     * @param string $namespace
+     */
     public function __construct($namespace)
     {
         $this->namespace = $namespace;
     }
 
+    /**
+     * @param string $path
+     * @param mixed $default
+     * @return mixed
+     */
     public function get($path, $default = false)
     {
         $value = static::translate($this->fullpath($path), $default);
@@ -44,6 +64,11 @@ class Translator
         return $value;
     }
 
+    /**
+     * @param string $string
+     * @param string $default
+     * @return string
+     */
     public function resolve($string, $default = false)
     {
         if (strpos($string, '@') !== false) {
@@ -55,6 +80,10 @@ class Translator
         return $string;
     }
 
+    /**
+     * @param string $path
+     * @return string
+     */
     private function fullpath($path)
     {
         return $this->namespace ? $this->namespace.'::'.$path : $path;

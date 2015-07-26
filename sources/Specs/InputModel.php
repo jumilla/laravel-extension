@@ -4,12 +4,26 @@ namespace LaravelPlus\Extension\Specs;
 
 class InputModel
 {
+    /**
+     * @var \LaravelPlus\Extension\Spec\InputSpec
+     */
     private $spec;
 
+    /**
+     * @var array
+     */
     private $in;
 
+    /**
+     * @var \Illuminate\Validation\Validator
+     */
     private $validator;
 
+    /**
+     * @param string|\LaravelPlus\Extension\Spec\InputSpec $spec
+     * @param array $in
+     * @return static
+     */
     public static function make($spec, array $in = null)
     {
         $instance = new static($spec, $in);
@@ -17,10 +31,14 @@ class InputModel
         return $instance;
     }
 
-    public function __construct($path, array $in = null)
+    /**
+     * @param string|\LaravelPlus\Extension\Spec\InputSpec $spec
+     * @param array $in
+     */
+    public function __construct($spec, array $in = null)
     {
-        if (is_string($path)) {
-            $spec = InputSpec::make($path);
+        if (is_string($spec)) {
+            $spec = InputSpec::make($spec);
         }
 
         $this->spec = $spec;
@@ -40,9 +58,12 @@ class InputModel
         $this->validator = \Validator::make($this->in, $rules, $ruleMessages, $labels);
     }
 
+    /**
+     * @return array
+     */
     public function getInput()
     {
-        return \Input::only($this->spec->attributes());
+        return app('request')->only($this->spec->attributes());
     }
 
     /**
@@ -68,21 +89,33 @@ class InputModel
         $this->in[$key] = $value;
     }
 
+    /**
+     * @return bool
+     */
     public function passes()
     {
         return $this->validator->passes();
     }
 
+    /**
+     * @return bool
+     */
     public function fails()
     {
         return $this->validator->fails();
     }
 
+    /**
+     * @return \Illuminate\Support\MessageBag
+     */
     public function errors()
     {
         return $this->validator->errors();
     }
 
+    /**
+     * @return \Illuminate\Validation\Validator
+     */
     public function validator()
     {
         return $this->validator;

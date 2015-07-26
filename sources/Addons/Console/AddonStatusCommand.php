@@ -3,6 +3,7 @@
 namespace LaravelPlus\Extension\Addons\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 
 class AddonStatusCommand extends Command
@@ -26,21 +27,19 @@ class AddonStatusCommand extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(Filesystem $filesystem)
     {
-        $files = $this->laravel['files'];
-
         // make addons/
         $addonsDirectory = AddonDirectory::path();
-        if (!$files->exists($addonsDirectory)) {
-            $files->makeDirectory($addonsDirectory);
+        if (!$filesystem->exists($addonsDirectory)) {
+            $filesystem->makeDirectory($addonsDirectory);
         }
 
         // copy app/config/addon.php
         $addonConfigSourceFile = __DIR__.'/../../../config/addon.php';
         $addonConfigFile = app('path.config').'/addon.php';
-        if (!$files->exists($addonConfigFile)) {
-            $files->copy($addonConfigSourceFile, $addonConfigFile);
+        if (!$filesystem->exists($addonConfigFile)) {
+            $filesystem->copy($addonConfigSourceFile, $addonConfigFile);
 
             $this->info('make config: '.$addonConfigFile);
         }

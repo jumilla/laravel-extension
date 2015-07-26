@@ -14,7 +14,7 @@ class AddonDirectory
     public static function path($name = null)
     {
         if ($name !== null) {
-            return self::path().'/'.$name;
+            return static::path().'/'.$name;
         } else {
             return app('path.base').'/'.app('config')->get('addon.path', 'addons');
         }
@@ -26,7 +26,7 @@ class AddonDirectory
      */
     public static function exists($name)
     {
-        return is_dir(self::path($name));
+        return is_dir(static::path($name));
     }
 
     /**

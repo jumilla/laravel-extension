@@ -5,40 +5,61 @@ namespace LaravelPlus\Extension\Specs;
 class FormModel
 {
     /**
+     * @param string $id
+     * @param string $path
+     * @return static
+     */
+    public static function make($id, $path)
+    {
+        return new static($id, $path);
+    }
+
+    /**
      *	Form name for HTML Element.
-     *	@param string
+     *	@var string
      */
     protected $id;
 
     /**
      *	Form spec.
-     *	@param InputSpec
+     *	@var \LaravelPlus\Extension\Specs\InputSpec
      */
     protected $spec;
 
-    public static function make($id, $spec)
-    {
-        return new static($id, $spec);
-    }
-
-    public function __construct($id, $spec)
+    /**
+     * @param string $id
+     * @param string $path
+     */
+    public function __construct($id, $path)
     {
         $this->id = $id;
-        $this->spec = new InputSpec($spec);
+        $this->spec = new InputSpec($path);
     }
 
+    /**
+     * @return string
+     */
     public function id()
     {
         return $this->id;
     }
 
+    /**
+     * @param $fieldName
+     * @return string
+     */
     public function fieldId($fieldName)
     {
         return $this->id.'-'.$fieldName;
     }
 
-    public function __call($method, $parameters)
+    /**
+     * @param string $method
+     * @return array $arguments
+     * @return mixed
+     */
+    public function __call($method, $arguments)
     {
-        return call_user_func_array([$this->spec, $method], $parameters);
+        return call_user_func_array([$this->spec, $method], $arguments);
     }
 }

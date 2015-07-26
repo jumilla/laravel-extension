@@ -3,6 +3,7 @@
 namespace LaravelPlus\Extension\Addons\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 
 class AddonRemoveCommand extends Command
@@ -25,15 +26,17 @@ class AddonRemoveCommand extends Command
     protected $description = '[+] Remove addon.';
 
     /**
+     * @var \Illuminate\Filesystem\Filesystem
+     */
+    protected $filesystem;
+
+    /**
      * Execute the console command.
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(Filesystem $filesystem)
     {
-        // setup addon environment
-        $this->call('addon:setup');
-
         $addonName = $this->argument('name');
 
         // check addon
@@ -53,7 +56,7 @@ class AddonRemoveCommand extends Command
         }
 
         // process
-        $this->files->deleteDirectory(AddonDirectory::path($addonName));
+        $filesystem->deleteDirectory(AddonDirectory::path($addonName));
 
         $this->info(sprintf('Addon "%s" removed.', $addonName));
     }

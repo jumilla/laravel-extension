@@ -69,7 +69,7 @@ class AddonMakeCommand extends Command
     {
         $addon_name = $this->argument('name');
 
-        $output_path = base_path(AddonDirectory::path($addon_name));
+        $output_path = AddonDirectory::path($addon_name);
 
         if ($filesystem->exists($output_path)) {
             throw new InvalidArgumentException("addon directory '{$addon_name}' is already exists.");
