@@ -7,7 +7,7 @@ if (!function_exists('addon_name')) {
      */
     function addon_name($class = null)
     {
-        if ($class !== null) {
+        if ($class === null) {
             list(, $caller) = debug_backtrace(false, 2);
 
             if (!isset($caller['class'])) {
@@ -30,11 +30,11 @@ if (!function_exists('addon_name')) {
 if (!function_exists('addon_namespace')) {
     /**
      * @param  string  $class
-     * @return string|null
+     * @return string
      */
     function addon_namespace($class = null)
     {
-        if ($class !== null) {
+        if ($class === null) {
             list(, $caller) = debug_backtrace(false, 2);
 
             if (!isset($caller['class'])) {
@@ -69,7 +69,7 @@ if (!function_exists('addon_path')) {
      */
     function addon_path($name, $path = null)
     {
-        return addon($name)->path($path);
+        return $name === null ?: addon($name)->path($path);
     }
 }
 
@@ -82,17 +82,18 @@ if (!function_exists('addon_config')) {
      */
     function addon_config($name, $key, $value = null)
     {
-        return addon($name)->config($key, $value);
+        return $name === null ?: addon($name)->config($key, $value);
     }
 }
 
 if (!function_exists('addon_trans')) {
     /**
-     * //@param  string  $name Addon name.
+     * @param  string  $name
+     * @param  string  $id
      * @param  ...
      * @return string
      */
-    function addon_trans()
+    function addon_trans($name, $id)
     {
         $args = func_get_args();
 
@@ -105,11 +106,12 @@ if (!function_exists('addon_trans')) {
 
 if (!function_exists('addon_trans_choice')) {
     /**
-     * //@param  string  $name Addon name.
+     * @param  string  $name
+     * @param  string  $id
      * @param  ...
      * @return string
      */
-    function addon_trans_choice()
+    function addon_trans_choice($name, $id)
     {
         $args = func_get_args();
 
@@ -122,11 +124,12 @@ if (!function_exists('addon_trans_choice')) {
 
 if (!function_exists('addon_spec')) {
     /**
-     * //@param  string  $name Addon name.
+     * @param  string  $name
+     * @param  string  $id
      * @param  ...
      * @return string
      */
-    function addon_spec()
+    function addon_spec($name, $id)
     {
         $args = func_get_args();
 
@@ -139,11 +142,12 @@ if (!function_exists('addon_spec')) {
 
 if (!function_exists('addon_view')) {
     /**
-     * //@param  string  $name Addon name.
+     * @param  string  $name
+     * @param  string  $id
      * @param  ...
      * @return \Illuminate\View\View
      */
-    function addon_view()
+    function addon_view($name, $id)
     {
         $args = func_get_args();
 
