@@ -84,7 +84,6 @@ class FileGenerator
     public function sourceDirectory($path)
     {
         foreach ($this->stubbox->allFiles($this->makePath($path)) as $stubbox_path) {
-            //            var_dump($file);
             if ($this->context->directory) {
                 $outbox_path = substr($stubbox_path, strlen($this->context->directory) + 1);
             } else {
@@ -97,7 +96,6 @@ class FileGenerator
     public function templateDirectory($path, array $arguments = [])
     {
         foreach ($this->stubbox->allFiles($this->makePath($path)) as $stubbox_path) {
-            //            var_dump($file);
             if ($this->context->directory) {
                 $outbox_path = substr($stubbox_path, strlen($this->context->directory) + 1);
             } else {
@@ -189,12 +187,12 @@ class FileGenerator
 
     public function sourceFile($path)
     {
-        $this->file($path)->source($path);
+        $this->file($path)->source($this->makePath($path));
     }
 
     public function templateFile($path, array $arguments = [])
     {
-        $this->file($path)->template($path, $arguments);
+        $this->file($path)->template($this->makePath($path), $arguments);
     }
 
     protected function makePath($path)

@@ -26,7 +26,7 @@ class AddonGenerator
 
     protected function generateMinimum(FileGenerator $generator, array $properties)
     {
-        $generator->directory('app', function ($generator) use ($properties) {
+        $generator->directory('classes', function ($generator) use ($properties) {
             $generator->directory('Providers')
                 ->file('AddonServiceProvider.php')->template('AddonServiceProvider.php', $properties);
         });
@@ -34,7 +34,7 @@ class AddonGenerator
         $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
-                'app',
+                'classes',
             ],
             'paths' => [
             ],
@@ -46,11 +46,14 @@ class AddonGenerator
 
     protected function generateSimple(FileGenerator $generator, array $properties)
     {
-        $generator->directory('app', function ($generator) use ($properties) {
+        $generator->directory('classes', function ($generator) use ($properties) {
             $generator->directory('Providers')
                 ->file('AddonServiceProvider.php')->template('AddonServiceProvider.php', $properties);
+            $generator->directory('Providers')
+                ->file('RouteServiceProvider.php')->template('RouteServiceProvider.php', $properties);
 
-            $generator->keepDirectory('Database/Migrations');
+            $generator->directory('Http')->phpBlankFile('routes.php');
+            $generator->keepDirectory('Http/Controllers');
 
             $generator->keepDirectory('Services');
         });
@@ -70,7 +73,7 @@ class AddonGenerator
         $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
-                'app',
+                'classes',
             ],
             'files' => [
                 'helpers.php',
@@ -82,21 +85,22 @@ class AddonGenerator
             ],
             'providers' => [
                 $properties['namespace'].'\\Providers\\AddonServiceProvider',
+                $properties['namespace'].'\\Providers\\RouteServiceProvider',
             ],
         ]);
     }
 
     protected function generateLibrary(FileGenerator $generator, array $properties)
     {
-        $generator->directory('app', function ($generator) use ($properties) {
-            $migration_class = studly_case($properties['addon_name']).'_1_0';
+        $generator->directory('classes', function ($generator) use ($properties) {
+            $migration_class = $properties['addon_class'].'_1_0';
 
             $generator->directory('Providers')
                 ->file('AddonServiceProvider.php')->template('AddonServiceProvider.php', $properties);
             $generator->directory('Providers')
-                ->file('RouteServiceProvider.php')->template('RouteServiceProvider.php', $properties);
-            $generator->directory('Providers')
                 ->file('DatabaseServiceProvider.php')->template('DatabaseServiceProvider.php', array_merge($properties, ['migration_class_name' => $migration_class]));
+            $generator->directory('Providers')
+                ->file('RouteServiceProvider.php')->template('RouteServiceProvider.php', $properties);
 
             $generator->keepDirectory('Console/Commands');
 
@@ -133,7 +137,7 @@ class AddonGenerator
         $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
-                'app',
+                'classes',
             ],
             'files' => [
                 'helpers.php',
@@ -145,6 +149,7 @@ class AddonGenerator
             ],
             'providers' => [
                 $properties['namespace'].'\\Providers\\AddonServiceProvider',
+                $properties['namespace'].'\\Providers\\DatabaseServiceProvider',
                 $properties['namespace'].'\\Providers\\RouteServiceProvider',
             ],
         ]);
@@ -152,7 +157,7 @@ class AddonGenerator
 
     protected function generateApi(FileGenerator $generator, array $properties)
     {
-        $generator->directory('app', function ($generator) use ($properties) {
+        $generator->directory('classes', function ($generator) use ($properties) {
             $generator->directory('Providers')
                 ->file('AddonServiceProvider.php')->template('AddonServiceProvider.php', $properties);
             $generator->directory('Providers')
@@ -190,7 +195,7 @@ class AddonGenerator
         $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
-                'app',
+                'classes',
             ],
             'files' => [
                 'helpers.php',
@@ -209,15 +214,15 @@ class AddonGenerator
 
     protected function generateUi(FileGenerator $generator, array $properties)
     {
-        $generator->directory('app', function ($generator) use ($properties) {
-            $migration_class = studly_case($properties['addon_name']).'_1_0';
+        $generator->directory('classes', function ($generator) use ($properties) {
+            $migration_class = $properties['addon_class'].'_1_0';
 
             $generator->directory('Providers')
                 ->file('AddonServiceProvider.php')->template('AddonServiceProvider.php', $properties);
             $generator->directory('Providers')
-                ->file('RouteServiceProvider.php')->template('RouteServiceProvider.php', $properties);
-            $generator->directory('Providers')
                 ->file('DatabaseServiceProvider.php')->template('DatabaseServiceProvider.php', array_merge($properties, ['migration_class_name' => $migration_class]));
+            $generator->directory('Providers')
+                ->file('RouteServiceProvider.php')->template('RouteServiceProvider.php', $properties);
 
             $generator->keepDirectory('Console/Commands');
 
@@ -262,7 +267,7 @@ class AddonGenerator
         $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
-                'app',
+                'classes',
             ],
             'files' => [
                 'helpers.php',
@@ -276,6 +281,7 @@ class AddonGenerator
             ],
             'providers' => [
                 $properties['namespace'].'\\Providers\\AddonServiceProvider',
+                $properties['namespace'].'\\Providers\\DatabaseServiceProvider',
                 $properties['namespace'].'\\Providers\\RouteServiceProvider',
             ],
         ]);
@@ -283,7 +289,7 @@ class AddonGenerator
 
     protected function generateDebug(FileGenerator $generator, array $properties)
     {
-        $generator->directory('app', function ($generator) use ($properties) {
+        $generator->directory('classes', function ($generator) use ($properties) {
             $generator->directory('Providers')
                 ->file('AddonServiceProvider.php')->template('AddonServiceProvider.php', $properties);
             $generator->directory('Providers')
@@ -326,7 +332,7 @@ class AddonGenerator
         $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
-                'app',
+                'classes',
             ],
             'files' => [
                 'helpers.php',
@@ -410,8 +416,8 @@ class AddonGenerator
 
     protected function generateSampleUi(FileGenerator $generator, array $properties)
     {
-        $generator->directory('app', function ($generator) use ($properties) {
-            $migration_class = studly_case($properties['addon_name']).'_1_0';
+        $generator->directory('classes', function ($generator) use ($properties) {
+            $migration_class = $properties['addon_class'].'_1_0';
 
             $generator->directory('Providers')
                 ->file('AddonServiceProvider.php')->template('AddonServiceProvider.php', $properties);
@@ -469,7 +475,7 @@ class AddonGenerator
         $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
-                'app',
+                'classes',
             ],
             'files' => [
                 'helpers.php',
@@ -483,6 +489,7 @@ class AddonGenerator
             ],
             'providers' => [
                 $properties['namespace'].'\\Providers\\AddonServiceProvider',
+                $properties['namespace'].'\\Providers\\DatabaseServiceProvider',
                 $properties['namespace'].'\\Providers\\RouteServiceProvider',
             ],
         ]);
@@ -490,7 +497,7 @@ class AddonGenerator
 
     protected function generateSampleAuth(FileGenerator $generator, array $properties)
     {
-        $generator->directory('app', function ($generator) use ($properties) {
+        $generator->directory('classes', function ($generator) use ($properties) {
             $generator->keepDirectory('Console/Commands');
 
             $generator->templateDirectory('Database/Migrations', $properties);
@@ -502,7 +509,7 @@ class AddonGenerator
 
             $generator->keepDirectory('Services');
 
-            $generator->file('User.php')->template('app/User.php', $properties);
+            $generator->sourceFile('User.php', $properties);
         });
 
         $generator->keepDirectory('config');
@@ -531,7 +538,7 @@ class AddonGenerator
         $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
-                'app',
+                'classes',
             ],
             'files' => [
                 'helpers.php',
@@ -545,6 +552,7 @@ class AddonGenerator
             ],
             'providers' => [
                 $properties['namespace'].'\\Providers\\AddonServiceProvider',
+                $properties['namespace'].'\\Providers\\DatabaseServiceProvider',
                 $properties['namespace'].'\\Providers\\RouteServiceProvider',
             ],
         ]);

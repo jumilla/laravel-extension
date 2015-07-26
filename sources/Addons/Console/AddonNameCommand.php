@@ -53,7 +53,7 @@ class AddonNameCommand extends Command
 
         $this->setComposerNamespace();
 
-        $this->setAppDirectoryNamespace();
+        $this->setClassNamespace();
 
         $this->setConfigNamespaces();
 
@@ -139,15 +139,19 @@ class AddonNameCommand extends Command
     }
 
     /**
-     * Set the namespace on the files in the app directory.
+     * Set the namespace on the files in the class directory.
      *
      * @return void
      */
-    protected function setAppDirectoryNamespace()
+    protected function setClassNamespace()
     {
-        $files = Finder::create()
-            ->in($this->addon->path('app'))
-            ->name('*.php');
+        $files = Finder::create();
+
+        foreach ($this->addon->config('addon.directories') as $path) {
+            $files->in($this->addon->path($path));
+        }
+
+        $files->name('*.php');
 
         $search = [
             'namespace '.$this->currentNamespace.';',

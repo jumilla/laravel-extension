@@ -15,7 +15,7 @@ class DatabaseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->migrations('{{ $addon_name }}', [
+        $this->migrations('{$addon_name}', [
             '1.0' => Migrations\{$migration_class_name}::class,
         ]);
 

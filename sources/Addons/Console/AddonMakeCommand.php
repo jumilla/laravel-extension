@@ -85,11 +85,18 @@ class AddonMakeCommand extends Command
             } else {
                 $namespace = studly_case(preg_replace('/[^\w_]/', '', $addon_name));
             }
+
+            $namespace = preg_replace('/^(\d)/', '_$1', $namespace);
         }
         $languages = $this->option('language') ? explode($this->option('language')) : [];
 
         $properties = [
             'addon_name' => preg_replace('/[^\w_]/', '', $addon_name),
+            'addon_class' => preg_replace(
+                ['/[^\w_]/', '/^(\d)/'],
+                ['', '_$1'],
+                studly_case($addon_name)
+            ),
             'namespace' => $this->option('no-namespace') ? '' : $namespace,
             'languages' => array_unique(array_merge(['en', config('app.locale')], $languages)),
         ];
