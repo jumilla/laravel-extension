@@ -36,6 +36,16 @@ class AddonStatusCommand extends Command
             $files->makeDirectory($addonsDirectory);
         }
 
+        // copy app/config/addon.php
+        $addonConfigSourceFile = __DIR__.'/../../../config/addon.php';
+        $addonConfigFile = app('path.config').'/addon.php';
+        if (!$files->exists($addonConfigFile)) {
+            $files->copy($addonConfigSourceFile, $addonConfigFile);
+
+            $this->info('make config: '.$addonConfigFile);
+        }
+
+        // show lists
         $addons = AddonDirectory::addons();
         foreach ($addons as $addon) {
             $this->dump($addon);

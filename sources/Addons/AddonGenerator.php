@@ -99,20 +99,12 @@ class AddonGenerator
                 ->file('AddonServiceProvider.php')->template('AddonServiceProvider.php', $properties);
             $generator->directory('Providers')
                 ->file('DatabaseServiceProvider.php')->template('DatabaseServiceProvider.php', array_merge($properties, ['migration_class_name' => $migration_class]));
-            $generator->directory('Providers')
-                ->file('RouteServiceProvider.php')->template('RouteServiceProvider.php', $properties);
 
             $generator->keepDirectory('Console/Commands');
 
             $generator->directory('Database/Migrations')
                 ->file($migration_class.'.php')->template('Migration.php', array_merge($properties, ['class_name' => $migration_class]));
             $generator->keepDirectory('Database/Seeds');
-
-            $generator->directory('Http')
-                ->file('routes.php')->template('routes.php', $properties);
-            $generator->directory('Http/Controllers')
-                ->file('Controller.php')->template('Controller.php', $properties);
-            $generator->keepDirectory('Http/Middleware');
 
             $generator->keepDirectory('Services');
         });
@@ -122,10 +114,7 @@ class AddonGenerator
         $generator->directory('resources', function ($generator) use ($properties) {
             $this->generateLang($generator, $properties, function ($generator) use ($properties) {
                 $generator->phpConfigFile('messages.php', []);
-                $generator->phpConfigFile('vocabulary.php', []);
             });
-
-            $generator->keepDirectory('specs');
         });
 
         $generator->directory('tests', function ($generator) use ($properties) {
@@ -145,12 +134,10 @@ class AddonGenerator
             'paths' => [
                 'config' => 'config',
                 'lang' => 'resources/lang',
-                'specs' => 'resources/specs',
             ],
             'providers' => [
                 $properties['namespace'].'\\Providers\\AddonServiceProvider',
                 $properties['namespace'].'\\Providers\\DatabaseServiceProvider',
-                $properties['namespace'].'\\Providers\\RouteServiceProvider',
             ],
         ]);
     }

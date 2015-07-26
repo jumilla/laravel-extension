@@ -4,6 +4,10 @@ namespace LaravelPlus\Extension\Generators;
 
 class PhpConfigGenerator
 {
+    /**
+     * @param array $config
+     * @return static
+     */
     public static function generateText(array $config)
     {
         $instance = new static;
@@ -11,6 +15,20 @@ class PhpConfigGenerator
         return $instance->generate($config);
     }
 
+    /**
+     * @var string
+     */
+    protected $text;
+
+    /**
+     * @var int
+     */
+    protected $indent;
+
+    /**
+     * @param array $config
+     * @return string
+     */
     public function generate(array $config)
     {
         $this->text = "<?php\n\nreturn [\n";
@@ -23,6 +41,10 @@ class PhpConfigGenerator
         return $this->text;
     }
 
+    /**
+     * @param array $config
+     * @return void
+     */
     private function generateArray(array $config)
     {
         ++$this->indent;
@@ -68,6 +90,10 @@ class PhpConfigGenerator
         --$this->indent;
     }
 
+    /**
+     * @param string $line
+     * @return void
+     */
     private function writeLine($line)
     {
         $this->text .= str_repeat("\t", $this->indent);

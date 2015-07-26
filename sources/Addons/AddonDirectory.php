@@ -13,10 +13,10 @@ class AddonDirectory
      */
     public static function path($name = null)
     {
-        if ($name) {
+        if ($name !== null) {
             return self::path().'/'.$name;
         } else {
-            return app('config')->get('addon.path', 'addons');
+            return app('path.base').'/'.app('config')->get('addon.path', 'addons');
         }
     }
 
@@ -54,14 +54,13 @@ class AddonDirectory
     }
 
     /**
-     * @param  string  $name
-     * @return \LaravelPlus\Extension\Addons\Addon
+     * @return array
      */
     public static function addons()
     {
         $files = new Filesystem;
 
-        $addonsDirectoryPath = app('path.base').'/'.static::path();
+        $addonsDirectoryPath = static::path();
 
         // make addons/
         if (!$files->exists($addonsDirectoryPath)) {

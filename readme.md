@@ -14,7 +14,8 @@
 	* パッケージに独自の名前空間(PSR-4)を一つ持たせることができます。
 	* Laravel 5のパッケージとして扱えます。
 		* lang, viewの識別子の名前空間表記`{addon-name}::`が使えます。
-	* アドオンの追加はディレクトリをコピーするだけ。`config/app.php`にコードを追加する必要はありません。
+	* アドオンの追加はディレクトリをコピーするだけ。`config/app.php`などの設定ファイルにコードを追加する必要はありません。
+	* 7種類のひな形と2種類のサンプルを用意しています。`php artisan make:addon` で生成できます。
 
 * バージョンベースマイグレーション機能の追加
 	* [Laravel Versionia](http://github.com/jumilla/laravel-versionia) を組み込み済みです。
@@ -33,21 +34,10 @@ composer create-project laravel-plus/laravel5 <project-name>
 
 ### [B] 既存のプロジェクトにインストールする
 
-`composer.json`ファイルを編集します。
-行末のカンマはJSON記法に合わせて設定してください。
-```json
-	"require": [
-		"laravel/framework": "5.*",
-		...
-		↓追加する
-		"laravel-plus/extension": "2.*"
-	],
-```
-
-以下のコマンドを実行して、Laravel Extension Packをセットアップしてください。
+Composerを使います。
 
 ```sh
-composer update
+composer require laravel-plus/extension
 ```
 
 `config/app.config`ファイルを編集します。
@@ -66,18 +56,18 @@ composer update
 `app/config/addon.php`を生成したい時に、いつでも使えます。
 
 ```sh
-php artisan addon:setup
+php artisan addon:status
 ```
 
 ## 動作確認
 サンプルとして、アドオン`wiki`を作成します。
-アドオンに割り当てられる名前空間は`Wiki`です。(--namespaceオプションで指定することもできます。)
 
 ```sh
-php artisan addon:make wiki
+php artisan make:addon wiki sample:ui
 ```
 
 ルーティング設定を確認してください。
+
 ```sh
 php artisan route:list
 ```
@@ -91,68 +81,74 @@ php artisan serve
 
 ## コマンド
 
-### `addon:setup`
+### `addon:status`
 
-アドオン機能を有効にします。
+アドオンの状態を確認できます。
 
 ```sh
-php artisan addon:setup
+php artisan addon:status
 ```
 
-* addonsディレクトリを作成する。
-* app/config/addon.phpファイルを作成する。
+`addons`ディレクトリや`app/config/addon.php`ファイルが存在しない場合は作成します。
 
-### `addon:make`
+### `make:addon`
 
 アドオンを作成します。
+次のコマンドは、アドオン `blog` を `ui`タイプのひな形を用いて PHP名前空間 `Blog` として生成します。
 
 ```sh
-php artisan addon:make &lt;アドオン名&gt; {--namespace=...} {--no-namespace}
+php artisan make:addon blog ui
 ```
 
-* addonsディレクトリ下に、**addon-name**という名前でディレクトリを作成する。
-* 以下のディレクトリ構成を作成する。
-	* app/
-		* Console/
-			* Commands/
-			* Kernel.php
-		* Http/
-			* Controllers/
-			* Middleware/
-			* Requests/
-			* Kernel.php
-			* routes.php
-		* Providers/
-		* Services/
-	* config/
-	* database/
-		* migrations/
-		* seeds/
-	* resources/
-		* assets/
-		* lang/
-			* en/
-			* `Lang::getLocale()`/
-		* specs/
-		* views/
-			* sample.blade.php
-	* addon.json
+ひな形は9種類から選べます。
+
+* `minimum` - 最小構成
+* `simple` - `views`ディレクトリと`route.php`があるシンプルな構成
+* `library` - PHPクラスとデータベースを提供する構成
+* `api` - APIのための構成
+* `ui` - UIを含むフルセット
+* `debug` - デバッグ機能を収めるアドオン。`debug-bar`のサービスプロバイダ登録も含む。
+* `laravel5` - Laravel 5のディレクトリ構成。
+* `sample:ui` - UIアドオンのサンプル
+* `sample:auth` - Laravel 5に含まれる認証サンプル。
+
+コマンド引数でひな形を指定しない場合、対話形式で選択できます。
+
+```sh
+php artisan make:addon blog
+```
+
+PHP名前空間は `--namespace` オプションで指定することもできます。
+名前空間の区切りは、`\\` か `/` を使ってください。
+
+```sh
+php artisan make:addon blog --namespace App\\Blog
+php artisan make:addon blog --namespace App/Blog
+```
+
+### `addon:name`
+
+アドオン内のファイルを走査し、PHP名前空間を変更します。
+
+```sh
+php artisan addon:name blog Sugoi/Blog
+```
+
+走査したファイルを確認したい場合は、`-v`オプションを指定してください。
+
+```sh
+php artisan addon:name blog Sugoi/Blog -v
+```
 
 ### `addon:remove`
 
 アドオンを削除します。
 
 ```sh
-php artisan addon:remove &lt;アドオン&gt;
+php artisan addon:remove blog;
 ```
 
-挙動は、アドオンディレクトリを削除するだけです。
-
-### `addon:list`
-
-```sh
-php artisan addon:list
-```
+`addons/blog` ディレクトリを削除するだけです。
 
 ### `database:status`
 

@@ -23,7 +23,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         'command+.app.route' => Console\RouteListCommand::class,
         'command+.app.tail' => Console\TailCommand::class,
 // addon:
-        'command+.addon.setup' => Addons\Console\AddonSetupCommand::class,
         'command+.addon.status' => Addons\Console\AddonStatusCommand::class,
         'command+.addon.make' => Addons\Console\AddonMakeCommand::class,
         'command+.addon.name' => Addons\Console\AddonNameCommand::class,

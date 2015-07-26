@@ -4,8 +4,15 @@ namespace LaravelPlus\Extension\Addons;
 
 class AddonClassLoader
 {
-    private static $instance;
+    /**
+     * @var static
+     */
+    protected static $instance;
 
+    /**
+     * @param array $addons
+     * @return void
+     */
     public static function register($addons)
     {
         static::$instance = new static($addons);
@@ -15,6 +22,9 @@ class AddonClassLoader
         spl_autoload_register([static::$instance, 'load'], true, false);
     }
 
+    /**
+     * @return void
+     */
     public static function unregister()
     {
         if (static::$instance) {
@@ -22,13 +32,20 @@ class AddonClassLoader
         }
     }
 
-    private $addons;
+    protected $addons;
 
+    /**
+     * @param array $addons
+     */
     public function __construct(array $addons)
     {
         $this->addons = $addons;
     }
 
+    /**
+     * @param string $className
+     * @return bool
+     */
     public function load($className)
     {
         foreach ($this->addons as $addon) {

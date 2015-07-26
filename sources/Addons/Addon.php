@@ -59,10 +59,8 @@ class Addon
      * @param string $path
      * @return static
      */
-    public static function createApp()
+    public static function createApp($path)
     {
-        $path = app_path();
-
         $config = new Repository([
             'addon' => [
                 'namespace' => Application::getNamespace(),
@@ -158,7 +156,7 @@ class Addon
      *
      * @param  string $name
      * @param  mixed  $default
-     * @return int
+     * @return mixed
      */
     public function config($name, $default = null)
     {
@@ -258,7 +256,7 @@ class Addon
 
         if ($filenames !== null) {
             foreach ($filenames as $filename) {
-                $files[] = $addon->path.'/'.$filename;
+                $files[] = $this->path($filename);
             }
         } else {
             // load *.php on addon's root directory
@@ -286,7 +284,7 @@ class Addon
 
         if ($filenames !== null) {
             foreach ($filenames as $filename) {
-                $files[] = $addon->path.'/'.$filename;
+                $files[] = $this->path($filename);
             }
         }
 

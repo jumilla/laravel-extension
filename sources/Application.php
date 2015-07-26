@@ -9,15 +9,18 @@ class Application
 {
     use AppNamespaceDetectorTrait;
 
+    /**
+     * @return array
+     */
+    protected static $addons = null;
+
+    /**
+     * @return string
+     */
     public static function getNamespace()
     {
         return preg_replace('/\\\\+$/', '', (new static)->getAppNamespace());
     }
-
-    /**
-     * @return array
-     */
-    private static $addons = null;
 
     /**
      * @return array
@@ -32,7 +35,7 @@ class Application
     }
 
     /**
-     * @return LaravelPlus\Extension\Addons\Addon|null
+     * @return \LaravelPlus\Extension\Addons\Addon
      */
     public static function getAddon($name)
     {

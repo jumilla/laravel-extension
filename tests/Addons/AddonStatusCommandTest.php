@@ -16,6 +16,9 @@ class AddonStatusCommandTest extends TestCase
         $app['config'] = new Illuminate\Config\Repository([]);
         $app['files'] = new Illuminate\Filesystem\Filesystem();
         $app['path.base'] = __DIR__.'/../sandbox';
+        $app['path.config'] = __DIR__.'/../sandbox/config';
+
+        @mkdir($app['path.config'], 0755, true);
 
         // 2. condition
 

@@ -6,8 +6,16 @@ use LaravelPlus\Extension\Addons\Addon;
 
 class AliasResolver
 {
-    private static $instance;
+    /**
+     * @var static
+     */
+    protected static $instance;
 
+    /**
+     * @param array $addons
+     * @param array $aliases
+     * @return void
+     */
     public static function register(array $addons, array $aliases)
     {
         static::$instance = new static($addons, $aliases);
@@ -17,6 +25,9 @@ class AliasResolver
         spl_autoload_register([static::$instance, 'load'], true, false);
     }
 
+    /**
+     * @return void
+     */
     public static function unregister()
     {
         if (static::$instance) {
@@ -24,16 +35,30 @@ class AliasResolver
         }
     }
 
-    private $addons;
+    /**
+     * @var array
+     */
+    protected $addons;
 
-    private $globalClassAliases;
+    /**
+     * @var array
+     */
+    protected $globalClassAliases;
 
+    /**
+     * @param array $addons
+     * @param array $aliases
+     */
     public function __construct(array $addons, array $aliases)
     {
-        $this->addons = array_merge([Addon::createApp()], $addons);
+        $this->addons = array_merge([Addon::createApp(app_path())], $addons);
         $this->globalClassAliases = $aliases;
     }
 
+    /**
+     * @param string $className
+     * @return bool
+     */
     public function load($className)
     {
         foreach ($this->addons as $addon) {
