@@ -32,7 +32,7 @@ class InputModel
     }
 
     /**
-     * @param string|\LaravelPlus\Extension\Spec\InputSpec $spec
+     * @param string|\LaravelPlus\Extension\Specs\InputSpec $spec
      * @param array $in
      */
     public function __construct($spec, array $in = null)

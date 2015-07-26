@@ -7,7 +7,7 @@ if (!function_exists('addon_name')) {
      */
     function addon_name($class = null)
     {
-        if (!$class) {
+        if ($class !== null) {
             list(, $caller) = debug_backtrace(false, 2);
 
             if (!isset($caller['class'])) {
@@ -34,7 +34,7 @@ if (!function_exists('addon_namespace')) {
      */
     function addon_namespace($class = null)
     {
-        if (!$class) {
+        if ($class !== null) {
             list(, $caller) = debug_backtrace(false, 2);
 
             if (!isset($caller['class'])) {
@@ -88,7 +88,7 @@ if (!function_exists('addon_config')) {
 
 if (!function_exists('addon_trans')) {
     /**
-     * @param  string  $name Addon name.
+     * //@param  string  $name Addon name.
      * @param  ...
      * @return string
      */
@@ -105,7 +105,7 @@ if (!function_exists('addon_trans')) {
 
 if (!function_exists('addon_trans_choice')) {
     /**
-     * @param  string  $name Addon name.
+     * //@param  string  $name Addon name.
      * @param  ...
      * @return string
      */
@@ -122,7 +122,7 @@ if (!function_exists('addon_trans_choice')) {
 
 if (!function_exists('addon_spec')) {
     /**
-     * @param  string  $name Addon name.
+     * //@param  string  $name Addon name.
      * @param  ...
      * @return string
      */
@@ -139,7 +139,7 @@ if (!function_exists('addon_spec')) {
 
 if (!function_exists('addon_view')) {
     /**
-     * @param  string  $name Addon name.
+     * //@param  string  $name Addon name.
      * @param  ...
      * @return \Illuminate\View\View
      */

@@ -131,7 +131,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     /**
      * setup package's commands.
      *
-     * @param  $command array
+     * @param  array  $commands
      * @return void
      */
     protected function setupCommands($commands)
@@ -178,7 +178,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      * Register the package's component namespaces.
      *
      * @param  string  $namespace
-     * @param  string  $path
+     * @param  \LaravelPlus\Extension\Addons\Addon  $addon
      * @return void
      */
     protected function registerPackage($namespace, $addon)

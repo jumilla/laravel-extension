@@ -200,7 +200,7 @@ class AddonNameCommand extends Command
             ->name('*.php');
 
         foreach ($files as $file) {
-            $this->replaceConfigNamespaces($files->getRealPath());
+            $this->replaceConfigNamespaces($file->getRealPath());
         }
     }
 
