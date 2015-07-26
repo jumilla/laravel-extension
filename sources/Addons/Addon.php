@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Addons;
 
-use \RuntimeException;
+use RuntimeException;
 use Illuminate\Config\Repository;
 use LaravelPlus\Extension\Application;
 use LaravelPlus\Extension\Repository\ConfigLoader;
@@ -36,8 +36,7 @@ class Addon
     {
         if (file_exists($path.'/addon.php')) {
             $config = require $path.'/addon.php';
-        }
-        else if (file_exists($path.'/addon.json')) {
+        } elseif (file_exists($path.'/addon.json')) {
             $config = json_decode(file_get_contents($path.'/addon.json'), true);
 
             if ($config === null) {
@@ -45,10 +44,9 @@ class Addon
             }
         }
         // compatible v4 addon
-        else if (file_exists($path.'/config/addon.php')) {
+        elseif (file_exists($path.'/config/addon.php')) {
             $config = require $path.'/config/addon.php';
-        }
-        else {
+        } else {
             throw new RuntimeException("No such config file for addon '$name', need 'addon.php' or 'addon.json'.");
         }
 

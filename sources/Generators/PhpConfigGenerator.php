@@ -96,7 +96,7 @@ class PhpConfigGenerator
      */
     private function writeLine($line)
     {
-        $this->text .= str_repeat("\t", $this->indent);
+        $this->text .= str_repeat(' ', $this->indent * 4);
         $this->text .= $line;
         $this->text .= "\n";
     }

@@ -5,7 +5,7 @@ namespace LaravelPlus\Extension\Specs;
 class InputModel
 {
     /**
-     * @var \LaravelPlus\Extension\Spec\InputSpec
+     * @var \LaravelPlus\Extension\Specs\InputSpec
      */
     private $spec;
 
@@ -20,7 +20,7 @@ class InputModel
     private $validator;
 
     /**
-     * @param string|\LaravelPlus\Extension\Spec\InputSpec $spec
+     * @param string|\LaravelPlus\Extension\Specs\InputSpec $spec
      * @param array $in
      * @return static
      */

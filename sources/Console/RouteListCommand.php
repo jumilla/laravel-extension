@@ -26,7 +26,6 @@ class RouteListCommand extends BaseCommand
      * Create a new route command instance.
      *
      * @param  \Illuminate\Foundation\Application  $app
-     * @return void
      */
     public function __construct(Application $app)
     {

@@ -8,8 +8,6 @@ class DatabaseRefreshCommand extends BaseCommand
 {
     /**
      * Create a new console command instance.
-     *
-     * @return void
      */
     public function __construct()
     {

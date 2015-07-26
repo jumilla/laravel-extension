@@ -5,7 +5,7 @@ namespace LaravelPlus\Extension\Specs;
 class InputSpec
 {
     /**
-     * rule string or array
+     * rule string or array.
      *
      * @param string $path
      * @return static
@@ -51,8 +51,7 @@ class InputSpec
 
         if (strpos($path, '::') !== false) {
             list($namespace, $path) = explode('::', $path, 2);
-        }
-        else {
+        } else {
             $namespace = '';
         }
         $this->path = $path;

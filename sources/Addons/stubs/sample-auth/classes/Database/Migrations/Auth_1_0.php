@@ -31,7 +31,7 @@ class Auth_1_0 extends Migration
     }
 
     /**
-     * Create 'users' table
+     * Create 'users' table.
      *
      * @return void
      */
@@ -48,7 +48,7 @@ class Auth_1_0 extends Migration
     }
 
     /**
-     * Create 'password_resets' table
+     * Create 'password_resets' table.
      *
      * @return void
      */

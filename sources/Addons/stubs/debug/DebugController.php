@@ -1,15 +1,16 @@
-<?php namespace {$namespace}\Http\Controllers;
+<?php
 
-class DebugController extends Controller {
+namespace {$namespace}\Http\Controllers;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+class DebugController extends Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function index()
-	{
-		return addon_view(addon_name(), 'index');
-	}
-
+    public function index()
+    {
+        return addon_view(addon_name(), 'index');
+    }
 }
