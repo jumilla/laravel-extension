@@ -31,7 +31,7 @@ class AddonGenerator
                 ->file('AddonServiceProvider.php')->template('AddonServiceProvider.php', $properties);
         });
 
-        $this->generateAddonJson($generator, [
+        $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
                 'app',
@@ -50,7 +50,7 @@ class AddonGenerator
             $generator->directory('Providers')
                 ->file('AddonServiceProvider.php')->template('AddonServiceProvider.php', $properties);
 
-            $generator->keepDirectory('Database');
+            $generator->keepDirectory('Database/Migrations');
 
             $generator->keepDirectory('Services');
         });
@@ -67,7 +67,7 @@ class AddonGenerator
 
         $generator->phpBlankFile('helpers.php');
 
-        $this->generateAddonJson($generator, [
+        $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
                 'app',
@@ -130,7 +130,7 @@ class AddonGenerator
 
         $generator->phpBlankFile('helpers.php');
 
-        $this->generateAddonJson($generator, [
+        $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
                 'app',
@@ -187,7 +187,7 @@ class AddonGenerator
 
         $generator->phpBlankFile('helpers.php');
 
-        $this->generateAddonJson($generator, [
+        $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
                 'app',
@@ -259,7 +259,7 @@ class AddonGenerator
 
         $generator->phpBlankFile('helpers.php');
 
-        $this->generateAddonJson($generator, [
+        $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
                 'app',
@@ -323,7 +323,7 @@ class AddonGenerator
 
         $generator->phpBlankFile('helpers.php');
 
-        $this->generateAddonJson($generator, [
+        $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
                 'app',
@@ -387,7 +387,7 @@ class AddonGenerator
 
         $generator->phpBlankFile('helpers.php');
 
-        $this->generateAddonJson($generator, [
+        $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
                 'app',
@@ -466,7 +466,7 @@ class AddonGenerator
 
         $generator->phpBlankFile('helpers.php');
 
-        $this->generateAddonJson($generator, [
+        $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
                 'app',
@@ -528,7 +528,7 @@ class AddonGenerator
 
         $generator->phpBlankFile('helpers.php');
 
-        $this->generateAddonJson($generator, [
+        $this->generateAddonConfig($generator, [
             'namespace' => $properties['namespace'],
             'directories' => [
                 'app',
@@ -559,7 +559,7 @@ class AddonGenerator
         });
     }
 
-    protected function generateAddonJson(FileGenerator $generator, array $data)
+    protected function generateAddonConfig(FileGenerator $generator, array $data)
     {
         $data = array_merge([
             'version' => 5,
@@ -587,6 +587,6 @@ class AddonGenerator
             ],
         ], $data);
 
-        $generator->file('addon.json')->json($data);
+        $generator->phpConfigFile('addon.php', $data);
     }
 }

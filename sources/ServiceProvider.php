@@ -26,6 +26,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         'command+.addon.setup' => Addons\Console\AddonSetupCommand::class,
         'command+.addon.status' => Addons\Console\AddonStatusCommand::class,
         'command+.addon.make' => Addons\Console\AddonMakeCommand::class,
+        'command+.addon.name' => Addons\Console\AddonNameCommand::class,
         'command+.addon.remove' => Addons\Console\AddonRemoveCommand::class,
         'command+.addon.check' => Addons\Console\AddonCheckCommand::class,
 // database:

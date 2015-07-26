@@ -37,7 +37,7 @@ class AliasResolver
     public function load($className)
     {
         foreach ($this->addons as $addon) {
-            $namespace = $addon->config('addon.namespace');
+            $namespace = $addon->phpNamespace();
 
             // 名前空間のないパッケージはエイリアス解決をする必要がない
             if (empty($namespace)) {

@@ -2,37 +2,65 @@
 
 namespace LaravelPlus\Extension\Addons;
 
+use \RuntimeException;
 use Illuminate\Config\Repository;
 use LaravelPlus\Extension\Application;
 use LaravelPlus\Extension\Repository\ConfigLoader;
 
 class Addon
 {
+    /**
+     * @param string $path
+     * @return static
+     */
     public static function create($path)
     {
         $pathComponents = explode('/', $path);
 
         $name = $pathComponents[count($pathComponents) - 1];
 
-        $config = ConfigLoader::load($path.'/config');
+        $addonConfig = static::loadConfig($path, $name);
 
-        if (file_exists($path.'/addon.json')) {
-            $addonConfig = json_decode(file_get_contents($path.'/addon.json'), true);
+        $config = ConfigLoader::load($path.'/'.array_get($addonConfig, 'paths.config', 'config'));
 
-            if ($addonConfig === null) {
-                throw new \RuntimeException('Invalid json format at '.$path.'/addon.json');
-            }
-
-            $config->set('addon', $addonConfig);
-        }
+        $config->set('addon', $addonConfig);
 
         return new static($name, $path, $config);
     }
 
+    /**
+     * @param string $path
+     * @return array
+     */
+    protected static function loadConfig($path, $name)
+    {
+        if (file_exists($path.'/addon.php')) {
+            $config = require $path.'/addon.php';
+        }
+        else if (file_exists($path.'/addon.json')) {
+            $config = json_decode(file_get_contents($path.'/addon.json'), true);
+
+            if ($config === null) {
+                throw new RuntimeException("Invalid json format at '$path/addon.json'.");
+            }
+        }
+        // compatible v4 addon
+        else if (file_exists($path.'/config/addon.php')) {
+            $config = require $path.'/config/addon.php';
+        }
+        else {
+            throw new RuntimeException("No such config file for addon '$name', need 'addon.php' or 'addon.json'.");
+        }
+
+        return $config;
+    }
+
+    /**
+     * @param string $path
+     * @return static
+     */
     public static function createApp()
     {
-        $name = 'app';
-
         $path = app_path();
 
         $config = new Repository([
@@ -41,7 +69,7 @@ class Addon
             ],
         ]);
 
-        return new static($name, $path, $config);
+        return new static('app', $path, $config);
     }
 
     /**
@@ -59,6 +87,11 @@ class Addon
      */
     protected $config;
 
+    /**
+     * @param string $name
+     * @param string $path
+     * @param \Illuminate\Config\Repository $config
+     */
     public function __construct($name, $path, Repository $config)
     {
         $this->name = $name;
@@ -108,6 +141,16 @@ class Addon
     public function version()
     {
         return $this->config('addon.version', 4);
+    }
+
+    /**
+     * get PHP namespace.
+     *
+     * @return string
+     */
+    public function phpNamespace()
+    {
+        return trim($this->config('addon.namespace', ''), '\\');
     }
 
     /**
@@ -161,7 +204,7 @@ class Addon
         $providers = $this->config('addon.providers', []);
         foreach ($providers as $provider) {
             if (!starts_with($provider, '\\')) {
-                $provider = sprintf('%s\%s', $this->config('addon.namespace'), $provider);
+                $provider = sprintf('%s\%s', $this->phpNamespace(), $provider);
             }
 
             $app->register($provider);
@@ -259,13 +302,13 @@ class Addon
     private function loadFiles(array $files)
     {
         foreach ($files as $file) {
-            include $file;
-/*			if (! file_exists($file)) {
-                echo "Warfile '{$file}' not found.", PHP_EOL;
+            if (!file_exists($file)) {
+                $message = "Warning: PHP Script '$file' is nothing.";
+                info($message);
+                echo $message;
             }
-            else {
-                require $file;
-            }*/
+
+            include $file;
         }
     }
 }

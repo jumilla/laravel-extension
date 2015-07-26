@@ -18,7 +18,7 @@ if (!function_exists('addon_name')) {
         }
 
         foreach (\LaravelPlus\Extension\Application::getAddons() as $addon) {
-            if (starts_with($class, $addon->config('addon.namespace'))) {
+            if (starts_with($class, $addon->phpNamespace())) {
                 return $addon->name();
             }
         }

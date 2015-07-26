@@ -32,7 +32,7 @@ class AddonClassLoader
     public function load($className)
     {
         foreach ($this->addons as $addon) {
-            $namespace = $addon->config('addon.namespace');
+            $namespace = $addon->phpNamespace();
 
             $namespacePrefix = $namespace ? $namespace.'\\' : '';
 

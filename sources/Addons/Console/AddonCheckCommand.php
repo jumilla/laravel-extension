@@ -61,7 +61,7 @@ class AddonCheckCommand extends Command
     {
         $this->info(sprintf('Addon "%s"', $addon->name()));
         $this->info(sprintf('Path: %s', $addon->relativePath()));
-        $this->info(sprintf('PHP namespace: %s', $addon->config('addon.namespace')));
+        $this->info(sprintf('PHP namespace: %s', $addon->phpNamespace()));
     }
 
     protected function dumpClasses($addon)
@@ -86,7 +86,7 @@ class AddonCheckCommand extends Command
             foreach ($phpFilePaths as $phpFilePath) {
                 $relativePath = substr($phpFilePath, strlen($classDirectoryPath) + 1);
 
-                $classFullName = $addon->config('addon.namespace').'\\'.AddonDirectory::pathToClass($relativePath);
+                $classFullName = $addon->phpNamespace().'\\'.AddonDirectory::pathToClass($relativePath);
 
                 $this->line(sprintf('  "%s" => %s', $relativePath, $classFullName));
             }
