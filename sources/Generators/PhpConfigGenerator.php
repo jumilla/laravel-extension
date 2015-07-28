@@ -78,6 +78,12 @@ class PhpConfigGenerator
                 $this->generateArray($value);
 
                 $this->writeLine('],');
+            } elseif ($value instanceof ClassName) {
+                if (is_string($key)) {
+                    $this->writeLine(sprintf("'%s' => %s,", $key, (string) $value));
+                } else {
+                    $this->writeLine(sprintf("%s,", (string) $value));
+                }
             } else {
                 if (is_string($key)) {
                     $this->writeLine(sprintf("'%s' => %s,", $key, $value));

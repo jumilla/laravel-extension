@@ -3,6 +3,7 @@
 namespace LaravelPlus\Extension\Addons;
 
 use Illuminate\Config\Repository;
+use LaravelPlus\Extension\Generators\ClassName;
 use LaravelPlus\Extension\Generators\FileGenerator;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 use Exception;
@@ -39,7 +40,7 @@ class AddonGenerator
             'paths' => [
             ],
             'providers' => [
-                $properties['namespace'].'\\Providers\\AddonServiceProvider',
+                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
             ],
         ]);
     }
@@ -84,8 +85,8 @@ class AddonGenerator
                 'views' => 'resources/views',
             ],
             'providers' => [
-                $properties['namespace'].'\\Providers\\AddonServiceProvider',
-                $properties['namespace'].'\\Providers\\RouteServiceProvider',
+                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
             ],
         ]);
     }
@@ -136,8 +137,8 @@ class AddonGenerator
                 'lang' => 'resources/lang',
             ],
             'providers' => [
-                $properties['namespace'].'\\Providers\\AddonServiceProvider',
-                $properties['namespace'].'\\Providers\\DatabaseServiceProvider',
+                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\\Providers\\DatabaseServiceProvider'),
             ],
         ]);
     }
@@ -193,8 +194,8 @@ class AddonGenerator
                 'specs' => 'resources/specs',
             ],
             'providers' => [
-                $properties['namespace'].'\\Providers\\AddonServiceProvider',
-                $properties['namespace'].'\\Providers\\RouteServiceProvider',
+                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
             ],
         ]);
     }
@@ -267,9 +268,9 @@ class AddonGenerator
                 'views' => 'resources/views',
             ],
             'providers' => [
-                $properties['namespace'].'\\Providers\\AddonServiceProvider',
-                $properties['namespace'].'\\Providers\\DatabaseServiceProvider',
-                $properties['namespace'].'\\Providers\\RouteServiceProvider',
+                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\\Providers\\DatabaseServiceProvider'),
+                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
             ],
         ]);
     }
@@ -331,8 +332,8 @@ class AddonGenerator
                 'views' => 'resources/views',
             ],
             'providers' => [
-                $properties['namespace'].'\\Providers\\AddonServiceProvider',
-                $properties['namespace'].'\\Providers\\RouteServiceProvider',
+                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
             ],
         ]);
     }
@@ -395,8 +396,8 @@ class AddonGenerator
                 'views' => 'resources/views',
             ],
             'providers' => [
-                $properties['namespace'].'\\Providers\\AddonServiceProvider',
-                $properties['namespace'].'\\Providers\\RouteServiceProvider',
+                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
             ],
         ]);
     }
@@ -475,9 +476,9 @@ class AddonGenerator
                 'views' => 'resources/views',
             ],
             'providers' => [
-                $properties['namespace'].'\\Providers\\AddonServiceProvider',
-                $properties['namespace'].'\\Providers\\DatabaseServiceProvider',
-                $properties['namespace'].'\\Providers\\RouteServiceProvider',
+                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\\Providers\\DatabaseServiceProvider'),
+                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
             ],
         ]);
     }
@@ -538,9 +539,9 @@ class AddonGenerator
                 'views' => 'resources/views',
             ],
             'providers' => [
-                $properties['namespace'].'\\Providers\\AddonServiceProvider',
-                $properties['namespace'].'\\Providers\\DatabaseServiceProvider',
-                $properties['namespace'].'\\Providers\\RouteServiceProvider',
+                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\\Providers\\DatabaseServiceProvider'),
+                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
             ],
         ]);
     }
@@ -556,7 +557,7 @@ class AddonGenerator
 
     protected function generateAddonConfig(FileGenerator $generator, array $data)
     {
-        $data = array_merge([
+        $defaults = [
             'version' => 5,
             'namespace' => '',
             'directories' => [
@@ -569,18 +570,23 @@ class AddonGenerator
             ],
             'console' => [
                 'commands' => [
+                    // class
                 ],
             ],
             'http' => [
                 'middlewares' => [
+                    // class
                 ],
                 'route_middlewares' => [
+                    // name => class
                 ],
             ],
             'includes_global_aliases' => true,
             'aliases' => [
             ],
-        ], $data);
+        ];
+
+        $data = array_replace($defaults, $data);
 
         $generator->phpConfigFile('addon.php', $data);
     }
