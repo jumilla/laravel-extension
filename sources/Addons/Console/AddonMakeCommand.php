@@ -81,7 +81,7 @@ class AddonMakeCommand extends Command
         } else {
             if ($this->option('namespace')) {
                 $namespace = str_replace('/', '\\', $this->option('namespace'));
-                $namespace = studly_case(preg_replace('/[^\w_]/', '', $namespace));
+                $namespace = studly_case(preg_replace('/[^\w_\\\\]/', '', $namespace));
             } else {
                 $namespace = studly_case(preg_replace('/[^\w_]/', '', $addon_name));
             }

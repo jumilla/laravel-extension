@@ -497,7 +497,7 @@ class AddonGenerator
 
             $generator->keepDirectory('Services');
 
-            $generator->sourceFile('User.php', $properties);
+            $generator->templateFile('User.php', $properties);
         });
 
         $generator->keepDirectory('config');
@@ -537,6 +537,15 @@ class AddonGenerator
                 'lang' => 'resources/lang',
                 'specs' => 'resources/specs',
                 'views' => 'resources/views',
+            ],
+            'http' => [
+                'middlewares' => [
+                ],
+                'route_middlewares' => [
+                    'auth' => new ClassName($properties['namespace'].'\Http\Middleware\Authenticate'),
+                    'auth.basic' => new ClassName('Illuminate\Auth\Http\Middleware\AuthenticateWithBasicAuth'),
+                    'guest' => new ClassName($properties['namespace'].'\Http\Middleware\RedirectIfAuthenticated'),
+                ],
             ],
             'providers' => [
                 new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
