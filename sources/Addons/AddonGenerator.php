@@ -40,7 +40,7 @@ class AddonGenerator
             'paths' => [
             ],
             'providers' => [
-                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\AddonServiceProvider'),
             ],
         ]);
     }
@@ -85,8 +85,8 @@ class AddonGenerator
                 'views' => 'resources/views',
             ],
             'providers' => [
-                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
-                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\RouteServiceProvider'),
             ],
         ]);
     }
@@ -137,8 +137,8 @@ class AddonGenerator
                 'lang' => 'resources/lang',
             ],
             'providers' => [
-                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
-                new ClassName($properties['namespace'].'\\Providers\\DatabaseServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\DatabaseServiceProvider'),
             ],
         ]);
     }
@@ -194,8 +194,8 @@ class AddonGenerator
                 'specs' => 'resources/specs',
             ],
             'providers' => [
-                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
-                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\RouteServiceProvider'),
             ],
         ]);
     }
@@ -268,9 +268,9 @@ class AddonGenerator
                 'views' => 'resources/views',
             ],
             'providers' => [
-                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
-                new ClassName($properties['namespace'].'\\Providers\\DatabaseServiceProvider'),
-                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\DatabaseServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\RouteServiceProvider'),
             ],
         ]);
     }
@@ -332,8 +332,8 @@ class AddonGenerator
                 'views' => 'resources/views',
             ],
             'providers' => [
-                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
-                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\RouteServiceProvider'),
             ],
         ]);
     }
@@ -396,8 +396,8 @@ class AddonGenerator
                 'views' => 'resources/views',
             ],
             'providers' => [
-                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
-                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\RouteServiceProvider'),
             ],
         ]);
     }
@@ -476,9 +476,9 @@ class AddonGenerator
                 'views' => 'resources/views',
             ],
             'providers' => [
-                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
-                new ClassName($properties['namespace'].'\\Providers\\DatabaseServiceProvider'),
-                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\DatabaseServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\RouteServiceProvider'),
             ],
         ]);
     }
@@ -548,9 +548,9 @@ class AddonGenerator
                 ],
             ],
             'providers' => [
-                new ClassName($properties['namespace'].'\\Providers\\AddonServiceProvider'),
-                new ClassName($properties['namespace'].'\\Providers\\DatabaseServiceProvider'),
-                new ClassName($properties['namespace'].'\\Providers\\RouteServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\AddonServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\DatabaseServiceProvider'),
+                new ClassName($properties['namespace'].'\Providers\RouteServiceProvider'),
             ],
         ]);
     }
@@ -570,12 +570,16 @@ class AddonGenerator
             'version' => 5,
             'namespace' => '',
             'directories' => [
+                // path
             ],
             'files' => [
+                // path
             ],
             'paths' => [
+                // role => path
             ],
             'providers' => [
+                // class
             ],
             'console' => [
                 'commands' => [
@@ -592,6 +596,7 @@ class AddonGenerator
             ],
             'includes_global_aliases' => true,
             'aliases' => [
+                // name => class
             ],
         ];
 

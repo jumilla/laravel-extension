@@ -67,7 +67,7 @@ class AddonMakeCommand extends Command
      */
     public function handle(Filesystem $filesystem, AddonGenerator $generator)
     {
-        $addon_name = $this->argument('name');
+        $addon_name = preg_replace('#(/+)#', '-', $this->argument('name'));
 
         $output_path = AddonDirectory::path($addon_name);
 
