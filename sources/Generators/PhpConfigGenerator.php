@@ -82,7 +82,7 @@ class PhpConfigGenerator
                 if (is_string($key)) {
                     $this->writeLine(sprintf("'%s' => %s,", $key, (string) $value));
                 } else {
-                    $this->writeLine(sprintf("%s,", (string) $value));
+                    $this->writeLine(sprintf('%s,', (string) $value));
                 }
             } else {
                 if (is_string($key)) {
