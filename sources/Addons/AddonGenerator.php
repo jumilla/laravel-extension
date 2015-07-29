@@ -353,6 +353,8 @@ class AddonGenerator
             $generator->directory('Http/Controllers')
                 ->file('Controller.php')->template('Controller.php', $properties);
             $generator->keepDirectory('Http/Middleware');
+            $generator->directory('Http/Requests')
+                ->file('Request.php')->template('Request.php', $properties);
 
             $generator->keepDirectory('Services');
         });
