@@ -543,7 +543,7 @@ class AddonGenerator
                 ],
                 'route_middlewares' => [
                     'auth' => new ClassName($properties['namespace'].'\Http\Middleware\Authenticate'),
-                    'auth.basic' => new ClassName('Illuminate\Auth\Http\Middleware\AuthenticateWithBasicAuth'),
+                    'auth.basic' => new ClassName('Illuminate\Auth\Middleware\AuthenticateWithBasicAuth'),
                     'guest' => new ClassName($properties['namespace'].'\Http\Middleware\RedirectIfAuthenticated'),
                 ],
             ],
