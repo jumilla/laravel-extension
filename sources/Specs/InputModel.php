@@ -3,8 +3,9 @@
 namespace LaravelPlus\Extension\Specs;
 
 use InvalidArgumentException;
+use Illuminate\Contracts\Support\Arrayable;
 
-class InputModel
+class InputModel implements Arrayable
 {
     /**
      * @var \LaravelPlus\Extension\Specs\InputSpec
@@ -133,5 +134,15 @@ class InputModel
     public function input()
     {
         return $this->in;
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->input();
     }
 }
