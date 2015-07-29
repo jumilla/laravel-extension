@@ -2,22 +2,24 @@
 
 namespace LaravelPlus\Extension\Specs;
 
+use InvalidArgumentException;
+
 class InputModel
 {
     /**
      * @var \LaravelPlus\Extension\Specs\InputSpec
      */
-    private $spec;
+    protected $spec;
 
     /**
      * @var array
      */
-    private $in;
+    protected $in;
 
     /**
      * @var \Illuminate\Validation\Validator
      */
-    private $validator;
+    protected $validator;
 
     /**
      * @param string|\LaravelPlus\Extension\Specs\InputSpec $spec
@@ -42,51 +44,32 @@ class InputModel
         }
 
         $this->spec = $spec;
-        $this->in = $in ?: $this->getInput();
+        $this->in = $in ?: $this->gatherInput();
+
         $rules = $this->spec->rules();
         if (!is_array($rules)) {
-            throw new \InvalidArgumentException('rule specs for "'.$path.'" must array.');
+            throw new InvalidArgumentException("rule specs for '$path' must array.");
         }
+
         $ruleMessages = $this->spec->ruleMessages();
         if (!is_array($ruleMessages)) {
-            throw new \InvalidArgumentException('rule translation for "'.$path.'" must array.');
+            throw new InvalidArgumentException("rule translation for '$path' must array.");
         }
+
         $labels = $this->spec->labels();
         if (!is_array($labels)) {
-            throw new \InvalidArgumentException('rule labels for "'.$path.'" must array.');
+            throw new InvalidArgumentException("rule labels for '$path' must array.");
         }
-        $this->validator = \Validator::make($this->in, $rules, $ruleMessages, $labels);
+
+        $this->validator = app('validator')->make($this->in, $rules, $ruleMessages, $labels);
     }
 
     /**
      * @return array
      */
-    public function getInput()
+    protected function gatherInput()
     {
         return app('request')->only($this->spec->attributes());
-    }
-
-    /**
-     * Dynamically retrieve attributes on the model.
-     *
-     * @param  string  $key
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        return $this->in[$key];
-    }
-
-    /**
-     * Dynamically set attributes on the model.
-     *
-     * @param  string  $key
-     * @param  mixed   $value
-     * @return void
-     */
-    public function __set($key, $value)
-    {
-        $this->in[$key] = $value;
     }
 
     /**
@@ -119,5 +102,36 @@ class InputModel
     public function validator()
     {
         return $this->validator;
+    }
+
+    /**
+     * Dynamically retrieve attributes on the model.
+     *
+     * @param  string  $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return $this->in[$key];
+    }
+
+    /**
+     * Dynamically set attributes on the model.
+     *
+     * @param  string  $key
+     * @param  mixed   $value
+     * @return void
+     */
+    public function __set($key, $value)
+    {
+        $this->in[$key] = $value;
+    }
+
+    /**
+     * @return array
+     */
+    public function input()
+    {
+        return $this->in;
     }
 }
