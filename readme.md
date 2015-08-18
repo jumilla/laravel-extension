@@ -103,7 +103,7 @@ I add on the next command  `blog` is generated as PHP name spatial `Blog` using 
 php artisan make:addon blog ui
 ```
 
-ひな形は9種類から選べます。
+A skeleton can be chosen from 9 kinds.
 
 * `minimum` - Minimum structure.
 * `simple` - The simple construction with the `views` directory and the `route.php`.
