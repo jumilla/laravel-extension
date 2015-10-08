@@ -7,7 +7,8 @@ use Illuminate\Filesystem\Filesystem;
 class AddonDirectory
 {
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     public static function path($name = null)
@@ -20,7 +21,8 @@ class AddonDirectory
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return bool
      */
     public static function exists($name)
@@ -29,7 +31,8 @@ class AddonDirectory
     }
 
     /**
-     * @param  string  $relativeClassName
+     * @param string $relativeClassName
+     *
      * @return string
      */
     public static function classToPath($relativeClassName)
@@ -38,7 +41,8 @@ class AddonDirectory
     }
 
     /**
-     * @param  string  $relativePath
+     * @param string $relativePath
+     *
      * @return mixed
      */
     public static function pathToClass($relativePath)
@@ -57,7 +61,7 @@ class AddonDirectory
      */
     public static function addons()
     {
-        $files = new Filesystem;
+        $files = new Filesystem();
 
         $addonsDirectoryPath = static::path();
 

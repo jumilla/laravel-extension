@@ -11,6 +11,7 @@ class Addon
 {
     /**
      * @param string $path
+     *
      * @return static
      */
     public static function create($path)
@@ -30,6 +31,7 @@ class Addon
 
     /**
      * @param string $path
+     *
      * @return array
      */
     protected static function loadConfig($path, $name)
@@ -55,6 +57,7 @@ class Addon
 
     /**
      * @param string $path
+     *
      * @return static
      */
     public static function createApp($path)
@@ -84,8 +87,8 @@ class Addon
     protected $config;
 
     /**
-     * @param string $name
-     * @param string $path
+     * @param string                        $name
+     * @param string                        $path
      * @param \Illuminate\Config\Repository $config
      */
     public function __construct($name, $path, Repository $config)
@@ -152,8 +155,9 @@ class Addon
     /**
      * get config value.
      *
-     * @param  string $name
-     * @param  mixed  $default
+     * @param string $name
+     * @param mixed  $default
+     *
      * @return mixed
      */
     public function config($name, $default = null)
@@ -164,8 +168,7 @@ class Addon
     /**
      * register addon.
      *
-     * @param  \Illuminate\Foundation\Application $app
-     * @return void
+     * @param \Illuminate\Foundation\Application $app
      */
     public function register($app)
     {
@@ -182,8 +185,7 @@ class Addon
     /**
      * register addon version 4.
      *
-     * @param  \Illuminate\Foundation\Application $app
-     * @return void
+     * @param \Illuminate\Foundation\Application $app
      */
     private function registerV4($app)
     {
@@ -210,8 +212,7 @@ class Addon
     /**
      * register addon version 5.
      *
-     * @param  \Illuminate\Foundation\Application $app
-     * @return void
+     * @param \Illuminate\Foundation\Application $app
      */
     private function registerV5($app)
     {
@@ -225,8 +226,7 @@ class Addon
     /**
      * boot addon.
      *
-     * @param  \Illuminate\Foundation\Application $app
-     * @return void
+     * @param \Illuminate\Foundation\Application $app
      */
     public function boot($app)
     {
@@ -243,8 +243,7 @@ class Addon
     /**
      * boot addon version 4.
      *
-     * @param  \Illuminate\Foundation\Application $app
-     * @return void
+     * @param \Illuminate\Foundation\Application $app
      */
     private function bootV4($app)
     {
@@ -271,8 +270,7 @@ class Addon
     /**
      * boot addon version 5.
      *
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return void
+     * @param \Illuminate\Foundation\Application $app
      */
     private function bootV5($app)
     {
@@ -292,8 +290,7 @@ class Addon
     /**
      * load addon initial script files.
      *
-     * @param  array  $files
-     * @return void
+     * @param array $files
      */
     private function loadFiles(array $files)
     {

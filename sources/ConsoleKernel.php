@@ -8,8 +8,6 @@ abstract class ConsoleKernel extends Kernel
 {
     /**
      * Bootstrap the application for Console.
-     *
-     * @return void
      */
     public function bootstrap()
     {

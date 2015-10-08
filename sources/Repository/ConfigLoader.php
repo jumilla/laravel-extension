@@ -10,14 +10,15 @@ class ConfigLoader
     /**
      * Load the configuration items from all of the files.
      *
-     * @param  string $directoryPath
+     * @param string $directoryPath
+     *
      * @return \Illuminate\Contracts\Config\Repository
      */
     public static function load($directoryPath)
     {
         $config = new Repository();
 
-        (new static)->loadConfigurationFiles($directoryPath, $config);
+        (new static())->loadConfigurationFiles($directoryPath, $config);
 
         return $config;
     }
@@ -25,9 +26,8 @@ class ConfigLoader
     /**
      * Load the configuration items from all of the files.
      *
-     * @param  string $directoryPath
-     * @param  \Illuminate\Contracts\Config\Repository $config
-     * @return void
+     * @param string                                  $directoryPath
+     * @param \Illuminate\Contracts\Config\Repository $config
      */
     protected function loadConfigurationFiles($directoryPath, Repository $config)
     {
@@ -39,7 +39,8 @@ class ConfigLoader
     /**
      * Get all of the configuration files for the directory.
      *
-     * @param  string $directoryPath
+     * @param string $directoryPath
+     *
      * @return array
      */
     protected function getConfigurationFiles($directoryPath)

@@ -8,6 +8,7 @@ class InputSpec
      * rule string or array.
      *
      * @param string $path
+     *
      * @return static
      */
     public static function make($path)
@@ -109,6 +110,7 @@ class InputSpec
 
     /**
      * @param string $name
+     *
      * @return bool
      */
     public function required($name)
@@ -118,6 +120,7 @@ class InputSpec
 
     /**
      * @param string $name
+     *
      * @return string
      */
     public function label($name)
@@ -129,6 +132,7 @@ class InputSpec
 
     /**
      * @param string $name
+     *
      * @return string
      */
     public function helptext($name)
@@ -139,8 +143,9 @@ class InputSpec
     }
 
     /**
-     * @param mixed $ruleOrRules
+     * @param mixed  $ruleOrRules
      * @param string $name
+     *
      * @return bool
      */
     protected function hasRule($ruleOrRules, $name)
@@ -155,8 +160,9 @@ class InputSpec
     }
 
     /**
-     * @param array $rules
+     * @param array  $rules
      * @param string $name
+     *
      * @return bool
      */
     private function hasRuleInArray(array $rules, $name)
@@ -171,7 +177,6 @@ class InputSpec
     }
 
     /**
-     * @return void
      */
     private function resolveSpecReferences()
     {
@@ -192,6 +197,7 @@ class InputSpec
 
     /**
      * @param string $path
+     *
      * @return string
      */
     private function fullpath($path)

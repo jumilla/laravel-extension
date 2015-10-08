@@ -6,6 +6,7 @@ class ClassName
 {
     /**
      * Class name.
+     *
      * @var string
      */
     protected $name;

@@ -7,6 +7,7 @@ class FormModel
     /**
      * @param string $id
      * @param string $path
+     *
      * @return static
      */
     public static function make($id, $path)
@@ -16,12 +17,14 @@ class FormModel
 
     /**
      *	Form name for HTML Element.
+     *
      *	@var string
      */
     protected $id;
 
     /**
      *	Form spec.
+     *
      *	@var \LaravelPlus\Extension\Specs\InputSpec
      */
     protected $spec;
@@ -46,6 +49,7 @@ class FormModel
 
     /**
      * @param $fieldName
+     *
      * @return string
      */
     public function fieldId($fieldName)
@@ -55,6 +59,7 @@ class FormModel
 
     /**
      * @param string $method
+     *
      * @return array $arguments
      * @return mixed
      */

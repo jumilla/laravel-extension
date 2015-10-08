@@ -27,8 +27,6 @@ class TailCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle()
     {
@@ -87,7 +85,8 @@ class TailCommand extends Command
     /**
      * Tail a local log file for the application.
      *
-     * @param  string  $path
+     * @param string $path
+     *
      * @return string
      */
     protected function tailLocalLogs($path)
@@ -104,7 +103,8 @@ class TailCommand extends Command
     /**
      * Get the path to the Laravel log file.
      *
-     * @param  string  $connection
+     * @param string $connection
+     *
      * @return string
      */
     protected function getRemotePath($connection)
@@ -136,7 +136,8 @@ class TailCommand extends Command
     /**
      * Get the path to the Laravel install root.
      *
-     * @param  string  $connection
+     * @param string $connection
+     *
      * @return string
      */
     protected function getRoot($connection)
@@ -147,9 +148,8 @@ class TailCommand extends Command
     /**
      * Tail a remote log file at the given path and connection.
      *
-     * @param  string  $path
-     * @param  string  $connection
-     * @return void
+     * @param string $path
+     * @param string $connection
      */
     protected function tailRemoteLogs($path, $connection)
     {
@@ -165,7 +165,8 @@ class TailCommand extends Command
     /**
      * Get a connection to the remote server.
      *
-     * @param  string  $connection
+     * @param string $connection
+     *
      * @return \Illuminate\Remote\Connection
      */
     protected function getRemote($connection)

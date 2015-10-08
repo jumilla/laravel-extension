@@ -2,7 +2,6 @@
 
 namespace LaravelPlus\Extension\Repository;
 
-use Closure;
 use ArrayAccess;
 use Illuminate\Support\NamespacedItemResolver;
 
@@ -25,7 +24,7 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Create a new configuration repository.
      *
-     * @param  \LaravelPlus\Extension\Repository\LoaderInterface  $loader
+     * @param \LaravelPlus\Extension\Repository\LoaderInterface $loader
      */
     public function __construct(LoaderInterface $loader)
     {
@@ -35,7 +34,8 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Determine if the given configuration value exists.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return bool
      */
     public function has($key)
@@ -48,7 +48,8 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Determine if a configuration group exists.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return bool
      */
     public function hasGroup($key)
@@ -61,8 +62,9 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Get the specified configuration value.
      *
-     * @param  string  $key
-     * @param  mixed   $default
+     * @param string $key
+     * @param mixed  $default
+     *
      * @return mixed
      */
     public function get($key, $default = null)
@@ -82,9 +84,8 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Set a given configuration value.
      *
-     * @param  string  $key
-     * @param  mixed   $value
-     * @return void
+     * @param string $key
+     * @param mixed  $value
      */
     public function set($key, $value)
     {
@@ -107,10 +108,9 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Load the configuration group for the key.
      *
-     * @param  string  $group
-     * @param  string  $namespace
-     * @param  string  $collection
-     * @return void
+     * @param string $group
+     * @param string $namespace
+     * @param string $collection
      */
     protected function load($group, $namespace, $collection)
     {
@@ -129,8 +129,9 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Get the configuration namespace for a package.
      *
-     * @param  string  $package
-     * @param  string  $namespace
+     * @param string $package
+     * @param string $namespace
+     *
      * @return string
      */
     protected function getPackageNamespace($package, $namespace)
@@ -145,8 +146,9 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Get the collection identifier.
      *
-     * @param  string  $group
-     * @param  string  $namespace
+     * @param string $group
+     * @param string $namespace
+     *
      * @return string
      */
     protected function getCollection($group, $namespace = null)
@@ -159,9 +161,8 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Add a new namespace to the loader.
      *
-     * @param  string  $namespace
-     * @param  string  $hint
-     * @return void
+     * @param string $namespace
+     * @param string $hint
      */
     public function addNamespace($namespace, $hint)
     {
@@ -192,8 +193,7 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Set the loader implementation.
      *
-     * @param  \LaravelPlus\Extension\Repository\LoaderInterface  $loader
-     * @return void
+     * @param \LaravelPlus\Extension\Repository\LoaderInterface $loader
      */
     public function setLoader(LoaderInterface $loader)
     {
@@ -213,7 +213,8 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Determine if the given configuration option exists.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return bool
      */
     public function offsetExists($key)
@@ -224,7 +225,8 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Get a configuration option.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return mixed
      */
     public function offsetGet($key)
@@ -235,9 +237,8 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Set a configuration option.
      *
-     * @param  string  $key
-     * @param  mixed  $value
-     * @return void
+     * @param string $key
+     * @param mixed  $value
      */
     public function offsetSet($key, $value)
     {
@@ -247,8 +248,7 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Unset a configuration option.
      *
-     * @param  string  $key
-     * @return void
+     * @param string $key
      */
     public function offsetUnset($key)
     {

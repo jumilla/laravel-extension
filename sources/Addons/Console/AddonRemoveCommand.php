@@ -5,6 +5,7 @@ namespace LaravelPlus\Extension\Addons\Console;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use LaravelPlus\Extension\Addons\AddonDirectory;
+use UnexpectedValueException;
 
 class AddonRemoveCommand extends Command
 {
@@ -41,9 +42,7 @@ class AddonRemoveCommand extends Command
 
         // check addon
         if (!AddonDirectory::exists($addonName)) {
-            $this->error(sprintf('Addon "%s" is not found.', $addonName));
-
-            return;
+            throw new UnexpectedValueException(sprintf('Addon "%s" is not found.', $addonName));
         }
 
         // confirm

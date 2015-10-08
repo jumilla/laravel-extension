@@ -3,7 +3,6 @@
 trait MockeryTrait
 {
     /**
-     * @return void
      */
     public function tearDown()
     {
@@ -11,9 +10,10 @@ trait MockeryTrait
     }
 
     /**
-     * @param  string $class
-     * @param  array $overrides
-     * @param  overrides $callback
+     * @param string    $class
+     * @param array     $overrides
+     * @param overrides $callback
+     *
      * @return \Mockery\MockInterface
      */
     protected function createMock($class, array $overrides = null, callable $callback = null)

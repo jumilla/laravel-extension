@@ -8,8 +8,6 @@ abstract class HttpKernel extends Kernel
 {
     /**
      * Bootstrap the application for HTTP requests.
-     *
-     * @return void
      */
     public function bootstrap()
     {

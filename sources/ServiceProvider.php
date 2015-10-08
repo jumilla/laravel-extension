@@ -2,13 +2,10 @@
 
 namespace LaravelPlus\Extension;
 
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Blade;
 use LaravelPlus\Extension\Addons\Addon;
-use LaravelPlus\Extension\Addons\AddonDirectory;
 use LaravelPlus\Extension\Addons\AddonClassLoader;
 use LaravelPlus\Extension\Addons\AddonGenerator;
-use LaravelPlus\Extension\Repository;
 use LaravelPlus\Extension\Templates\BladeExtension;
 use Jumilla\Versionia\Laravel\Migrator;
 
@@ -36,9 +33,32 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         'command+.database.rollback' => Database\Console\DatabaseRollbackCommand::class,
         'command+.database.again' => Database\Console\DatabaseAgainCommand::class,
         'command+.database.seed' => Database\Console\DatabaseSeedCommand::class,
+        'command+.migration.make' => Database\Console\MigrationMakeCommand::class,
+        'command+.seeder.make' => Database\Console\SeederMakeCommand::class,
 // hash:
         'command+.hash.make' => Console\HashMakeCommand::class,
         'command+.hash.check' => Console\HashCheckCommand::class,
+    ];
+
+    /**
+     * @var array
+     */
+    protected static $extend_commands = [
+        'command.console.make' => Console\ConsoleMakeCommand::class,
+        'command.controller.make' => Console\ControllerMakeCommand::class,
+        'command.event.make' => Console\EventMakeCommand::class,
+        'command.job.make' => Console\JobMakeCommand::class,
+        'command.listener.make' => Console\ListenerMakeCommand::class,
+        'command.middleware.make' => Console\MiddlewareMakeCommand::class,
+        'command.model.make' => Console\ModelMakeCommand::class,
+        'command.policy.make' => Console\PolicyMakeCommand::class,
+        'command.provider.make' => Console\ProviderMakeCommand::class,
+        'command.request.make' => Console\RequestMakeCommand::class,
+        'command.test.make' => Console\TestMakeCommand::class,
+
+        'command.command.make' => Console\DummyCommand::class,
+        'command.handler.command' => Console\DummyCommand::class,
+        'command.handler.event' => Console\DummyCommand::class,
     ];
 
     /**
@@ -55,8 +75,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -74,7 +92,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         // register addon generator
         $app->singleton('addons.generator', function ($app) {
-            return new AddonGenerator;
+            return new AddonGenerator();
         });
         $app->alias('addons.generator', AddonGenerator::class);
 
@@ -91,7 +109,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
-     * @return void
      */
     protected function registerClassResolvers()
     {
@@ -101,7 +118,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
-     * @return void
      */
     protected function registerAddons()
     {
@@ -113,13 +129,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
     public function boot()
     {
         // Add package commands
-        $this->setupCommands(static::$commands);
+        $this->setupPackageCommands(static::$commands);
+
+        // Add extend framework commands
+        $this->setupExtendCommands(static::$extend_commands);
 
         //
         $this->registerBladeExtensions();
@@ -131,14 +148,13 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     /**
      * setup package's commands.
      *
-     * @param  array  $commands
-     * @return void
+     * @param array $commands
      */
-    protected function setupCommands($commands)
+    protected function setupPackageCommands($commands)
     {
         foreach ($commands as $name => $class) {
             $this->app->singleton($name, function ($app) use ($class) {
-                return new $class($app);
+                return $app->build($class);
             });
         }
 
@@ -147,9 +163,21 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
-     * register blade extensions.
+     * setup extend framework's commands.
      *
-     * @return void
+     * @param array $commands
+     */
+    protected function setupExtendCommands($commands)
+    {
+        foreach ($commands as $name => $class) {
+            $this->app->extend($name, function ($instance, $app) use ($class) {
+                return $app->build($class);
+            });
+        }
+    }
+
+    /**
+     * register blade extensions.
      */
     protected function registerBladeExtensions()
     {
@@ -160,8 +188,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     /**
      * setup & boot addons.
-     *
-     * @return void
      */
     protected function bootAddons()
     {
@@ -177,9 +203,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     /**
      * Register the package's component namespaces.
      *
-     * @param  string  $namespace
-     * @param  \LaravelPlus\Extension\Addons\Addon  $addon
-     * @return void
+     * @param string                              $namespace
+     * @param \LaravelPlus\Extension\Addons\Addon $addon
      */
     protected function registerPackage($namespace, $addon)
     {

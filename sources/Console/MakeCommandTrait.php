@@ -20,6 +20,7 @@ trait MakeCommandTrait
      * Choose skeleton by command line parameter or dialog.
      *
      * @param string $skeleton
+     *
      * @return string
      */
     protected function chooseSkeleton($skeleton)

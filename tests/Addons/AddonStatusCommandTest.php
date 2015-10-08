@@ -13,18 +13,18 @@ class AddonStatusCommandTest extends TestCase
     {
         // 1. setup
         $app = $this->createApplication();
-        $app['config'] = new Illuminate\Config\Repository([]);
-        $app['files'] = new Illuminate\Filesystem\Filesystem();
-        $app['path.base'] = __DIR__.'/../sandbox';
-        $app['path.config'] = __DIR__.'/../sandbox/config';
-
-        @mkdir($app['path.config'], 0755, true);
 
         // 2. condition
 
         // 3. test
         $command = new Command();
 
-        $this->runCommand($app, $command);
+        try {
+            $result = $this->runCommand($app, $command);
+
+            Assert::same(0, $result);
+        } catch (RuntimeException $ex) {
+            Assert::failed($ex->getMessage());
+        }
     }
 }

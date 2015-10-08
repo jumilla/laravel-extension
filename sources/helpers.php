@@ -2,7 +2,8 @@
 
 if (!function_exists('addon_name')) {
     /**
-     * @param  string  $class
+     * @param string $class
+     *
      * @return string|null
      */
     function addon_name($class = null)
@@ -29,7 +30,8 @@ if (!function_exists('addon_name')) {
 
 if (!function_exists('addon_namespace')) {
     /**
-     * @param  string  $class
+     * @param string $class
+     *
      * @return string
      */
     function addon_namespace($class = null)
@@ -52,7 +54,8 @@ if (!function_exists('addon_namespace')) {
 
 if (!function_exists('addon')) {
     /**
-     * @param  string  $name Addon name.
+     * @param string $name Addon name.
+     *
      * @return \LaravelPlus\Extension\Addons\Addon
      */
     function addon($name)
@@ -63,8 +66,9 @@ if (!function_exists('addon')) {
 
 if (!function_exists('addon_path')) {
     /**
-     * @param  string  $name Addon name.
-     * @param  string|null  $path
+     * @param string      $name Addon name.
+     * @param string|null $path
+     *
      * @return mixed
      */
     function addon_path($name, $path = null)
@@ -75,9 +79,10 @@ if (!function_exists('addon_path')) {
 
 if (!function_exists('addon_config')) {
     /**
-     * @param  string  $name Addon name.
-     * @param  string  $key
-     * @param  mixed   $value
+     * @param string $name  Addon name.
+     * @param string $key
+     * @param mixed  $value
+     *
      * @return mixed
      */
     function addon_config($name, $key, $value = null)
@@ -88,9 +93,10 @@ if (!function_exists('addon_config')) {
 
 if (!function_exists('addon_trans')) {
     /**
-     * @param  string  $name
-     * @param  string  $id
+     * @param string $name
+     * @param string $id
      * @param  ...
+     *
      * @return string
      */
     function addon_trans($name, $id)
@@ -106,9 +112,10 @@ if (!function_exists('addon_trans')) {
 
 if (!function_exists('addon_trans_choice')) {
     /**
-     * @param  string  $name
-     * @param  string  $id
+     * @param string $name
+     * @param string $id
      * @param  ...
+     *
      * @return string
      */
     function addon_trans_choice($name, $id)
@@ -124,9 +131,10 @@ if (!function_exists('addon_trans_choice')) {
 
 if (!function_exists('addon_spec')) {
     /**
-     * @param  string  $name
-     * @param  string  $id
+     * @param string $name
+     * @param string $id
      * @param  ...
+     *
      * @return string
      */
     function addon_spec($name, $id)
@@ -142,9 +150,10 @@ if (!function_exists('addon_spec')) {
 
 if (!function_exists('addon_view')) {
     /**
-     * @param  string  $name
-     * @param  string  $id
+     * @param string $name
+     * @param string $id
      * @param  ...
+     *
      * @return \Illuminate\View\View
      */
     function addon_view($name, $id)

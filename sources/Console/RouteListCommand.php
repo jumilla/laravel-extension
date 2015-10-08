@@ -9,11 +9,11 @@ use Illuminate\Foundation\Console\RouteListCommand as BaseCommand;
 class RouteListCommand extends BaseCommand
 {
     /**
-     * The console command name.
+     * The console command singature.
      *
      * @var string
      */
-    protected $name = 'route';
+    protected $singature = 'route';
 
     /**
      * The console command description.
@@ -25,7 +25,7 @@ class RouteListCommand extends BaseCommand
     /**
      * Create a new route command instance.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
      */
     public function __construct(Application $app)
     {

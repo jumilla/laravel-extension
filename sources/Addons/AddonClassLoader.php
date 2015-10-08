@@ -11,7 +11,6 @@ class AddonClassLoader
 
     /**
      * @param array $addons
-     * @return void
      */
     public static function register($addons)
     {
@@ -23,7 +22,6 @@ class AddonClassLoader
     }
 
     /**
-     * @return void
      */
     public static function unregister()
     {
@@ -44,6 +42,7 @@ class AddonClassLoader
 
     /**
      * @param string $className
+     *
      * @return bool
      */
     public function load($className)

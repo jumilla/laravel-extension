@@ -19,4 +19,9 @@ final class Assert
             static::contains($value, $provides);
         }
     }
+
+    public static function failed($message)
+    {
+        static::equals(null, $message);
+    }
 }

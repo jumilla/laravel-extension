@@ -24,7 +24,8 @@ class InputModel implements Arrayable
 
     /**
      * @param string|\LaravelPlus\Extension\Specs\InputSpec $spec
-     * @param array $in
+     * @param array                                         $in
+     *
      * @return static
      */
     public static function make($spec, array $in = null)
@@ -36,7 +37,7 @@ class InputModel implements Arrayable
 
     /**
      * @param string|\LaravelPlus\Extension\Specs\InputSpec $spec
-     * @param array $in
+     * @param array                                         $in
      */
     public function __construct($spec, array $in = null)
     {
@@ -108,7 +109,8 @@ class InputModel implements Arrayable
     /**
      * Dynamically retrieve attributes on the model.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return mixed
      */
     public function __get($key)
@@ -119,9 +121,8 @@ class InputModel implements Arrayable
     /**
      * Dynamically set attributes on the model.
      *
-     * @param  string  $key
-     * @param  mixed   $value
-     * @return void
+     * @param string $key
+     * @param mixed  $value
      */
     public function __set($key, $value)
     {

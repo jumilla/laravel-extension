@@ -81,7 +81,7 @@ class AddonCheckCommand extends Command
             }
 
             // recursive find files
-            $phpFilePaths = iterator_to_array((new Finder)->in($classDirectoryPath)->name('*.php')->files(), false);
+            $phpFilePaths = iterator_to_array((new Finder())->in($classDirectoryPath)->name('*.php')->files(), false);
 
             foreach ($phpFilePaths as $phpFilePath) {
                 $relativePath = substr($phpFilePath, strlen($classDirectoryPath) + 1);

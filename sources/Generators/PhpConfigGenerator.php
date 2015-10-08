@@ -6,11 +6,12 @@ class PhpConfigGenerator
 {
     /**
      * @param array $config
+     *
      * @return static
      */
     public static function generateText(array $config)
     {
-        $instance = new static;
+        $instance = new static();
 
         return $instance->generate($config);
     }
@@ -27,6 +28,7 @@ class PhpConfigGenerator
 
     /**
      * @param array $config
+     *
      * @return string
      */
     public function generate(array $config)
@@ -43,7 +45,6 @@ class PhpConfigGenerator
 
     /**
      * @param array $config
-     * @return void
      */
     private function generateArray(array $config)
     {
@@ -98,7 +99,6 @@ class PhpConfigGenerator
 
     /**
      * @param string $line
-     * @return void
      */
     private function writeLine($line)
     {

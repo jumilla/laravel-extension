@@ -24,6 +24,7 @@ class FileGenerator
     /**
      * @param string $outbox_path
      * @param string $stubbox_path
+     *
      * @return static
      */
     public static function make($outbox_path, $stubbox_path)
@@ -49,7 +50,7 @@ class FileGenerator
     /**
      * @param \Illuminate\Contracts\Filesystem $outbox
      * @param \Illuminate\Contracts\Filesystem $stubbox
-     * @param \stdClass $context
+     * @param \stdClass                        $context
      */
     public function __construct($outbox, $stubbox, $context)
     {
@@ -59,8 +60,9 @@ class FileGenerator
     }
 
     /**
-     * @param string $path
+     * @param string   $path
      * @param callable $callable
+     *
      * @return static
      */
     public function directory($path, callable $callable = null)

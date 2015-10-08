@@ -14,7 +14,6 @@ class AliasResolver
     /**
      * @param array $addons
      * @param array $aliases
-     * @return void
      */
     public static function register(array $addons, array $aliases)
     {
@@ -26,7 +25,6 @@ class AliasResolver
     }
 
     /**
-     * @return void
      */
     public static function unregister()
     {
@@ -57,6 +55,7 @@ class AliasResolver
 
     /**
      * @param string $className
+     *
      * @return bool
      */
     public function load($className)

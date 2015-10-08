@@ -2,12 +2,12 @@
 
 namespace LaravelPlus\Extension\Addons\Console;
 
-use InvalidArgumentException;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 use LaravelPlus\Extension\Addons\Addon;
+use UnexpectedValueException;
 
 class AddonNameCommand extends Command
 {
@@ -60,7 +60,7 @@ class AddonNameCommand extends Command
         $addonName = $this->argument('addon');
 
         if (!AddonDirectory::exists($addonName)) {
-            throw new InvalidArgumentException("Addon '$addonName' is not found.");
+            throw new UnexpectedValueException("Addon '$addonName' is not found.");
         }
 
         $this->addon = Addon::create(AddonDirectory::path($addonName));
@@ -82,8 +82,6 @@ class AddonNameCommand extends Command
 
     /**
      * Set the namespace in addon.php, adon.json file.
-     *
-     * @return void
      */
     protected function setAddonNamespaces()
     {
@@ -93,8 +91,6 @@ class AddonNameCommand extends Command
 
     /**
      * Set the namespace in addon.php file.
-     *
-     * @return void
      */
     protected function setAddonConfigNamespaces()
     {
@@ -119,8 +115,6 @@ class AddonNameCommand extends Command
 
     /**
      * Set the namespace in addon.json file.
-     *
-     * @return void
      */
     protected function setAddonJsonNamespaces()
     {
@@ -146,8 +140,6 @@ class AddonNameCommand extends Command
 
     /**
      * Set the PSR-4 namespace in the Composer file.
-     *
-     * @return void
      */
     protected function setComposerNamespace()
     {
@@ -160,8 +152,6 @@ class AddonNameCommand extends Command
 
     /**
      * Set the namespace on the files in the class directory.
-     *
-     * @return void
      */
     protected function setClassNamespace()
     {
@@ -190,25 +180,26 @@ class AddonNameCommand extends Command
 
     /**
      * Set the namespace in the appropriate configuration files.
-     *
-     * @return void
      */
     protected function setConfigNamespaces()
     {
-        $files = Finder::create()
-            ->in($this->addon->path($this->addon->config('paths.config', 'config')))
-            ->name('*.php');
+        $configPath = $this->addon->path($this->addon->config('paths.config', 'config'));
 
-        foreach ($files as $file) {
-            $this->replaceConfigNamespaces($file->getRealPath());
+        if ($this->filesystem->isDirectory($configPath)) {
+            $files = Finder::create()
+                ->in($configPath)
+                ->name('*.php');
+
+            foreach ($files as $file) {
+                $this->replaceConfigNamespaces($file->getRealPath());
+            }
         }
     }
 
     /**
      * Replace the namespace in PHP configuration file.
      *
-     * @param  string  $path
-     * @return void
+     * @param string $path
      */
     protected function replaceConfigNamespaces($path)
     {
@@ -230,10 +221,9 @@ class AddonNameCommand extends Command
     /**
      * Replace the given string in the given file.
      *
-     * @param  string  $path
-     * @param  string|array  $search
-     * @param  string|array  $replace
-     * @return void
+     * @param string       $path
+     * @param string|array $search
+     * @param string|array $replace
      */
     protected function replaceIn($path, $search, $replace)
     {

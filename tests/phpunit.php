@@ -25,25 +25,6 @@ require __DIR__.'/TestCase.php';
 
 /*
 |--------------------------------------------------------------------------
-| Illuminate Foundation Stub
-|--------------------------------------------------------------------------
-*/
-
-function app($name = null)
-{
-    if ($name === null) {
-        return $GLOBALS['app'];
-    } else {
-        return $GLOBALS['app']->make($name);
-    }
-}
-
-require __DIR__.'/Illuminate_Foundation.php';
-require __DIR__.'/Illuminate_Foundation_Console.php';
-require __DIR__.'/Illuminate_Foundation_Http.php';
-
-/*
-|--------------------------------------------------------------------------
 | Set The Default Timezone
 |--------------------------------------------------------------------------
 |

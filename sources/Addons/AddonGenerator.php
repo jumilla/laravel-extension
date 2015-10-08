@@ -2,19 +2,15 @@
 
 namespace LaravelPlus\Extension\Addons;
 
-use Illuminate\Config\Repository;
 use LaravelPlus\Extension\Generators\ClassName;
 use LaravelPlus\Extension\Generators\FileGenerator;
-use LaravelPlus\Extension\Addons\AddonDirectory;
-use Exception;
 
 class AddonGenerator
 {
     /**
      * @param string $path
      * @param string $type
-     * @param array $properties
-     * @return void
+     * @param array  $properties
      */
     public function generateAddon($path, $type, array $properties)
     {

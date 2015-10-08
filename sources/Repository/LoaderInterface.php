@@ -7,8 +7,9 @@ interface LoaderInterface
     /**
      * Load the given configuration group.
      *
-     * @param  string  $group
-     * @param  string  $namespace
+     * @param string $group
+     * @param string $namespace
+     *
      * @return array
      */
     public function load($group, $namespace = null);
@@ -16,8 +17,9 @@ interface LoaderInterface
     /**
      * Determine if the given configuration group exists.
      *
-     * @param  string  $group
-     * @param  string  $namespace
+     * @param string $group
+     * @param string $namespace
+     *
      * @return bool
      */
     public function exists($group, $namespace = null);
@@ -25,9 +27,8 @@ interface LoaderInterface
     /**
      * Add a new namespace to the loader.
      *
-     * @param  string  $namespace
-     * @param  string  $hint
-     * @return void
+     * @param string $namespace
+     * @param string $hint
      */
     public function addNamespace($namespace, $hint);
 

@@ -37,8 +37,8 @@ class FileLoader implements LoaderInterface
     /**
      * Create a new file configuration loader.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @param  string  $defaultPath
+     * @param \Illuminate\Filesystem\Filesystem $files
+     * @param string                            $defaultPath
      */
     public function __construct(Filesystem $files, $defaultPath)
     {
@@ -49,8 +49,9 @@ class FileLoader implements LoaderInterface
     /**
      * Load the given configuration group.
      *
-     * @param  string  $group
-     * @param  string  $namespace
+     * @param string $group
+     * @param string $namespace
+     *
      * @return array
      */
     public function load($group, $namespace = null)
@@ -75,8 +76,9 @@ class FileLoader implements LoaderInterface
     /**
      * Determine if the given group exists.
      *
-     * @param  string  $group
-     * @param  string  $namespace
+     * @param string $group
+     * @param string $namespace
+     *
      * @return bool
      */
     public function exists($group, $namespace = null)
@@ -112,7 +114,8 @@ class FileLoader implements LoaderInterface
     /**
      * Get the configuration path for a namespace.
      *
-     * @param  string  $namespace
+     * @param string $namespace
+     *
      * @return string
      */
     protected function getPath($namespace)
@@ -127,9 +130,8 @@ class FileLoader implements LoaderInterface
     /**
      * Add a new namespace to the loader.
      *
-     * @param  string  $namespace
-     * @param  string  $hint
-     * @return void
+     * @param string $namespace
+     * @param string $hint
      */
     public function addNamespace($namespace, $hint)
     {
@@ -150,7 +152,8 @@ class FileLoader implements LoaderInterface
     /**
      * Get a file's contents by requiring it.
      *
-     * @param  string  $path
+     * @param string $path
+     *
      * @return mixed
      */
     protected function getRequire($path)

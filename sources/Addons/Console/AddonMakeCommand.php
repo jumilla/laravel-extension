@@ -7,11 +7,12 @@ use Illuminate\Filesystem\Filesystem;
 use LaravelPlus\Extension\Console\MakeCommandTrait;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 use LaravelPlus\Extension\Addons\AddonGenerator;
-use InvalidArgumentException;
+use UnexpectedValueException;
 use Exception;
 
 /**
  * Modules console commands.
+ *
  * @author Fumio Furukawa <fumio.furukawa@gmail.com>
  */
 class AddonMakeCommand extends Command
@@ -63,6 +64,7 @@ class AddonMakeCommand extends Command
      * Execute the console command.
      *
      * @param \LaravelPlus\Extension\Addons\AddonGenerator $generator
+     *
      * @return mixed
      */
     public function handle(Filesystem $filesystem, AddonGenerator $generator)
@@ -72,7 +74,7 @@ class AddonMakeCommand extends Command
         $output_path = AddonDirectory::path($addon_name);
 
         if ($filesystem->exists($output_path)) {
-            throw new InvalidArgumentException("addon directory '{$addon_name}' is already exists.");
+            throw new UnexpectedValueException("addon directory '{$addon_name}' is already exists.");
         }
 
         $skeleton = $this->chooseSkeleton($this->argument('skeleton'));

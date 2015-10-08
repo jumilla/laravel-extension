@@ -1,5 +1,6 @@
 /vendor
 /report
+/tests/sandbox
 composer.phar
 composer.lock
 .DS_Store

@@ -13,14 +13,7 @@
 	],
 	"require": {
 		"php": ">=5.5.9",
-        "symfony/console": "2.7.3",
-        "illuminate/config": "5.1.*",
-        "illuminate/console": "5.1.*",
-        "illuminate/container": "5.1.*",
-        "illuminate/contracts": "5.1.*",
-        "illuminate/database": "5.1.*",
-        "illuminate/filesystem": "5.1.*",
-        "illuminate/support": "5.1.*",
+        "laravel/framework": "5.1.*",
 		"jumilla/laravel-versionia": "~1.0"
 	},
     "require-dev": {

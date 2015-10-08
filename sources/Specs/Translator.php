@@ -6,7 +6,8 @@ class Translator
 {
     /**
      * @param string $path
-     * @param mixed $default
+     * @param mixed  $default
+     *
      * @return mixed
      */
     public static function translate($path, $default = false)
@@ -24,6 +25,7 @@ class Translator
 
     /**
      * @param string $namespace
+     *
      * @return static
      */
     public static function make($namespace)
@@ -46,7 +48,8 @@ class Translator
 
     /**
      * @param string $path
-     * @param mixed $default
+     * @param mixed  $default
+     *
      * @return mixed
      */
     public function get($path, $default = false)
@@ -67,6 +70,7 @@ class Translator
     /**
      * @param string $string
      * @param string $default
+     *
      * @return string
      */
     public function resolve($string, $default = false)
@@ -82,6 +86,7 @@ class Translator
 
     /**
      * @param string $path
+     *
      * @return string
      */
     private function fullpath($path)
