@@ -85,6 +85,10 @@ class MigrationMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
+        if ($this->stub) {
+            return $this->stub;
+        }
+
         if ($this->option('create')) {
             return __DIR__.'/stubs/migration-create.stub';
         } elseif ($this->option('update')) {

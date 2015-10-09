@@ -38,14 +38,4 @@ class ConsoleMakeCommand extends BaseCommand
     {
         return $addon->path('classes');
     }
-
-    /**
-     * Get the stub file for the generator.
-     *
-     * @return string
-     */
-    protected function getStub()
-    {
-        return parent::getStub();
-    }
 }

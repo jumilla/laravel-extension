@@ -37,14 +37,4 @@ class TestMakeCommand extends BaseCommand
     {
         return $addon->path('tests');
     }
-
-    /**
-     * Get the stub file for the generator.
-     *
-     * @return string
-     */
-    protected function getStub()
-    {
-        return parent::getStub();
-    }
 }

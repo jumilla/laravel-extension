@@ -92,7 +92,7 @@ class ModelMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return __DIR__.'/stubs/model.stub';
+        return $this->stub ?: __DIR__.'/stubs/model.stub';
     }
 
     /**

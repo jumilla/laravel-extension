@@ -11,7 +11,7 @@ class DummyCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = '_';
+    protected $signature = "_";
 
     /**
      * Execute the console command.
@@ -20,5 +20,6 @@ class DummyCommand extends BaseCommand
      */
     public function handle()
     {
+        $this->info('This is the dummy command. no effect.');
     }
 }

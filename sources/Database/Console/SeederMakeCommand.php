@@ -28,6 +28,13 @@ class SeederMakeCommand extends BaseCommand
     protected $description = '[+] Create a new seeder class';
 
     /**
+     * The type of class being generated.
+     *
+     * @var string
+     */
+    protected $type = 'Seeder';
+
+    /**
      * Get the destination class base path.
      *
      * @param \LaravelPlus\Extension\Addons\Addon $addon
@@ -75,6 +82,6 @@ class SeederMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return __DIR__.'/stubs/seeder.stub';
+        return $this->stub ?: __DIR__.'/stubs/seeder.stub';
     }
 }

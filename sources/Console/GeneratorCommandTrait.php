@@ -17,6 +17,13 @@ trait GeneratorCommandTrait
     protected $addon;
 
     /**
+     * stub file path.
+     *
+     * @var string
+     */
+    protected $stub;
+
+    /**
      * Execute the console command.
      */
     public function fire()
@@ -26,6 +33,11 @@ trait GeneratorCommandTrait
         return parent::fire();
     }
 
+    /**
+     * Get addon.
+     *
+     * @return string
+     */
     protected function getAddon()
     {
         if ($addon = $this->option('addon')) {
@@ -114,5 +126,25 @@ trait GeneratorCommandTrait
         }
 
         return $content;
+    }
+
+    /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    public function getStub()
+    {
+        return $this->stub ?: parent::getStub();
+    }
+
+    /**
+     * Set the stub file for the generator.
+     *
+     * @@param string $path
+     */
+    public function setStub($path)
+    {
+        $this->stub = $path;
     }
 }

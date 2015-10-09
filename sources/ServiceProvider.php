@@ -56,6 +56,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         'command.request.make' => Console\RequestMakeCommand::class,
         'command.test.make' => Console\TestMakeCommand::class,
 
+        // legacy commands
         'command.command.make' => Console\DummyCommand::class,
         'command.handler.command' => Console\DummyCommand::class,
         'command.handler.event' => Console\DummyCommand::class,
