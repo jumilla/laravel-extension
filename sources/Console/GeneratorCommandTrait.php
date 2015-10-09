@@ -122,6 +122,9 @@ trait GeneratorCommandTrait
             if (is_array($value)) {
                 $value = implode(', ', $value);
             }
+
+            // expand `{$variable}`
+            // MEMO: allow space, ex) { $variable }
             $content = preg_replace('/\{\s*\$'.$name.'\s*\}/', $value, $content);
         }
 
