@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/jumilla/laravel-extension.svg)](https://travis-ci.org/jumilla/laravel-extension)
 [![Quality Score](https://img.shields.io/scrutinizer/g/jumilla/laravel-extension.svg?style=flat)](https://scrutinizer-ci.com/g/jumilla/laravel-extension)
 [![Latest Stable Version](https://poser.pugx.org/laravel-plus/extension/v/stable.svg)](https://packagist.org/packages/laravel-plus/extension)
-[![Total Downloads](https://poser.pugx.org/laravel-plus/extension/d/total.svg)](https://packagist.org/packages/extension)
+[![Total Downloads](https://poser.pugx.org/laravel-plus/extension/d/total.svg)](https://packagist.org/packages/laravel-plus/extension)
 [![Software License](https://poser.pugx.org/laravel-plus/extension/license.svg)](https://packagist.org/packages/laravel-plus/extension)
 
 [日本語ドキュメント - Japanese](readme-ja.md)
