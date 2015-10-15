@@ -14,6 +14,7 @@ class TailCommand extends Command
      * @var string
      */
     protected $signature = 'tail
+        {connection? : The name of remote.}
         {--path= : The fully qualified path to the log file.}
         {--lines=20 : The number of lines to tail.}
     ';
