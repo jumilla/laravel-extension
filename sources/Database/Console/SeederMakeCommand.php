@@ -2,9 +2,9 @@
 
 namespace LaravelPlus\Extension\Database\Console;
 
-use Illuminate\Console\GeneratorCommand as BaseCommand;
+use Jumilla\Versionia\Laravel\Console\SeederMakeCommand as BaseCommand;
 use LaravelPlus\Extension\Addons\Addon;
-use LaravelPlus\Extension\Console\GeneratorCommandTrait;
+use LaravelPlus\Extension\Generators\GeneratorCommandTrait;
 
 class SeederMakeCommand extends BaseCommand
 {
@@ -28,60 +28,12 @@ class SeederMakeCommand extends BaseCommand
     protected $description = '[+] Create a new seeder class';
 
     /**
-     * The type of class being generated.
-     *
-     * @var string
+     * The constructor.
      */
-    protected $type = 'Seeder';
-
-    /**
-     * Get the destination class base path.
-     *
-     * @param \LaravelPlus\Extension\Addons\Addon $addon
-     *
-     * @return string
-     */
-    protected function getBasePath(Addon $addon)
+    public function __construct()
     {
-        return $addon->path('classes');
-    }
+        parent::__construct();
 
-    /**
-     * Build the class with the given name.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function buildClass($name)
-    {
-        $stub = $this->files->get($this->getStub());
-
-        return $this->template($stub, [
-            'namespace' => $this->getNamespace($name),
-            'class' => str_replace($this->getNamespace($name).'\\', '', $name),
-        ]);
-    }
-
-    /**
-     * Get the default namespace for the class.
-     *
-     * @param string $rootNamespace
-     *
-     * @return string
-     */
-    protected function getDefaultNamespace($rootNamespace)
-    {
-        return $rootNamespace.'\\Database\\Seeds';
-    }
-
-    /**
-     * Get the stub file for the generator.
-     *
-     * @return string
-     */
-    protected function getStub()
-    {
-        return $this->stub ?: __DIR__.'/stubs/seeder.stub';
+        $this->setStubDirectory(__DIR__.'/../stubs');
     }
 }

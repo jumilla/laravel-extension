@@ -4,7 +4,7 @@ namespace LaravelPlus\Extension\Addons\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use LaravelPlus\Extension\Console\MakeCommandTrait;
+use LaravelPlus\Extension\Addons\MakeCommandTrait;
 use LaravelPlus\Extension\Addons\AddonDirectory;
 use LaravelPlus\Extension\Addons\AddonGenerator;
 use UnexpectedValueException;
@@ -26,7 +26,7 @@ class AddonMakeCommand extends Command
      * @var string
      */
     protected $signature = 'make:addon
-        {name : Name of addon.}
+        {name : The name of the addon.}
         {skeleton? : Skeleton of addon.}
         {--namespace= : PHP namespace of addon. Slash OK.}
         {--no-namespace : No PHP namespace.}
@@ -38,7 +38,7 @@ class AddonMakeCommand extends Command
      *
      * @var string
      */
-    protected $description = '[+] Make addon';
+    protected $description = '[+] Create a new addon directory';
 
     /**
      * @var array

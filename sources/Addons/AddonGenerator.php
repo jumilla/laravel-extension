@@ -2,8 +2,8 @@
 
 namespace LaravelPlus\Extension\Addons;
 
-use LaravelPlus\Extension\Generators\ClassName;
-use LaravelPlus\Extension\Generators\FileGenerator;
+use Jumilla\Generators\Php\ClassName;
+use Jumilla\Generators\FileGenerator;
 
 class AddonGenerator
 {

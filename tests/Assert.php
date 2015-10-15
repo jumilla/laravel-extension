@@ -4,7 +4,7 @@ final class Assert
 {
     public static function __callStatic($method, array $arguments)
     {
-        if (starts_with($method, 'is')) {
+        if (strpos($method, 'is') === 0) {
             $method = substr($method, 2);
         }
 
@@ -20,8 +20,13 @@ final class Assert
         }
     }
 
-    public static function failed($message)
+    public static function success()
     {
-        static::equals(null, $message);
+        static::equals('Success', 'Success');
+    }
+
+    public static function failure($actual = 'Success')
+    {
+        static::equals('Failure', $actual);
     }
 }

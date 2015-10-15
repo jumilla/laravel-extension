@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 cd `dirname $0`
-vendor/bin/phpunit --coverage-html=./report
+vendor/bin/phpunit --coverage-text

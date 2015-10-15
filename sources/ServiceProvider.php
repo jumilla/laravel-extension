@@ -44,17 +44,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      * @var array
      */
     protected static $extend_commands = [
-        'command.console.make' => Console\ConsoleMakeCommand::class,
-        'command.controller.make' => Console\ControllerMakeCommand::class,
-        'command.event.make' => Console\EventMakeCommand::class,
-        'command.job.make' => Console\JobMakeCommand::class,
-        'command.listener.make' => Console\ListenerMakeCommand::class,
-        'command.middleware.make' => Console\MiddlewareMakeCommand::class,
-        'command.model.make' => Console\ModelMakeCommand::class,
-        'command.policy.make' => Console\PolicyMakeCommand::class,
-        'command.provider.make' => Console\ProviderMakeCommand::class,
-        'command.request.make' => Console\RequestMakeCommand::class,
-        'command.test.make' => Console\TestMakeCommand::class,
+        'command.console.make' => Generators\Console\ConsoleMakeCommand::class,
+        'command.controller.make' => Generators\Console\ControllerMakeCommand::class,
+        'command.event.make' => Generators\Console\EventMakeCommand::class,
+        'command.job.make' => Generators\Console\JobMakeCommand::class,
+        'command.listener.make' => Generators\Console\ListenerMakeCommand::class,
+        'command.middleware.make' => Generators\Console\MiddlewareMakeCommand::class,
+        'command.model.make' => Generators\Console\ModelMakeCommand::class,
+        'command.policy.make' => Generators\Console\PolicyMakeCommand::class,
+        'command.provider.make' => Generators\Console\ProviderMakeCommand::class,
+        'command.request.make' => Generators\Console\RequestMakeCommand::class,
+        'command.test.make' => Generators\Console\TestMakeCommand::class,
 
         // legacy commands
         'command.command.make' => Console\DummyCommand::class,

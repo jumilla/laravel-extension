@@ -16,9 +16,8 @@ class ApplicationStub extends Container implements ApplicationContract
         Facade::setFacadeApplication($this);
 
         $this['path.base'] = __DIR__.'/sandbox';
+        $this['path'] = $this['path.base'].'/app';
         $this['path.config'] = $this['path.base'].'/config';
-
-        @mkdir($app['path.config'], 0755, true);
     }
 
     /**

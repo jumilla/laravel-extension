@@ -11,13 +11,26 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 {
     use MockeryTrait;
 
-    public function setUp()
+    /**
+     * @before
+     */
+    public function setupSandbox()
     {
         $files = new Filesystem();
         $files->deleteDirectory(__DIR__.'/sandbox');
         $files->makeDirectory(__DIR__.'/sandbox');
-        $files->makeDirectory(__DIR__.'/sandbox/config');
         $files->makeDirectory(__DIR__.'/sandbox/addons');
+        $files->makeDirectory(__DIR__.'/sandbox/app');
+        $files->makeDirectory(__DIR__.'/sandbox/config');
+    }
+
+    /**
+     * @after
+     */
+    public function teardownSandbox()
+    {
+        $files = new Filesystem();
+        $files->deleteDirectory(__DIR__.'/sandbox');
     }
 
     /**

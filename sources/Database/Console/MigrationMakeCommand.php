@@ -2,9 +2,9 @@
 
 namespace LaravelPlus\Extension\Database\Console;
 
-use Illuminate\Console\GeneratorCommand as BaseCommand;
+use Jumilla\Versionia\Laravel\Console\MigrationMakeCommand as BaseCommand;
 use LaravelPlus\Extension\Addons\Addon;
-use LaravelPlus\Extension\Console\GeneratorCommandTrait;
+use LaravelPlus\Extension\Generators\GeneratorCommandTrait;
 
 class MigrationMakeCommand extends BaseCommand
 {
@@ -13,7 +13,7 @@ class MigrationMakeCommand extends BaseCommand
     /**
      * The console command singature.
      *
-     * @var stringphp
+     * @var string
      */
     protected $signature = 'make:migration
         {name : The name of the class}
@@ -30,71 +30,12 @@ class MigrationMakeCommand extends BaseCommand
     protected $description = '[+] Create a new migration class';
 
     /**
-     * The type of class being generated.
-     *
-     * @var string
+     * The constructor.
      */
-    protected $type = 'Migration';
-
-    /**
-     * Get the destination class base path.
-     *
-     * @param \LaravelPlus\Extension\Addons\Addon $addon
-     *
-     * @return string
-     */
-    protected function getBasePath(Addon $addon)
+    public function __construct()
     {
-        return $addon->path('classes');
-    }
+        parent::__construct();
 
-    /**
-     * Build the class with the given name.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function buildClass($name)
-    {
-        $stub = $this->files->get($this->getStub());
-
-        return $this->template($stub, [
-            'namespace' => $this->getNamespace($name),
-            'class' => str_replace($this->getNamespace($name).'\\', '', $name),
-            'table' => $this->option('create') ?: $this->option('update'),
-        ]);
-    }
-
-    /**
-     * Get the default namespace for the class.
-     *
-     * @param string $rootNamespace
-     *
-     * @return string
-     */
-    protected function getDefaultNamespace($rootNamespace)
-    {
-        return $rootNamespace.'\\Database\\Migrations';
-    }
-
-    /**
-     * Get the stub file for the generator.
-     *
-     * @return string
-     */
-    protected function getStub()
-    {
-        if ($this->stub) {
-            return $this->stub;
-        }
-
-        if ($this->option('create')) {
-            return __DIR__.'/stubs/migration-create.stub';
-        } elseif ($this->option('update')) {
-            return __DIR__.'/stubs/migration-update.stub';
-        } else {
-            return __DIR__.'/stubs/migration-blank.stub';
-        }
+        $this->setStubDirectory(__DIR__.'/../stubs');
     }
 }
