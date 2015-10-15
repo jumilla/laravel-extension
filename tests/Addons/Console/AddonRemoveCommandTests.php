@@ -2,7 +2,7 @@
 
 use LaravelPlus\Extension\Addons\Console\AddonRemoveCommand as Command;
 
-class AddonRemoveCommandTest extends TestCase
+class AddonRemoveCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

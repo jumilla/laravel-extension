@@ -2,7 +2,7 @@
 
 use LaravelPlus\Extension\Generators\Console\MiddlewareMakeCommand as Command;
 
-class MiddlewareMakeCommandTest extends TestCase
+class MiddlewareMakeCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

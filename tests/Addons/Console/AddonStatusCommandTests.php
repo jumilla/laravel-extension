@@ -2,7 +2,7 @@
 
 use LaravelPlus\Extension\Addons\Console\AddonStatusCommand as Command;
 
-class AddonStatusCommandTest extends TestCase
+class AddonStatusCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

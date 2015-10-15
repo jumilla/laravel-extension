@@ -2,7 +2,7 @@
 
 use LaravelPlus\Extension\Database\Console\DatabaseAgainCommand as Command;
 
-class DatabaseAgainCommandTest extends TestCase
+class DatabaseAgainCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

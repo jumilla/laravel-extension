@@ -2,7 +2,7 @@
 
 use LaravelPlus\Extension\Generators\Console\PolicyMakeCommand as Command;
 
-class PolicyMakeCommandTest extends TestCase
+class PolicyMakeCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

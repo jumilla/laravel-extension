@@ -2,7 +2,7 @@
 
 use LaravelPlus\Extension\Database\Console\SeederMakeCommand as Command;
 
-class SeederMakeCommandTest extends TestCase
+class SeederMakeCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

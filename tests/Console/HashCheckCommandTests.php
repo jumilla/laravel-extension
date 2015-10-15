@@ -1,8 +1,8 @@
 <?php
 
-use LaravelPlus\Extension\Database\Console\DatabaseRollbackCommand as Command;
+use LaravelPlus\Extension\Console\HashCheckCommand as Command;
 
-class DatabaseRollbackCommandTests extends TestCase
+class HashCkeckCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

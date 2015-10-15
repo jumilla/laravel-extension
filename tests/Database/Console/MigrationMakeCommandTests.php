@@ -2,7 +2,7 @@
 
 use LaravelPlus\Extension\Database\Console\MigrationMakeCommand as Command;
 
-class MigrationMakeCommandTest extends TestCase
+class MigrationMakeCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

@@ -2,7 +2,7 @@
 
 use LaravelPlus\Extension\Database\Console\DatabaseCleanCommand as Command;
 
-class DatabaseCleanCommandTest extends TestCase
+class DatabaseCleanCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

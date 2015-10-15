@@ -2,7 +2,7 @@
 
 use LaravelPlus\Extension\Database\Console\DatabaseSeedCommand as Command;
 
-class DatabaseSeedCommandTest extends TestCase
+class DatabaseSeedCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

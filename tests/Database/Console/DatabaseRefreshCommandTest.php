@@ -2,7 +2,7 @@
 
 use LaravelPlus\Extension\Database\Console\DatabaseRefreshCommand as Command;
 
-class DatabaseRefreshCommandTest extends TestCase
+class DatabaseRefreshCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

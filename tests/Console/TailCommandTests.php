@@ -1,8 +1,8 @@
 <?php
 
-use LaravelPlus\Extension\Database\Console\DatabaseRollbackCommand as Command;
+use LaravelPlus\Extension\Console\TailCommand as Command;
 
-class DatabaseRollbackCommandTests extends TestCase
+class TailCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

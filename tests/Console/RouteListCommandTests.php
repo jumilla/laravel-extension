@@ -1,8 +1,8 @@
 <?php
 
-use LaravelPlus\Extension\Database\Console\DatabaseRollbackCommand as Command;
+use LaravelPlus\Extension\Console\RouteListCommand as Command;
 
-class DatabaseRollbackCommandTests extends TestCase
+class RouteListCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

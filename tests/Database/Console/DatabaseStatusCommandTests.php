@@ -2,7 +2,7 @@
 
 use LaravelPlus\Extension\Database\Console\DatabaseStatusCommand as Command;
 
-class DatabaseStatusCommandTest extends TestCase
+class DatabaseStatusCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
