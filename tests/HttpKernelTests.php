@@ -1,17 +1,15 @@
 <?php
 
 use LaravelPlus\Extension\HttpKernel;
+use Illuminate\Events\Dispatcher;
+use Illuminate\Routing\Router;
 
 class HttpKernelTests extends TestCase
 {
-    use ConsoleCommandTrait;
-
-    /**
-     * @test
-     */
     public function test_withNoParameter()
     {
-        $command = new HttpKernelStub();
+        $app = $this->createApplication();
+        $command = new HttpKernelStub($app, new Router(new Dispatcher));
 
         Assert::isInstanceOf(HttpKernel::class, $command);
     }

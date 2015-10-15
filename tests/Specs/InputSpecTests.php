@@ -4,11 +4,16 @@ use LaravelPlus\Extension\Specs\InputSpec;
 
 class InputSpecTests extends TestCase
 {
-    use ConsoleCommandTrait;
-
     public function test_withNoParameter()
     {
-        $command = new InputSpec();
+        $app = $this->createApplication();
+        $app['specs'] = $spec = $this->createMock('spec');
+        $app['translator'] = $translator = $this->createMock('translator');
+
+        $spec->shouldReceive('get')->with('foo')->andReturn([])->once();
+        $translator->shouldReceive('has')->with('foo')->andReturn(true)->once();
+
+        $command = new InputSpec('foo');
 
         Assert::isInstanceOf(InputSpec::class, $command);
     }

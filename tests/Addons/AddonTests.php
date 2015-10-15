@@ -4,12 +4,27 @@ use LaravelPlus\Extension\Addons\Addon;
 
 class AddonTests extends TestCase
 {
-    use ConsoleCommandTrait;
-
-    public function test_withNoParameter()
+    public function test_createNoExistingAddon()
     {
-        $command = new Addon();
+        try {
+            Addon::create('foo');
 
-        Assert::isInstanceOf(Addon::class, $command);
+            Assert::failure();
+        }
+        catch (RuntimeException $ex) {
+            Assert::success();
+        }
+    }
+
+    public function test_createExistingAddon()
+    {
+        $this->createApplication();
+        $this->createAddon('foo', 'minimum', [
+            'namespace' => 'Foo',
+        ]);
+
+        $addon = Addon::create($this->app->basePath().'/addons/foo');
+
+        Assert::isInstanceOf(Addon::class, $addon);
     }
 }

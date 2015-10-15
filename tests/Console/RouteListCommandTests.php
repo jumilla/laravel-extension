@@ -1,6 +1,8 @@
 <?php
 
 use LaravelPlus\Extension\Console\RouteListCommand as Command;
+use Illuminate\Events\Dispatcher;
+use Illuminate\Routing\Router;
 
 class RouteListCommandTests extends TestCase
 {
@@ -11,7 +13,9 @@ class RouteListCommandTests extends TestCase
      */
     public function test_withNoParameter()
     {
-        $command = new Command();
+        $app = $this->createApplication();
+        $app['router'] = new Router(new Dispatcher);
+        $command = new Command($app);
 
         Assert::isInstanceOf(Command::class, $command);
     }

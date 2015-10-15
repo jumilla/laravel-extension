@@ -1,17 +1,15 @@
 <?php
 
 use LaravelPlus\Extension\ConsoleKernel;
+use Illuminate\Contracts\Events\Dispatcher;
 
 class ConsoleKernelTest extends TestCase
 {
-    use ConsoleCommandTrait;
-
-    /**
-     * @test
-     */
     public function test_withNoParameter()
     {
-        $command = new ConsoleKernelStub();
+        $app = $this->createApplication();
+        $dispatcher = $this->createMock(Dispatcher::class);
+        $command = new ConsoleKernelStub($app, $dispatcher);
 
         Assert::isInstanceOf(ConsoleKernel::class, $command);
     }

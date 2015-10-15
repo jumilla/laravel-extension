@@ -15,6 +15,9 @@ class AddonStatusCommandTests extends TestCase
         $app = $this->createApplication();
 
         // 2. condition
+        $this->createAddon('foo', 'minimum', [
+            'namespace' => 'Foo',
+        ]);
 
         // 3. test
         $command = new Command();

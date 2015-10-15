@@ -4,14 +4,10 @@ use LaravelPlus\Extension\ServiceProvider;
 
 class ServiceProviderTests extends TestCase
 {
-    use ConsoleCommandTrait;
-
-    /**
-     * @test
-     */
     public function test_withNoParameter()
     {
-        $command = new ServiceProvider();
+        $app = $this->createApplication();
+        $command = new ServiceProvider($app);
 
         Assert::isInstanceOf(ServiceProvider::class, $command);
     }

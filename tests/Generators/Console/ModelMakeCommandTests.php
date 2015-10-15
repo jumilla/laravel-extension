@@ -100,4 +100,33 @@ class ModelMakeCommandTests extends TestCase
         Assert::same(0, $result);
         Assert::fileExists($app['path.base'].'/addons/bar/classes/Foo.php');
     }
+
+    /**
+     * @test
+     */
+    public function test_withNameAndAddonParameter_addonFound_doMigrate()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+        $command = $this->createMock(Command::class, [
+            'call',
+        ]);
+
+        // 2. condition
+        $this->createAddon('bar', 'minimum', [
+            'namespace' => 'Bar',
+        ]);
+
+        // 3. test
+        $command->shouldReceive('call')->with('make:migration', ['name' => 'baz', '--addon' => 'bar', '--create' => 'foos'])->once()->andReturn(0);
+
+        $result = $this->runCommand($app, $command, [
+            'name' => 'foo',
+            '--addon' => 'bar',
+            '--migration' => 'baz',
+        ]);
+
+        Assert::same(0, $result);
+        Assert::fileExists($app['path.base'].'/addons/bar/classes/Foo.php');
+    }
 }

@@ -3,7 +3,7 @@
 namespace LaravelPlus\Extension\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Foundation\Application;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Console\RouteListCommand as BaseCommand;
 
 class RouteListCommand extends BaseCommand
@@ -25,7 +25,7 @@ class RouteListCommand extends BaseCommand
     /**
      * Create a new route command instance.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param \Illuminate\Contracts\Foundation\Application $app
      */
     public function __construct(Application $app)
     {

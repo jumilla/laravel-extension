@@ -4,8 +4,6 @@ use LaravelPlus\Extension\Addons\AddonDirectory;
 
 class AddonDirectoryTests extends TestCase
 {
-    use ConsoleCommandTrait;
-
     public function test_withNoParameter()
     {
         $command = new AddonDirectory();
