@@ -9,8 +9,8 @@ class HttpKernelTests extends TestCase
     public function test_withNoParameter()
     {
         $app = $this->createApplication();
-        $command = new HttpKernelStub($app, new Router(new Dispatcher));
+        $kernel = new HttpKernelStub($app, new Router(new Dispatcher));
 
-        Assert::isInstanceOf(HttpKernel::class, $command);
+        Assert::isInstanceOf(HttpKernel::class, $kernel);
     }
 }

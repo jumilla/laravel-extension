@@ -12,6 +12,13 @@ use Jumilla\Versionia\Laravel\Migrator;
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
+
+    /**
      * @var array
      */
     protected static $commands = [
@@ -33,41 +40,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         'command+.database.rollback' => Database\Console\DatabaseRollbackCommand::class,
         'command+.database.again' => Database\Console\DatabaseAgainCommand::class,
         'command+.database.seed' => Database\Console\DatabaseSeedCommand::class,
-        'command+.migration.make' => Database\Console\MigrationMakeCommand::class,
-        'command+.seeder.make' => Database\Console\SeederMakeCommand::class,
 // hash:
         'command+.hash.make' => Console\HashMakeCommand::class,
         'command+.hash.check' => Console\HashCheckCommand::class,
     ];
-
-    /**
-     * @var array
-     */
-    protected static $extend_commands = [
-        'command.console.make' => Generators\Console\ConsoleMakeCommand::class,
-        'command.controller.make' => Generators\Console\ControllerMakeCommand::class,
-        'command.event.make' => Generators\Console\EventMakeCommand::class,
-        'command.job.make' => Generators\Console\JobMakeCommand::class,
-        'command.listener.make' => Generators\Console\ListenerMakeCommand::class,
-        'command.middleware.make' => Generators\Console\MiddlewareMakeCommand::class,
-        'command.model.make' => Generators\Console\ModelMakeCommand::class,
-        'command.policy.make' => Generators\Console\PolicyMakeCommand::class,
-        'command.provider.make' => Generators\Console\ProviderMakeCommand::class,
-        'command.request.make' => Generators\Console\RequestMakeCommand::class,
-        'command.test.make' => Generators\Console\TestMakeCommand::class,
-
-        // legacy commands
-        'command.command.make' => Console\DummyCommand::class,
-        'command.handler.command' => Console\DummyCommand::class,
-        'command.handler.event' => Console\DummyCommand::class,
-    ];
-
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = false;
 
     /**
      * @var array
@@ -105,7 +81,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->registerClassResolvers();
 
-        // register all addons
+        $this->setupPackageCommands(static::$commands);
+
         $this->registerAddons();
     }
 
@@ -116,6 +93,23 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         AddonClassLoader::register(Application::getAddons());
 
         AliasResolver::register(Application::getAddons(), $this->app['config']->get('app.aliases'));
+    }
+
+    /**
+     * setup package's commands.
+     *
+     * @param array $commands
+     */
+    protected function setupPackageCommands(array $commands)
+    {
+        foreach ($commands as $name => $class) {
+            $this->app->singleton($name, function ($app) use ($class) {
+                return $app->build($class);
+            });
+        }
+
+        // Now register all the commands
+        $this->commands(array_keys($commands));
     }
 
     /**
@@ -133,48 +127,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        // Add package commands
-        $this->setupPackageCommands(static::$commands);
-
-        // Add extend framework commands
-        $this->setupExtendCommands(static::$extend_commands);
-
         //
         $this->registerBladeExtensions();
 
         // setup all addons
         $this->bootAddons();
-    }
-
-    /**
-     * setup package's commands.
-     *
-     * @param array $commands
-     */
-    protected function setupPackageCommands($commands)
-    {
-        foreach ($commands as $name => $class) {
-            $this->app->singleton($name, function ($app) use ($class) {
-                return $app->build($class);
-            });
-        }
-
-        // Now register all the commands
-        $this->commands(array_keys(static::$commands));
-    }
-
-    /**
-     * setup extend framework's commands.
-     *
-     * @param array $commands
-     */
-    protected function setupExtendCommands($commands)
-    {
-        foreach ($commands as $name => $class) {
-            $this->app->extend($name, function ($instance, $app) use ($class) {
-                return $app->build($class);
-            });
-        }
     }
 
     /**

@@ -13,6 +13,10 @@ abstract class ConsoleKernel extends Kernel
     {
         parent::bootstrap();
 
+        $registrar = new GeneratorCommandRegistrar($this->app);
+
+        $this->commands = array_merge($this->commands, $registrar->register());
+
         $this->commands = array_merge($this->commands, Application::getAddonConsoleCommands());
     }
 }
