@@ -68,11 +68,11 @@ class HashCkeckCommandTests extends TestCase
         }
     }
 
-    public function test_withString1_andString2_same()
+    public function test_withString_andEncryptedString()
     {
         // 1. setup
         $app = $this->createApplication();
-        $app['hash'] = new BcryptHasher();
+        $app['hash'] = $hash = new BcryptHasher();
 
         // 2. condition
 
@@ -81,17 +81,36 @@ class HashCkeckCommandTests extends TestCase
 
         $result = $this->runCommand($app, $command, [
             'string1' => 'foo',
+            'string2' => $hash->make('foo'),
+        ]);
+
+        Assert::same(0, $result);
+    }
+
+    public function test_withEncryptedString_andString()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+        $app['hash'] = $hash = new BcryptHasher();
+
+        // 2. condition
+
+        // 3. test
+        $command = $app->make(Command::class);
+
+        $result = $this->runCommand($app, $command, [
+            'string1' => $hash->make('foo'),
             'string2' => 'foo',
         ]);
 
         Assert::same(0, $result);
     }
 
-    public function test_withString1_andString2_other()
+    public function test_withEncryptedString_andString_different()
     {
         // 1. setup
         $app = $this->createApplication();
-        $app['hash'] = new BcryptHasher();
+        $app['hash'] = $hash = new BcryptHasher();
 
         // 2. condition
 
@@ -99,7 +118,7 @@ class HashCkeckCommandTests extends TestCase
         $command = $app->make(Command::class);
 
         $result = $this->runCommand($app, $command, [
-            'string1' => 'foo',
+            'string1' => $hash->make('foo'),
             'string2' => 'bar',
         ]);
 
@@ -110,7 +129,7 @@ class HashCkeckCommandTests extends TestCase
     {
         // 1. setup
         $app = $this->createApplication();
-        $app['hash'] = new BcryptHasher();
+        $app['hash'] = $hash = new BcryptHasher();
 
         // 2. condition
 

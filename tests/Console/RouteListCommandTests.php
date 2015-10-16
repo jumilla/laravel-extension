@@ -15,8 +15,11 @@ class RouteListCommandTests extends TestCase
     {
         $app = $this->createApplication();
         $app['router'] = new Router(new Dispatcher);
+
         $command = new Command($app);
 
-        Assert::isInstanceOf(Command::class, $command);
+        $result = $this->runCommand($app, $command);
+
+        Assert::same(0, $result);
     }
 }

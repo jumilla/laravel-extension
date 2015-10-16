@@ -12,5 +12,7 @@ class HttpKernelTests extends TestCase
         $kernel = new HttpKernelStub($app, new Router(new Dispatcher));
 
         Assert::isInstanceOf(HttpKernel::class, $kernel);
+
+        $kernel->bootstrap();
     }
 }

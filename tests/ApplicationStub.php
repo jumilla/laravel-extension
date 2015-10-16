@@ -156,4 +156,19 @@ class ApplicationStub extends Container implements ApplicationContract
     {
         return 'App';
     }
+
+    public function hasBeenBootstrapped()
+    {
+        return false;
+    }
+
+    /**
+     * Run the given array of bootstrap classes.
+     *
+     * @param  array  $bootstrappers
+     * @return void
+     */
+    public function bootstrapWith(array $bootstrappers)
+    {
+    }
 }

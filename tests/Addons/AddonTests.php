@@ -18,13 +18,22 @@ class AddonTests extends TestCase
 
     public function test_createExistingAddon()
     {
-        $this->createApplication();
-        $this->createAddon('foo', 'minimum', [
+        $app = $this->createApplication();
+        $this->createAddon('foo', 'ui', [
             'namespace' => 'Foo',
+            'addon_class' => 'Bar',
+            'languages' => ['en'],
         ]);
 
-        $addon = Addon::create($this->app->basePath().'/addons/foo');
+        $path = $this->app->basePath().'/addons/foo';
 
-        Assert::isInstanceOf(Addon::class, $addon);
+        $addon = Addon::create($path);
+
+        $addon->register($app);
+        $addon->boot($app);
+
+        Assert::same($path, $addon->path());
+        Assert::same($path.'/bar', $addon->path('bar'));
+        Assert::same('addons/foo', $addon->relativePath());
     }
 }

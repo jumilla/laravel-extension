@@ -32,7 +32,7 @@ class AppContainerCommand extends Command
      */
     public function handle()
     {
-        $app = new ApplicationHook(app());
+        $app = new ApplicationHook($this->laravel);
 
         $objects = $app->getInstances();
         $aliases = [];

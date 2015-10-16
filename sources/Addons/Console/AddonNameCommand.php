@@ -143,7 +143,7 @@ class AddonNameCommand extends Command
      */
     protected function setComposerNamespace()
     {
-        if (file_exists($this->addon->path('composer.php'))) {
+        if (file_exists($this->addon->path('composer.json'))) {
             $this->replaceIn(
                 $this->addon->path('composer.json'), $this->currentNamespace.'\\\\', str_replace('\\', '\\\\', $this->newNamespace).'\\\\'
             );

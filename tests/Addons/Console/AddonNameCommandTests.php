@@ -6,10 +6,7 @@ class AddonNameCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
-    /**
-     * @test
-     */
-    public function test_withNoParameter()
+    public function test_withoutArguments()
     {
         // 1. setup
         $app = $this->createApplication();
@@ -22,15 +19,12 @@ class AddonNameCommandTests extends TestCase
         try {
             $result = $this->runCommand($app, $command);
 
-            Assert::failure;
+            Assert::failure();
         } catch (RuntimeException $ex) {
             Assert::equals('Not enough arguments.', $ex->getMessage());
         }
     }
 
-    /**
-     * @test
-     */
     public function test_withAddonParameter()
     {
         // 1. setup
@@ -52,9 +46,6 @@ class AddonNameCommandTests extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
     public function test_withAddonAndNamespaceParameter_addonNotFound()
     {
         // 1. setup
@@ -77,15 +68,14 @@ class AddonNameCommandTests extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
     public function test_withAddonAndNamespaceParameter_addonFound()
     {
         // 1. setup
         $app = $this->createApplication();
-        $this->createAddon('foo', 'minimum', [
+        $this->createAddon('foo', 'ui', [
             'namespace' => 'Foo',
+            'addon_class' => 'Bar',
+            'languages' => ['en'],
         ]);
 
         // 2. condition
