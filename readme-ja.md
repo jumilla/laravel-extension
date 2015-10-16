@@ -3,26 +3,38 @@
 
 [![Build Status](https://travis-ci.org/jumilla/laravel-extension.svg)](https://travis-ci.org/jumilla/laravel-extension)
 [![Quality Score](https://img.shields.io/scrutinizer/g/jumilla/laravel-extension.svg?style=flat)](https://scrutinizer-ci.com/g/jumilla/laravel-extension)
+[![Code Coverage](https://scrutinizer-ci.com/g/jumilla/laravel-extension/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jumilla/laravel-extension/)
 [![Latest Stable Version](https://poser.pugx.org/laravel-plus/extension/v/stable.svg)](https://packagist.org/packages/laravel-plus/extension)
 [![Total Downloads](https://poser.pugx.org/laravel-plus/extension/d/total.svg)](https://packagist.org/packages/laravel-plus/extension)
 [![Software License](https://poser.pugx.org/laravel-plus/extension/license.svg)](https://packagist.org/packages/laravel-plus/extension)
 
 ## 機能
 
+* バージョンベースマイグレーション機能の追加
+	* セマンティックバージョンベースのデータベースマイグレーションライブラリ [Laravel Versionia](http://github.com/jumilla/laravel-versionia) を採用しました。
+	* マイグレーション／シードクラスは、Laravel 5のディレクトリ構造に組み込まれました。**app\Database\Migrations** と **app\Database\Seeds** ディレクトリを使ってください。
+	* マイグレーションにグループを指定できるようになりました。
+	* シードに名前が付けられるようになりました。
+	* バージョンとの指定は、`App/Providers/DatabaseServiceProvider` クラスで行います。
+	* Laravelのマイグレーション／シードクラスをそのまま利用できます。
+
 * アドオン機能の追加
-	* Laravel 5のディレクトリ構造を複製するイメージで使うことができます。
-	* パッケージに独自の名前空間(PSR-4)を一つ持たせることができます。
-	* Laravel 5のパッケージとして扱えます。
-		* lang, viewの識別子の名前空間表記`{addon-name}::`が使えます。
-	* アドオンの追加はディレクトリをコピーするだけ。`config/app.php`などの設定ファイルにコードを追加する必要はありません。
+	* アプリケーション内のパッケージ機能です。Laravel 5のディレクトリ構造を複製するイメージで使うことができます。
+	* デフォルトで、**addons** ディレクトリの下に配置されます。
+	* アドオンに独自の名前空間(PSR-4)を一つ持たせることができます。
+	* Laravel 5のパッケージとして扱えます。lang, viewの識別子の名前空間表記`{addon-name}::`が使えます。configも使えます。
+	* アドオンの追加はディレクトリをコピーするだけ。**config/app.php** などの設定ファイルにコードを追加する必要はありません。
 	* 7種類のひな形と2種類のサンプルを用意しています。`php artisan make:addon` で生成できます。
 
-* バージョンベースマイグレーション機能の追加
-	* [Laravel Versionia](http://github.com/jumilla/laravel-versionia) を組み込み済みです。
+* ファイル生成コマンド
+	* コンソールコマンドやジョブ、プロバイダーなどLaravel 5のクラスをコマンドラインから生成できる機能です。
+	* ジェネレーターコマンドに、カスタマイズしたスタブファイルを使用させることもできます。
+	* Laravel 5の`make:xxx`コマンドに準拠しています。コマンド名やオプションは同じです。
+	* `--addon`オプションで、アドオン内にファイルを生成することもできます。
 
 * 名前空間内でのファサード問題の解決
-	* appディレクトリ下の名前空間付きクラスの中でファサードが使えます。(バックスラッシュやuse宣言不要)
-	* アドオンの名前空間の中からも同じ記述方法でファサードが扱えます。
+	* appディレクトリ下の名前空間付きクラスの中でファサードが使えます。(バックスラッシュ指定やuse宣言不要)
+	* アドオンの名前空間付きクラスの中からも、同じ記述方法でファサードが扱えます。
 
 ## インストール方法
 
@@ -34,32 +46,51 @@ composer create-project laravel-plus/laravel5 <project-name>
 
 ### [B] 既存のプロジェクトにインストールする
 
-Composerを使います。
+#### 1. Composerで`laravel-plus/extension`パッケージを追加します。
 
 ```sh
 composer require laravel-plus/extension
 ```
 
-`config/app.php`ファイルを編集します。
+#### 2. サービスプロバイダーを追加します。
+
+**config/app.php** ファイルの`providers`セクションに、`LaravelPlus\Extension\ServiceProvider`クラスを追加してください。
 
 ```php
 	'providers' => [
-		↓追加する
-		'LaravelPlus\Extension\ServiceProvider',
+		Illuminate\Foundation\Providers\ArtisanServiceProvider:class,
 		...
-		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
-		...
+		↓次の行を追加する
+		LaravelPlus\Extension\ServiceProvider::class,
 	],
 ```
 
-アドオン設定ファイルをインストールします。
-`app/config/addon.php`を生成したい時に、いつでも使えます。
+#### 3. `App\Console\Kernel`クラスのベースクラスを設定します。
 
-```sh
-php artisan addon:status
+**app/Console/Kernel.php** ファイルを開き、`use Illuminate\Foundation\Console\Kernel as ConsoleKernel;`の行を次のように変更してください。
+
+```php
+use LaravelPlus\Extension\ConsoleKernel as ConsoleKernel;
+
+class Kernel extends ConsoleKernel
+{
+}
+```
+
+#### 4. `App\Http\Kernel`クラスのベースクラスを設定します。
+
+**app/Http/Kernel.php** ファイルを開き、`use Illuminate\Foundation\Http\Kernel as HttpKernel;`の行を次のように変更してください。
+
+```php
+use LaravelPlus\Extension\HttpKernel as HttpKernel;
+
+class Kernel extends HttpKernel
+{
+}
 ```
 
 ## 動作確認
+
 サンプルとして、アドオン`wiki`を作成します。
 
 ```sh
@@ -81,7 +112,18 @@ php artisan serve
 
 ## コマンド
 
-### `addon:status`
+### addon:setup
+
+`app/config/addon.php`を新しく生成します。
+すでにある場合は何もしません。
+
+```sh
+php artisan addon:setup
+```
+
+このコマンドは、`app/config/addon.php`を生成したい時にいつでも使えます。
+
+### addon:status
 
 アドオンの状態を確認できます。
 
@@ -91,7 +133,7 @@ php artisan addon:status
 
 `addons`ディレクトリや`app/config/addon.php`ファイルが存在しない場合は作成します。
 
-### `make:addon`
+### make:addon
 
 アドオンを作成します。
 次のコマンドは、アドオン `blog` を `ui`タイプのひな形を用いて PHP名前空間 `Blog` として生成します。
@@ -241,12 +283,13 @@ php artisan database:seed
 ```
 
 ## ファサードの拡張
+
 Laravel5のエイリアスローダーはグローバル名前空間にしか作用しないため、名前空間の中からファサードを扱うにはクラス名の先頭に`\`を付けなければなりません。
 
 ```
 function index()
 {
-	return \View::make()
+	return \View::make();
 }
 ```
 
@@ -259,16 +302,17 @@ use View;
 
 function index()
 {
-	return View::make()
+	return View::make();
 }
 ```
 
-Laravel Extensionは、アドオン下の名前空間内に対してファサードを解決するエイリアスローダーを持っているので、Laravel 4.2 公式ドキュメント記載の方法がそのまま使えます。
+Laravel Extensionはファサードを解決するエイリアスローダーを持っているので、`app`と`addons`ディレクトリ下の名前空間付きのPHPクラスに対してこれらの記述が不要です。
+`vendor`ディレクトリ下のパッケージには作用しないので安心です。
 
 ```
 function index()
 {
-	return View::make()
+	return View::make();	// スッキリ！
 }
 ```
 
