@@ -19,7 +19,7 @@ class ControllerMakeCommand extends BaseCommand
     protected $signature = 'make:controller
         {name : The name of the class}
         {--addon= : The name of the addon}
-        {--plain : Generate an empty controller class}
+        {--resource : Generate an resource controller class}
     ';
 
     /**
@@ -27,7 +27,7 @@ class ControllerMakeCommand extends BaseCommand
      *
      * @var string
      */
-    protected $description = '[+] Create a new resource controller class';
+    protected $description = '[+] Create a new controller class';
 
     /**
      * The type of class being generated.
@@ -63,7 +63,7 @@ class ControllerMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return $this->option('plain') ? 'controller-plain.stub' : 'controller.stub';
+        return $this->option('resource') ? 'controller-resource.stub' : 'controller.stub';
     }
 
     /**

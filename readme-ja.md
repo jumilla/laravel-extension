@@ -112,87 +112,7 @@ php artisan serve
 
 ## コマンド
 
-### addon:setup
-
-`app/config/addon.php`を新しく生成します。
-すでにある場合は何もしません。
-
-```sh
-php artisan addon:setup
-```
-
-このコマンドは、`app/config/addon.php`を生成したい時にいつでも使えます。
-
-### addon:status
-
-アドオンの状態を確認できます。
-
-```sh
-php artisan addon:status
-```
-
-`addons`ディレクトリや`app/config/addon.php`ファイルが存在しない場合は作成します。
-
-### make:addon
-
-アドオンを作成します。
-次のコマンドは、アドオン `blog` を `ui`タイプのひな形を用いて PHP名前空間 `Blog` として生成します。
-
-```sh
-php artisan make:addon blog ui
-```
-
-ひな形は9種類から選べます。
-
-* `minimum` - 最小構成
-* `simple` - `views`ディレクトリと`route.php`があるシンプルな構成
-* `library` - PHPクラスとデータベースを提供する構成
-* `api` - APIのための構成
-* `ui` - UIを含むフルセット
-* `debug` - デバッグ機能を収めるアドオン。`debug-bar`のサービスプロバイダ登録も含む。
-* `laravel5` - Laravel 5のディレクトリ構成。
-* `sample:ui` - UIアドオンのサンプル
-* `sample:auth` - Laravel 5に含まれる認証サンプル。
-
-コマンド引数でひな形を指定しない場合、対話形式で選択できます。
-
-```sh
-php artisan make:addon blog
-```
-
-PHP名前空間は `--namespace` オプションで指定することもできます。
-名前空間の区切りは、`\\` か `/` を使ってください。
-
-```sh
-php artisan make:addon blog --namespace App\\Blog
-php artisan make:addon blog --namespace App/Blog
-```
-
-### `addon:name`
-
-アドオン内のファイルを走査し、PHP名前空間を変更します。
-
-```sh
-php artisan addon:name blog Sugoi/Blog
-```
-
-走査したファイルを確認したい場合は、`-v`オプションを指定してください。
-
-```sh
-php artisan addon:name blog Sugoi/Blog -v
-```
-
-### `addon:remove`
-
-アドオンを削除します。
-
-```sh
-php artisan addon:remove blog;
-```
-
-`addons/blog` ディレクトリを削除するだけです。
-
-### `database:status`
+### database:status
 
 マイグレーション、シードの定義とインストール状態を表示します。
 
@@ -200,7 +120,7 @@ php artisan addon:remove blog;
 php artisan database:status
 ```
 
-### `database:upgrade`
+### database:upgrade
 
 すべてのグループのマイグレーションの`up()`を実行し、最新バージョンにします。
 
@@ -214,7 +134,7 @@ php artisan database:upgrade
 php artisan database:upgrade --seed <シード>
 ```
 
-### `database:clean`
+### database:clean
 
 すべてのグループのマイグレーションの`down()`を実行し、クリーン状態に戻します。
 
@@ -222,7 +142,7 @@ php artisan database:upgrade --seed <シード>
 php artisan database:clean
 ```
 
-### `database:refresh`
+### database:refresh
 
 すべてのグループのマイグレーションをやり直します。
 
@@ -238,7 +158,7 @@ php artisan database:refresh
 php artisan database:refresh --seed <シード>
 ```
 
-### `database:rollback`
+### database:rollback
 
 指定グループのバージョンをひとつ戻します。
 
@@ -252,7 +172,7 @@ php artisan database:rollback <グループ>
 php artisan database:rollback <グループ> --all
 ```
 
-### `database:again`
+### database:again
 
 指定グループの最新バージョンを再作成します。
 
@@ -268,7 +188,7 @@ php artisan database:again <グループ>
 php artisan database:again <グループ> --seed <シード>
 ```
 
-### `database:seed`
+### database:seed
 
 指定のシードを実行します。
 
@@ -280,6 +200,335 @@ php artisan database:seed <シード>
 
 ```sh
 php artisan database:seed
+```
+
+### addon:status
+
+アドオンの状態を確認できます。
+
+```sh
+php artisan addon:status
+```
+
+`addons`ディレクトリや`app/config/addon.php`ファイルが存在しない場合は作成します。
+
+### addon:name
+
+アドオン内のファイルを走査し、PHP名前空間を変更します。
+
+```sh
+php artisan addon:name blog Sugoi/Blog
+```
+
+走査したファイルを確認したい場合は、`-v`オプションを指定してください。
+
+```sh
+php artisan addon:name blog Sugoi/Blog -v
+```
+
+### addon:remove
+
+アドオンを削除します。
+
+```sh
+php artisan addon:remove blog;
+```
+
+`addons/blog` ディレクトリを削除するだけです。
+
+### make:addon
+
+アドオンを作成します。
+次のコマンドは、アドオン `blog` を `ui`タイプのひな形を用いて PHP名前空間 `Blog` として生成します。
+
+```sh
+php artisan make:addon blog ui
+```
+
+ひな形は9種類から選べます。
+
+- **minimum** - 最小構成
+- **simple** - **views** ディレクトリと **Http/route.php** があるシンプルな構成
+- **library** - PHPクラスとデータベースを提供する構成
+- **api** - APIのための構成
+- **ui** - UIを含むフルセット
+- **debug** - デバッグ機能を収めるアドオン。'debug-bar'のサービスプロバイダ登録も含む。
+- **generator** - カスタマイズ用スタブファイル。
+- **laravel5** - Laravel 5のディレクトリ構成。
+- **sample:ui** - UIアドオンのサンプル
+- **sample:auth** - Laravel 5に含まれる認証サンプル。
+
+コマンド引数でひな形を指定しない場合、対話形式で選択できます。
+
+```sh
+php artisan make:addon blog
+```
+
+PHP名前空間は `--namespace` オプションで指定することもできます。
+名前空間の区切りには、`\\` か `/` を使ってください。
+
+```sh
+php artisan make:addon blog --namespace App\\Blog
+php artisan make:addon blog --namespace App/Blog
+```
+
+### make:console
+
+artisanコマンドクラスを生成します。
+
+名前に`foo`を指定すると、`app/Console/Commands/Foo.php` ファイルを生成します。
+
+```sh
+$ php artisan make:console foo
+```
+
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Console/Commands/Foo.php` ファイルを生成します。
+
+```sh
+$ php artisan make:console foo --addon=blog
+```
+
+### make:controller
+
+コントローラークラスを生成します。
+
+名前に`FooController`を指定すると、`app/Http/Controllers/FooController.php` ファイルを生成します。
+
+```sh
+$ php artisan make:controller FooController
+```
+
+`--resource` オプションを指定すると、リソースコントローラーを生成します。
+
+```sh
+$ php artisan make:controller FooController --resource
+```
+
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Http/Controllers/FooController.php` ファイルを生成します。
+
+```sh
+$ php artisan make:controller FooController --addon=blog
+```
+
+### make:event
+
+イベントクラスを生成します。
+
+名前に`FooEvent`を指定すると、`app/Events/FooEvent.php` ファイルを生成します。
+
+```sh
+$ php artisan make:event FooEvent
+```
+
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Events/FooEvent.php` ファイルを生成します。
+
+```sh
+$ php artisan make:event FooEvent --addon=blog
+```
+
+### make:job
+
+ジョブクラスを生成します。
+
+名前に`FooJob`を指定すると、`app/Jobs/FooJob.php` ファイルを生成します。
+
+```sh
+$ php artisan make:job FooJob
+```
+
+`--queued` オプションを指定すると、`ShouldQueue` インターフェースを実装したジョブクラスを生成します。
+
+```sh
+$ php artisan make:job FooJob --queued
+```
+
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Jobs/FooJob.php` ファイルを生成します。
+
+```sh
+$ php artisan make:job FooJob --addon=blog
+```
+
+もし Laravel 5.0 の `App/Commands` ディレクトリを使っているなら、`app/Commands/FooCommand.php` も生成できます。
+
+```sh
+$ php artisan make:job /Commands/FooCommand
+```
+
+### make:listener
+
+リスナークラスを生成します。
+
+名前に`FooListener`を指定すると、`app/Listeners/FooListener.php` ファイルを生成します。
+`--event` オプションは必須です。
+
+```sh
+$ php artisan make:listener FooListener --event=bar
+```
+
+`--queued` オプションを指定すると、`ShouldQueue` インターフェースを実装したリスナークラスを生成します。
+
+```sh
+$ php artisan make:listener FooListener --event=bar --queued
+```
+
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Listeners/FooListener.php` ファイルを生成します。
+
+```sh
+$ php artisan make:listener FooListener --event=bar --addon=blog
+```
+
+### make:middleware
+
+ミドルウェアクラスを生成します。
+
+名前に`foo`を指定すると、`app/Http/Middleware/Foo.php` ファイルを生成します。
+
+```sh
+$ php artisan make:middleware foo
+```
+
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Http/Middleware/Foo.php` ファイルを生成します。
+
+```sh
+$ php artisan make:middleware foo --addon=blog
+```
+
+### make:migration
+
+マイグレーションクラスを生成します。
+
+名前に`foo`を指定すると、`app/Database/Migrations/App_1_0.php` ファイルを生成します。
+
+```sh
+$ php artisan make:migration App_1_0
+```
+
+`--create` オプションに `materials` を指定すると、**materials** テーブルを作成するマイグレーションクラスを生成します。
+
+```sh
+$ php artisan make:migration App_1_1 --create=materials
+```
+
+`--update` オプションに `materials` を指定すると、**materials** テーブルを更新するマイグレーションクラスを生成します。
+
+```sh
+$ php artisan make:migration App_1_2 --update=materials
+```
+
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Database/Migrations/Blog_1_0.php` ファイルを生成します。
+
+```sh
+$ php artisan make:migration Blog_1_0 --addon=blog
+```
+
+### make:model
+
+Eloquentモデルクラスを生成します。
+
+名前に`foo`を指定すると、**foos** テーブルに対応した `app/Foo.php` ファイルを生成します。
+
+```sh
+$ php artisan make:model foo
+```
+
+名前に`services/models/foo`を指定すると、**foos** テーブルに対応した `app/Services/Models/Foo.php` ファイルを生成します。
+PHP名前空間は `App\Services\Models` になります。
+
+```sh
+$ php artisan make:model services/models/foo
+```
+
+`--migration` オプションに `App_1_1` を指定すると、マイグレーションファイルも一緒に生成します。
+`php artisan make:migration App_1_1 --create=foos` コマンドを実行した結果と同じです。
+
+```sh
+$ php artisan make:model foo --migration=App_1_1
+```
+
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Foo.php` ファイルを生成します。
+
+```sh
+$ php artisan make:model foo --addon=blog
+```
+
+### make:policy
+
+ポリシークラスを生成します。
+
+名前に`foo`を指定すると、`app/Policies/Foo.php` ファイルを生成します。
+
+```sh
+$ php artisan make:policy foo
+```
+
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Policies/Foo.php` ファイルを生成します。
+
+```sh
+$ php artisan make:policy foo --addon=blog
+```
+
+### make:provider
+
+サービスプロバイダークラスを生成します。
+
+名前に`FooServiceProvider`を指定すると、`app/Providers/FooServiceProvider.php` ファイルを生成します。
+
+```sh
+$ php artisan make:provider FooServiceProvider
+```
+
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Providers/FooServiceProvider.php` ファイルを生成します。
+
+```sh
+$ php artisan make:provider FooServiceProvider --addon=blog
+```
+
+### make:request
+
+フォームリクエストクラスを生成します。
+
+名前に`FooRequest`を指定すると、`app/Http/Requests/FooRequest.php` ファイルを生成します。
+
+```sh
+$ php artisan make:request FooRequest
+```
+
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Http/Requests/FooRequest.php` ファイルを生成します。
+
+```sh
+$ php artisan make:request FooRequest --addon=blog
+```
+
+### make:seeder
+
+シードクラスを生成します。
+
+名前に`staging`を指定すると、`app/Database/Seeds/Staging.php` ファイルを生成します。
+
+```sh
+$ php artisan make:request staging
+```
+
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Database/Seeds/Staging.php` ファイルを生成します。
+
+```sh
+$ php artisan make:request staging --addon=blog
+```
+
+### make:test
+
+PHPUnitテストスイートを生成します。
+
+名前に`FooTests`を指定すると、`tests/FooTests.php` ファイルを生成します。
+
+```sh
+$ php artisan make:test FooTests
+```
+
+`--addon` オプションに `blog` を指定すると、`addons/blog/tests/FooTests.php` ファイルを生成します。
+
+```sh
+$ php artisan make:test FooTests --addon=blog
 ```
 
 ## ファサードの拡張

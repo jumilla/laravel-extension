@@ -116,75 +116,6 @@ php artisan serve
 
 ## Commands
 
-### `addon:status`
-
-The add-on state can be confirmed.
-
-```sh
-php artisan addon:status
-```
-
-When `addons` directory and `app/config/addon.php` file don't exist, it's made.
-
-### `make:addon`
-
-An add-on is made.
-I add on the next command  `blog` is generated as PHP name spatial `Blog` using a form of `ui`-type.
-
-```sh
-php artisan make:addon blog ui
-```
-
-A skeleton can be chosen from 9 kinds.
-
-* `minimum` - Minimum structure.
-* `simple` - The simple construction with the `views` directory and the `route.php`.
-* `library` - The composition to which a PHP range and a database are offered.
-* `api` - The structure for API.
-* `ui` - Full-set including UI.
-* `debug` - The add-on in which program testing facility is put. Service provider registration of `debug-bar` is also included.
-* `laravel5` - The directory structure of Laravel 5.
-* `sample:ui` - Example of a UI add-on.
-* `sample:auth` - The authentication sample included in Laravel 5.
-
-When not designating a form by a command argument, it can be chosen by an interactive mode.
-
-```sh
-php artisan make:addon blog
-```
-
-PHP namespace can designate `--namespace` by an option.
-Please use `\\` or `/` for a namespace separate.
-
-```sh
-php artisan make:addon blog --namespace App\\Blog
-php artisan make:addon blog --namespace App/Blog
-```
-
-### `addon:name`
-
-A file in the add-on is scanned and the PHP namespace is changed.
-
-```sh
-php artisan addon:name blog Wonderful/Blog
-```
-
-When you'd like to confirm the scanned file, please designate `-v` option.
-
-```sh
-php artisan addon:name blog Sugoi/Blog -v
-```
-
-### `addon:remove`
-
-An add-on is eliminated.
-
-```sh
-php artisan addon:remove blog;
-```
-
-`addons/blog`  A directory is just eliminated.
-
 ### `database:status`
 
 Migration, seed's definition and installation state are indicated.
@@ -273,6 +204,335 @@ When omitting `<seed>`, run default seed.
 
 ```sh
 php artisan database:seed
+```
+
+### `addon:status`
+
+Can check the status of addons.
+
+```sh
+php artisan addon:status
+```
+
+When `addons` directory and `app/config/addon.php` file don't exist, it's made.
+
+### `addon:name`
+
+A file in the add-on is scanned and the PHP namespace is changed.
+
+```sh
+php artisan addon:name blog Wonderful/Blog
+```
+
+When you'd like to confirm the scanned file, please designate `-v` option.
+
+```sh
+php artisan addon:name blog Sugoi/Blog -v
+```
+
+### `addon:remove`
+
+An add-on is eliminated.
+
+```sh
+php artisan addon:remove blog;
+```
+
+`addons/blog`  A directory is just eliminated.
+
+### `make:addon`
+
+An add-on is made.
+I add on the next command  `blog` is generated as PHP name spatial `Blog` using a form of `ui`-type.
+
+```sh
+php artisan make:addon blog ui
+```
+
+A skeleton can be chosen from 9 kinds.
+
+- **minimum** - Minimum structure.
+- **simple** - The simple structure with the directory **views** and the file **Http/route.php**.
+- **library** - The composition to which a PHP range and a database are offered.
+- **api** - The structure for API.
+- **ui** - Full-set including UI.
+- **debug** - The add-on in which program testing facility is put. Service provider registration of 'debug-bar' is also included.
+- **generator** - Customized for stub files.
+- **laravel5** - The directory structure of Laravel 5.
+- **sample:ui** - Example of a UI add-on.
+- **sample:auth** - The authentication sample included in Laravel 5.
+
+When not designating a form by a command argument, it can be chosen by an interactive mode.
+
+```sh
+php artisan make:addon blog
+```
+
+PHP namespace can designate `--namespace` by an option.
+Please use `\\` or `/` for a namespace separate.
+
+```sh
+php artisan make:addon blog --namespace App\\Blog
+php artisan make:addon blog --namespace App/Blog
+```
+
+### make:console
+
+Generate a class of artisan command.
+
+If you specify `foo` to name, to generate a file `app/Console/Commands/Foo.php`.
+
+```sh
+$ php artisan make:console foo
+```
+
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Console/Commands/Foo.php`.
+
+```sh
+$ php artisan make:console foo --addon=blog
+```
+
+### make:controller
+
+Generate a class of controller.
+
+If you specify `FooController` to name, to generate a file `app/Http/Controllers/FooController.php`.
+
+```sh
+$ php artisan make:controller FooController
+```
+
+If you specify option `--resource`, to generate a resource controller.
+
+```sh
+$ php artisan make:controller FooController --resource
+```
+
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Http/Controllers/FooController.php`.
+
+```sh
+$ php artisan make:controller FooController --addon=blog
+```
+
+### make:event
+
+Generate a class of event.
+
+If you specify `FooEvent` to name, to generate a file `app/Events/FooEvent.php`.
+
+```sh
+$ php artisan make:event FooEvent
+```
+
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Events/FooEvent.php`.
+
+```sh
+$ php artisan make:event FooEvent --addon=blog
+```
+
+### make:job
+
+Generate a class of job.
+
+If you specify a `FooJob` to name, to generate a file `app/Jobs/FooEvent.php`.
+
+```sh
+$ php artisan make:job FooJob
+```
+
+If you specify option `--queued`, to generate a job class implemented `ShouldQueue` interface.
+
+```sh
+$ php artisan make:job FooJob --queued
+```
+
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Jobs/FooJob.php`.
+
+```sh
+$ php artisan make:job FooJob --addon=blog
+```
+
+If using a `App/Commands` directory of Laravel 5.0, `app/Commands/FooCommand.php` can also be generated.
+
+```sh
+$ php artisan make:job /Commands/FooCommand
+```
+
+### make:listener
+
+Generate a class of listener.
+
+If you specify `FooListener` to name, to generate a file `app/Listeners/FooListener.php`.
+Require `--event` option.
+
+```sh
+$ php artisan make:listener FooListener --event=bar
+```
+
+If you specify option `--queued`, to generate a job class implemented `ShouldQueue` interface.
+
+```sh
+$ php artisan make:listener FooListener --event=bar --queued
+```
+
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Listeners/FooListener.php`.
+
+```sh
+$ php artisan make:listener FooListener --event=bar --addon=blog
+```
+
+### make:middleware
+
+Generate a class of middleware.
+
+If you specify `foo` to name, to generate a file `app/Http/Middleware/Foo.php`.
+
+```sh
+$ php artisan make:middleware foo
+```
+
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Http/Middleware/Foo.php`.
+
+```sh
+$ php artisan make:middleware foo --addon=blog
+```
+
+### make:migration
+
+Generate a class of migration.
+
+If you specify `foo` to name, to generate a file `app/Database/Migrations/App_1_0.php`.
+
+```sh
+$ php artisan make:migration App_1_0
+```
+
+If you specify `materials` to option `--create`, to generate a migration class for create **materials** table.
+
+```sh
+$ php artisan make:migration App_1_1 --create=materials
+```
+
+If you specify `materials` to option `--update`, to generate a migration class for update **materials** table.
+
+```sh
+$ php artisan make:migration App_1_2 --update=materials
+```
+
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Database/Migrations/Blog_1_0.php`.
+
+```sh
+$ php artisan make:migration Blog_1_0 --addon=blog
+```
+
+### make:model
+
+Generate a class of Eloquent model.
+
+If you specify `foo` to name, to generate a file `app/Foo.php` related to **foos** table.
+
+```sh
+$ php artisan make:model foo
+```
+
+If you specify `services/models/foo` to name, to generate a file `app/Services/Models/Foo.php` related to **foos** table.
+PHP namespace will be `App\Services\Models`.
+
+```sh
+$ php artisan make:model services/models/foo
+```
+
+If you specify `App_1_1` to option `--migration`, also generates together migration file.
+This is the same as a result of executing the command `php artisan make:migration App_1_1 --create=foos`.
+
+```sh
+$ php artisan make:model foo --migration=App_1_1
+```
+
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Foo.php`.
+
+```sh
+$ php artisan make:model foo --addon=blog
+```
+
+### make:policy
+
+Generate a class of policy.
+
+If you specify `foo` to name, to generate a file `app/Policies/Foo.php`.
+
+```sh
+$ php artisan make:policy foo
+```
+
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Policies/Foo.php`.
+
+```sh
+$ php artisan make:policy foo --addon=blog
+```
+
+### make:provider
+
+Generate a class of service provider.
+
+If you specify `FooServiceProvider` to name, to generate a file `app/Providers/FooServiceProvider.php`.
+
+```sh
+$ php artisan make:provider FooServiceProvider
+```
+
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Providers/FooServiceProvider.php`.
+
+```sh
+$ php artisan make:provider FooServiceProvider --addon=blog
+```
+
+### make:request
+
+Generate a class of form request.
+
+If you specify `FooRequest` to name, to generate a file `app/Http/Requests/FooRequest.php`.
+
+```sh
+$ php artisan make:request FooRequest
+```
+
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Http/Requests/FooRequest.php`.
+
+```sh
+$ php artisan make:request FooRequest --addon=blog
+```
+
+### make:seeder
+
+Generate a class of seeder.
+
+If you specify `staging` to name, to generate a file `app/Database/Seeds/Staging.php`.
+
+```sh
+$ php artisan make:request staging
+```
+
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Database/Seeds/Staging.php`.
+
+```sh
+$ php artisan make:request staging --addon=blog
+```
+
+### make:test
+
+Generate a class of PHPUnit test suite.
+
+If you specify `FooTests` to name, to generate a file `tests/FooTests.php`.
+
+```sh
+$ php artisan make:test FooTests
+```
+
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/tests/FooTests.php`.
+
+```sh
+$ php artisan make:test FooTests --addon=blog
 ```
 
 ## Facade expansion

@@ -50,9 +50,10 @@ class AddonMakeCommand extends Command
         4 => 'api',
         5 => 'ui',
         6 => 'debug',
-        7 => 'laravel5',
-        8 => 'sample:ui',
-        9 => 'sample:auth',
+        7 => 'generator',
+        8 => 'laravel5',
+        9 => 'sample:ui',
+        10 => 'sample:auth',
     ];
 
     /**

@@ -334,6 +334,54 @@ class AddonGenerator
         ]);
     }
 
+    protected function generateGenerator(FileGenerator $generator, array $properties)
+    {
+        $generator->directory('classes', function ($generator) use ($properties) {
+            $generator->directory('Providers')
+                ->file('AddonServiceProvider.php')->template('AddonServiceProvider.php', $properties);
+        });
+
+        $generator->directory('config', function ($generator) use ($properties) {
+            $generator->file('commands.php')->template('commands.php', $properties);
+        });
+
+        $generator->directory('stubs', function ($generator) use ($properties) {
+            $generator->sourceFile('_console.stub');
+            $generator->sourceFile('_controller.stub');
+            $generator->sourceFile('_controller-resource.stub');
+            $generator->sourceFile('_event.stub');
+            $generator->sourceFile('_job.stub');
+            $generator->sourceFile('_job-queued.stub');
+            $generator->sourceFile('_listener.stub');
+            $generator->sourceFile('_listener-queued.stub');
+            $generator->sourceFile('_middleware.stub');
+            $generator->sourceFile('_migration.stub');
+            $generator->sourceFile('_migration-create.stub');
+            $generator->sourceFile('_migration-update.stub');
+            $generator->sourceFile('_model.stub');
+            $generator->sourceFile('_policy.stub');
+            $generator->sourceFile('_provider.stub');
+            $generator->sourceFile('_request.stub');
+            $generator->sourceFile('_seeder.stub');
+            $generator->sourceFile('_test.stub');
+        });
+
+        $this->generateAddonConfig($generator, [
+            'namespace' => $properties['namespace'],
+            'directories' => [
+                'classes',
+            ],
+            'files' => [
+            ],
+            'paths' => [
+                'config' => 'config',
+            ],
+            'providers' => [
+                new ClassName($properties['namespace'].'\Providers\AddonServiceProvider'),
+            ],
+        ]);
+    }
+
     protected function generateLaravel5(FileGenerator $generator, array $properties)
     {
         $generator->directory('app', function ($generator) use ($properties) {

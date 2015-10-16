@@ -83,7 +83,21 @@ class AddonGeneratorTests extends TestCase
         $generator = new AddonGenerator();
         $path = __DIR__.'/../sandbox/addons/foo';
 
-        $generator->generateAddon($path, 'minimum', [
+        $generator->generateAddon($path, 'debug', [
+            'namespace' => 'Foo',
+            'addon_class' => 'Bar',
+            'languages' => ['en'],
+        ]);
+
+        Assert::fileExists($path.'/addon.php');
+    }
+
+    public function test_makeGenerator()
+    {
+        $generator = new AddonGenerator();
+        $path = __DIR__.'/../sandbox/addons/foo';
+
+        $generator->generateAddon($path, 'generator', [
             'namespace' => 'Foo',
             'addon_class' => 'Bar',
             'languages' => ['en'],
@@ -97,7 +111,7 @@ class AddonGeneratorTests extends TestCase
         $generator = new AddonGenerator();
         $path = __DIR__.'/../sandbox/addons/foo';
 
-        $generator->generateAddon($path, 'minimum', [
+        $generator->generateAddon($path, 'laravel5', [
             'namespace' => 'Foo',
             'addon_class' => 'Bar',
             'languages' => ['en'],

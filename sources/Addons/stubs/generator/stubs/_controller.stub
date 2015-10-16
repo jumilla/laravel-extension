@@ -6,6 +6,9 @@ use {$root_namespace}\Http\Controllers\Controller as BaseController;
 use Illuminate\Http\Request;
 use {$root_namespace}\Http\Requests;
 
+/**
+ *  Custom class
+ */
 class {$class} extends BaseController
 {
     //
