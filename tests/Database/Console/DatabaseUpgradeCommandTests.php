@@ -6,13 +6,22 @@ class DatabaseUpgradeCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
-    /**
-     * @test
-     */
-    public function test_withNoParameter()
+    public function test_whenMigrationNotDefined()
     {
+        // 1. setup
+        $app = $this->createApplication();
+        $migrator = $this->createMigrator([
+            'installedLatestMigrations',
+            'makeLogTable',
+        ]);
         $command = new Command();
 
-        Assert::isInstanceOf(Command::class, $command);
+        // 2. condition
+        $migrator->shouldReceive('installedLatestMigrations')->andReturn(collect());
+
+        // 3. test
+        $migrator->shouldReceive('makeLogTable')->once();
+
+        $this->runCommand($app, $command, []);
     }
 }

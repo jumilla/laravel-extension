@@ -6,13 +6,18 @@ class DummyCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
-    /**
-     * @test
-     */
-    public function test_withNoParameter()
+    public function test_run()
     {
-        $command = new Command();
+        // 1. setup
+        $app = $this->createApplication();
 
-        Assert::isInstanceOf(Command::class, $command);
+        // 2. condition
+
+        // 3. test
+        $command = $app->make(Command::class);
+
+        $result = $this->runCommand($app, $command);
+
+        Assert::same(0, $result);
     }
 }

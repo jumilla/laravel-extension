@@ -2,19 +2,20 @@
 
 namespace LaravelPlus\Extension\Hooks;
 
+use Illuminate\Contracts\Foundation\Application as ApplicationInterface;
 use Illuminate\Foundation\Application as LaravelApplication;
 
 /**
  * @author Fumio Furukawa <fumio.furukawa@gmail.com>
  */
-class ApplicationHook extends LaravelApplication
+class ApplicationHook extends LaravelApplication implements ApplicationInterface
 {
     /**
-     *	@var LaravelApplication
+     *	@var Illuminate\Contracts\Foundation\Application
      */
     private $app;
 
-    public function __construct(LaravelApplication $app)
+    public function __construct(ApplicationInterface $app)
     {
         $this->app = $app;
     }

@@ -6,9 +6,6 @@ class TestMakeCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
-    /**
-     * @test
-     */
     public function test_withNoParameter()
     {
         // 1. setup
@@ -28,9 +25,6 @@ class TestMakeCommandTests extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
     public function test_withNameParameter()
     {
         // 1. setup
@@ -49,9 +43,6 @@ class TestMakeCommandTests extends TestCase
         Assert::fileExists($app['path.base'].'/tests/Foo.php');
     }
 
-    /**
-     * @test
-     */
     public function test_withNameAndAddonParameter_addonNotFound()
     {
         // 1. setup
@@ -76,9 +67,6 @@ class TestMakeCommandTests extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
     public function test_withNameAndAddonParameter_addonFound()
     {
         // 1. setup

@@ -6,13 +6,20 @@ class DatabaseCleanCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
-    /**
-     * @test
-     */
-    public function test_withNoParameter()
+    public function test_whenMigrationNotInstalled()
     {
+        // 1. setup
+        $app = $this->createApplication();
+        $migrator = $this->createMigrator();
         $command = new Command();
 
-        Assert::isInstanceOf(Command::class, $command);
+        // 2. condition
+        $migrator->shouldReceive('installedMigrationsByDesc')->andReturn(collect());
+
+        // 3. test
+        $migrator->shouldReceive('makeLogTable')->once();
+        $migrator->shouldReceive('doDowngrade')->never();
+
+        $this->runCommand($app, $command, []);
     }
 }

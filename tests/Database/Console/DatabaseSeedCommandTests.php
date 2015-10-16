@@ -6,13 +6,20 @@ class DatabaseSeedCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
-    /**
-     * @test
-     */
-    public function test_withNoParameter()
+    public function test_whenSeedNotDefined()
     {
+        // 1. setup
+        $app = $this->createApplication();
+        $migrator = $this->createMigrator();
         $command = new Command();
 
-        Assert::isInstanceOf(Command::class, $command);
+        // 2. condition
+
+        // 3. test
+        $migrator->shouldReceive('defaultSeed')->once()->andReturn('');
+        $migrator->shouldReceive('seedClass')->never();
+        $migrator->shouldReceive('installedMigrationsByDesc')->never();
+
+        $this->runCommand($app, $command, []);
     }
 }
