@@ -3,6 +3,7 @@
 namespace LaravelPlus\Extension;
 
 use Illuminate\Foundation\Http\Kernel;
+use LaravelPlus\Extension\Addons\Environment as AddonEnvironment;
 
 abstract class HttpKernel extends Kernel
 {
@@ -13,9 +14,9 @@ abstract class HttpKernel extends Kernel
     {
         parent::bootstrap();
 
-        $this->middleware = array_merge($this->middleware, Application::getAddonHttpMiddlewares());
+        $this->middleware = array_merge($this->middleware, app(AddonEnvironment::class)->getAddonHttpMiddlewares());
 
-        foreach (Application::getAddonRouteMiddlewares() as $key => $middleware) {
+        foreach (app(AddonEnvironment::class)->getAddonRouteMiddlewares() as $key => $middleware) {
             $this->router->middleware($key, $middleware);
         }
     }

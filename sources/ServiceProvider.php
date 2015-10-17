@@ -3,6 +3,7 @@
 namespace LaravelPlus\Extension;
 
 use Illuminate\Support\Facades\Blade;
+use LaravelPlus\Extension\Addons\Environment as AddonEnvironment;
 use LaravelPlus\Extension\Addons\Addon;
 use LaravelPlus\Extension\Addons\AddonClassLoader;
 use LaravelPlus\Extension\Addons\AddonGenerator;
@@ -12,11 +13,11 @@ use Jumilla\Versionia\Laravel\Migrator;
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
+     * Addon environment.
      *
-     * @var bool
+     * @var LaravelPlus\Extension\Addons\Environment
      */
-    protected $defer = false;
+    protected $addonEnvironment;
 
     /**
      * @var array
@@ -67,11 +68,15 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             return new Repository\NamespacedRepository($loader);
         });
 
+        // register addon environment
+        $app->instance('addon', $this->addonEnvironment = new AddonEnvironment());
+        $app->alias('addon', AddonEnvironment::class);
+
         // register addon generator
-        $app->singleton('addons.generator', function ($app) {
+        $app->singleton('addon.generator', function ($app) {
             return new AddonGenerator();
         });
-        $app->alias('addons.generator', AddonGenerator::class);
+        $app->alias('addon.generator', AddonGenerator::class);
 
         // register database migrator
         $app->singleton('database.migrator', function ($app) {
@@ -79,20 +84,20 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         });
         $app->alias('database.migrator', Migrator::class);
 
-        $this->registerClassResolvers();
+        $this->registerClassResolvers($this->addonEnvironment->getAddons());
 
         $this->setupPackageCommands(static::$commands);
 
-        $this->registerAddons();
+        $this->registerAddons($this->addonEnvironment->getAddons());
     }
 
     /**
      */
-    protected function registerClassResolvers()
+    protected function registerClassResolvers(array $addons)
     {
-        AddonClassLoader::register(Application::getAddons());
+        AddonClassLoader::register($addons);
 
-        AliasResolver::register(Application::getAddons(), $this->app['config']->get('app.aliases'));
+        AliasResolver::register($this->app['path'], $addons, $this->app['config']->get('app.aliases'));
     }
 
     /**
@@ -113,11 +118,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /**
+     * Register all addons.
      */
-    protected function registerAddons()
+    public function registerAddons(array $addons)
     {
-        foreach (Application::getAddons() as $addon) {
-            // register addon
+        foreach ($addons as $addon) {
             $addon->register($this->app);
         }
     }
@@ -149,7 +154,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected function bootAddons()
     {
-        foreach (Application::getAddons() as $name => $addon) {
+        foreach ($this->addonEnvironment->getAddons() as $name => $addon) {
             // register package
             $this->registerPackage($name, $addon);
 

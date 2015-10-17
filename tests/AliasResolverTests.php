@@ -6,8 +6,9 @@ class AliasResolverTests extends TestCase
 {
     public function test_withNoParameter()
     {
-        $command = new AliasResolver([], []);
+        $app = $this->createApplication();
+        $resolver = new AliasResolver($app->basePath().'/app', [], []);
 
-        Assert::isInstanceOf(AliasResolver::class, $command);
+        Assert::isInstanceOf(AliasResolver::class, $resolver);
     }
 }

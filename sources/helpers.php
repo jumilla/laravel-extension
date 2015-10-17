@@ -1,15 +1,18 @@
 <?php
 
+use LaravelPlus\Extension\Addons\Environment as AddonEnvironment;
+
 if (!function_exists('addon_name')) {
     /**
      * @param string $class
+     * @param int $level
      *
      * @return string|null
      */
-    function addon_name($class = null)
+    function addon_name($class = null, $level = 2)
     {
         if ($class === null) {
-            list(, $caller) = debug_backtrace(false, 2);
+            $caller = debug_backtrace(false, $level)[$level - 1];
 
             if (!isset($caller['class'])) {
                 return;
@@ -18,7 +21,7 @@ if (!function_exists('addon_name')) {
             $class = $caller['class'];
         }
 
-        foreach (\LaravelPlus\Extension\Application::getAddons() as $addon) {
+        foreach (app(AddonEnvironment::class)->getAddons() as $addon) {
             if (starts_with($class, $addon->phpNamespace())) {
                 return $addon->name();
             }
@@ -31,13 +34,14 @@ if (!function_exists('addon_name')) {
 if (!function_exists('addon_namespace')) {
     /**
      * @param string $class
+     * @param int $level
      *
      * @return string
      */
-    function addon_namespace($class = null)
+    function addon_namespace($class = null, $level = 2)
     {
         if ($class === null) {
-            list(, $caller) = debug_backtrace(false, 2);
+            $caller = debug_backtrace(false, $level)[$level - 1];
 
             if (!isset($caller['class'])) {
                 return '';
@@ -56,11 +60,11 @@ if (!function_exists('addon')) {
     /**
      * @param string $name Addon name.
      *
-     * @return \LaravelPlus\Extension\Addons\Addon
+     * @return LaravelPlus\Extension\Addons\Addon
      */
-    function addon($name)
+    function addon($name = null)
     {
-        return \LaravelPlus\Extension\Application::getAddon($name);
+        return app(AddonEnvironment::class)->getAddon($name ?: addon_name(null, 3));
     }
 }
 
@@ -73,7 +77,7 @@ if (!function_exists('addon_path')) {
      */
     function addon_path($name, $path = null)
     {
-        return $name === null ?: addon($name)->path($path);
+        return addon($name)->path($path);
     }
 }
 
@@ -85,84 +89,97 @@ if (!function_exists('addon_config')) {
      *
      * @return mixed
      */
-    function addon_config($name, $key, $value = null)
+    function addon_config($name, $key)
     {
-        return $name === null ?: addon($name)->config($key, $value);
+        return call_user_func_array([addon($name), 'config'], array_slice(func_get_args(), 1));
     }
 }
 
 if (!function_exists('addon_trans')) {
     /**
+     * Translate the given message.
+     *
      * @param string $name
      * @param string $id
-     * @param  ...
+     * @param array  $parameters
+     * @param string $domain
+     * @param string $locale
      *
      * @return string
      */
     function addon_trans($name, $id)
     {
-        $args = func_get_args();
-
-        $name = array_shift($args);
-        $args[0] = $name.'::'.$args[0];
-
-        return call_user_func_array('trans', $args);
+        return call_user_func_array([addon($name), 'trans'], array_slice(func_get_args(), 1));
     }
 }
 
 if (!function_exists('addon_trans_choice')) {
     /**
-     * @param string $name
-     * @param string $id
-     * @param  ...
+     * Translates the given message based on a count.
+     *
+     * @param  string  $id
+     * @param  int     $number
+     * @param  array   $parameters
+     * @param  string  $domain
+     * @param  string  $locale
      *
      * @return string
      */
     function addon_trans_choice($name, $id)
     {
-        $args = func_get_args();
-
-        $name = array_shift($args);
-        $args[0] = $name.'::'.$args[0];
-
-        return call_user_func_array('trans_choice', $args);
-    }
-}
-
-if (!function_exists('addon_spec')) {
-    /**
-     * @param string $name
-     * @param string $id
-     * @param  ...
-     *
-     * @return string
-     */
-    function addon_spec($name, $id)
-    {
-        $args = func_get_args();
-
-        $name = array_shift($args);
-        $args[0] = $name.'::'.$args[0];
-
-        return call_user_func_array([app('specs'), 'get'], $args);
+        return call_user_func_array([addon($name), 'transChoice'], array_slice(func_get_args(), 1));
     }
 }
 
 if (!function_exists('addon_view')) {
     /**
-     * @param string $name
-     * @param string $id
-     * @param  ...
+     * Get the evaluated view contents for the given view.
      *
-     * @return \Illuminate\View\View
+     * @param  string  $view
+     * @param  array   $data
+     * @param  array   $mergeData
+     *
+     * @return Illuminate\View\View
      */
-    function addon_view($name, $id)
+    function addon_view($name, $view)
     {
-        $args = func_get_args();
+        return call_user_func_array([addon($name), 'view'], array_slice(func_get_args(), 1));
+    }
+}
 
-        $name = array_shift($args);
-        $args[0] = $name.'::'.$args[0];
+if (!function_exists('addon_spec')) {
+    /**
+     * Get the specified configuration value.
+     *
+     * @param string $name
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return string
+     */
+    function addon_spec($name, $key)
+    {
+        return call_user_func_array([addon($name), 'spec'], array_slice(func_get_args(), 1));
+    }
+}
 
-        return call_user_func_array('view', $args);
+if (!function_exists('spec')) {
+    /**
+     * Get the specified configuration value.
+     *
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    function spec($key = null, $default = null)
+    {
+        $repository = app('specs');
+
+        if (func_num_args() == 0) {
+            return $repository;
+        }
+
+        return app('specs')->get($key, $default);
     }
 }

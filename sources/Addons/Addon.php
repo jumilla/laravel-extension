@@ -2,10 +2,10 @@
 
 namespace LaravelPlus\Extension\Addons;
 
-use RuntimeException;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Config\Repository;
-use LaravelPlus\Extension\Application;
 use LaravelPlus\Extension\Repository\ConfigLoader;
+use RuntimeException;
 
 class Addon
 {
@@ -53,22 +53,6 @@ class Addon
         }
 
         return $config;
-    }
-
-    /**
-     * @param string $path
-     *
-     * @return static
-     */
-    public static function createApp($path)
-    {
-        $config = new Repository([
-            'addon' => [
-                'namespace' => Application::getNamespace(),
-            ],
-        ]);
-
-        return new static('app', $path, $config);
     }
 
     /**
@@ -155,22 +139,82 @@ class Addon
     /**
      * get config value.
      *
-     * @param string $name
+     * @param string $key
      * @param mixed  $default
      *
      * @return mixed
      */
-    public function config($name, $default = null)
+    public function config($key, $default = null)
     {
-        return $this->config->get($name, $default);
+        return $this->config->get($key, $default);
+    }
+
+    /**
+     * Translate the given message.
+     *
+     * @param  string  $id
+     * @param  array   $parameters
+     * @param  string  $domain
+     * @param  string  $locale
+     * @return string
+     */
+    public function trans()
+    {
+        $args = func_get_args();
+        $args[0] = $this->name.'::'.$args[0];
+
+        return call_user_func_array('trans', $args);
+    }
+
+    /**
+     * Translates the given message based on a count.
+     *
+     * @param  string  $id
+     * @param  int     $number
+     * @param  array   $parameters
+     * @param  string  $domain
+     * @param  string  $locale
+     * @return string
+     */
+    public function transChoice()
+    {
+         $args = func_get_args();
+         $args[0] = $this->name.'::'.$args[0];
+
+         return call_user_func_array('trans_choice', $args);
+    }
+
+    /**
+     * @param string $view
+     * @param array  $data
+     * @param array  $mergeData
+     *
+     * @return Illuminate\View\View
+     */
+    public function view($view, $data = [], $mergeData = [])
+    {
+        return view($this->name.$view, $data, $mergeData);
+    }
+
+    /**
+     * Get the specified configuration value.
+     *
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    public function spec($key, $default = null)
+    {
+        return spec($this->name.$key, $default);
     }
 
     /**
      * register addon.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param Illuminate\Contracts\Foundation\Application $app
      */
-    public function register($app)
+    public function register(Application $app)
     {
         $version = $this->version();
         if ($version == 4) {
@@ -178,16 +222,16 @@ class Addon
         } elseif ($version == 5) {
             $this->registerV5($app);
         } else {
-            throw new \Exception($version.': Illigal addon version.');
+            throw new RuntimeException($version.': Illigal addon version.');
         }
     }
 
     /**
      * register addon version 4.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param Illuminate\Contracts\Foundation\Application $app
      */
-    private function registerV4($app)
+    private function registerV4(Application $app)
     {
         $this->config['paths'] = [
             'assets' => 'assets',
@@ -212,9 +256,9 @@ class Addon
     /**
      * register addon version 5.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param Illuminate\Contracts\Foundation\Application $app
      */
-    private function registerV5($app)
+    private function registerV5(Application $app)
     {
         // regist service providers
         $providers = $this->config('addon.providers', []);
@@ -226,9 +270,9 @@ class Addon
     /**
      * boot addon.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param Illuminate\Contracts\Foundation\Application $app
      */
-    public function boot($app)
+    public function boot(Application $app)
     {
         $version = $this->version();
         if ($version == 4) {
@@ -236,16 +280,16 @@ class Addon
         } elseif ($version == 5) {
             $this->bootV5($app);
         } else {
-            throw new \Exception($version.': Illigal addon version.');
+            throw new RuntimeException($version.': Illigal addon version.');
         }
     }
 
     /**
      * boot addon version 4.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param Illuminate\Contracts\Foundation\Application $app
      */
-    private function bootV4($app)
+    private function bootV4(Application $app)
     {
         $filenames = $this->config('files');
 
@@ -270,9 +314,9 @@ class Addon
     /**
      * boot addon version 5.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param Illuminate\Contracts\Foundation\Application $app
      */
-    private function bootV5($app)
+    private function bootV5(Application $app)
     {
         $filenames = $this->config('files');
 

@@ -3,6 +3,7 @@
 namespace LaravelPlus\Extension;
 
 use Illuminate\Foundation\Console\Kernel;
+use LaravelPlus\Extension\Addons\Environment as AddonEnvironment;
 
 abstract class ConsoleKernel extends Kernel
 {
@@ -15,8 +16,6 @@ abstract class ConsoleKernel extends Kernel
 
         $registrar = new GeneratorCommandRegistrar($this->app);
 
-        $this->commands = array_merge($this->commands, $registrar->register());
-
-        $this->commands = array_merge($this->commands, Application::getAddonConsoleCommands());
+        $this->commands = array_merge($this->commands, $registrar->register(), app(AddonEnvironment::class)->getAddonConsoleCommands());
     }
 }

@@ -3,21 +3,26 @@
 namespace LaravelPlus\Extension;
 
 use LaravelPlus\Extension\Addons\Addon;
+use Illuminate\Config\Repository;
+use Illuminate\Console\AppNamespaceDetectorTrait;
 
 class AliasResolver
 {
+    use AppNamespaceDetectorTrait;
+
     /**
      * @var static
      */
     protected static $instance;
 
     /**
+     * @param string $app_path
      * @param array $addons
      * @param array $aliases
      */
-    public static function register(array $addons, array $aliases)
+    public static function register($app_path, array $addons, array $aliases)
     {
-        static::$instance = new static($addons, $aliases);
+        static::$instance = new static($app_path, $addons, $aliases);
 
         // TODO check addon configuration
 
@@ -44,13 +49,34 @@ class AliasResolver
     protected $globalClassAliases;
 
     /**
+     * The constructor.
+     *
+     * @param string $app_path
      * @param array $addons
      * @param array $aliases
      */
-    public function __construct(array $addons, array $aliases)
+    public function __construct($app_path, array $addons, array $aliases)
     {
-        $this->addons = array_merge([Addon::createApp(app_path())], $addons);
+        $this->addons = array_merge([$this->makeAppAddon($app_path)], $addons);
         $this->globalClassAliases = $aliases;
+    }
+
+    /**
+     * Make addon instance for application namespace.
+     *
+     * @param string $path
+     *
+     * @return static
+     */
+    protected function makeAppAddon($path)
+    {
+        $config = new Repository([
+            'addon' => [
+                'namespace' => trim($this->getAppNamespace(), '\\'),
+            ],
+        ]);
+
+        return new Addon('app', $path, $config);
     }
 
     /**
