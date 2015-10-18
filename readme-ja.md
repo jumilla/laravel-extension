@@ -558,8 +558,7 @@ class BlogController
 }
 ```
 
-`$addon`オブジェクトを使って、アドオンの属性やリソースにアクセスすることができます。
-
+`addon()` 関数で取得した `LaravelPlus\Extension\Addons\Addon` オブジェクトを使って、アドオンの属性やリソースにアクセスすることができます。
 
 ```php
 $addon = addon();
@@ -570,19 +569,40 @@ $addon->config('page.row_limit', 20);
 $addon->trans('emails.title');
 $addon->transChoice('emails.title', 2);
 $addon->view('layouts.default');
+$addon->spec('forms.user_register');
 ```
 
 ### addon_name($class)
 
+クラス名からアドオン名を取得します。
+クラス名は名前空間を含む完全修飾名でなければなりません。
 名前を指定してアドオンを取得します。
 
 ```php
-$addon = addon('blog');
+$name = addon_name(get_class($this));
+$name = addon_name(\Blog\Providers\AddonServiceProvider::class);		// 'blog'
+```
+
+引数を省略すると、呼び出し元のクラスが所属するアドオンの名前を返します。
+
+```php
+<?php
+
+namespace Blog\Http\Controllers;
+
+class PostsController
+{
+	public function index()
+	{
+		$name = addon_name();		// 'blog'
+	}
+}
 ```
 
 ## ファサードの拡張
 
-Laravel5のエイリアスローダーはグローバル名前空間にしか作用しないため、名前空間の中からファサードを扱うにはクラス名の先頭に`\`を付けなければなりません。
+Laravelのファサードは、クラスの静的メソッド呼び出しをインスタンスメソッド呼び出しに変換することと、グローバル名前空間にファサードクラスのエイリアスを作成することで実現されています。
+Laravel 5のエイリアスローダーはグローバル名前空間にしか作用しないため、名前空間 (`App`など) の中からファサードを扱うにはクラス名の先頭に`\`を付けなければなりません。
 
 ```
 function index()

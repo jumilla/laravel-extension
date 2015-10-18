@@ -535,9 +535,78 @@ If you specify `blog` to option `--addon`, to generate a file `addons/blog/tests
 $ php artisan make:test FooTests --addon=blog
 ```
 
+## Helper functions
+
+### addon($name = null)
+
+Get the add-on by name.
+
+```php
+$addon = addon('blog');
+```
+
+If omit the name, it returns the add-on that contains the calling class.
+This is equivalent to a `addon(addon_name())`.
+
+```php
+
+namespace Blog\Http\Controllers;
+
+class BlogController
+{
+	public function index()
+	{
+		$addon = addon();	// == addon(addon_name())
+		Assert::same('blog', $addon->name());
+	}
+}
+```
+
+`LaravelPlus\Extension\Addons\Addon` object retrieved by the `addon()` function, you can access the add-on attributes and resources.
+
+```php
+$addon = addon();
+$addon->path();				// {$root}/addons/blog
+$addon->relativePath();		// addons/blog
+$addon->phpNamespace();		// Blog
+$addon->config('page.row_limit', 20);
+$addon->trans('emails.title');
+$addon->transChoice('emails.title', 2);
+$addon->view('layouts.default');
+$addon->spec('forms.user_register');
+```
+
+### addon_name($class)
+
+Get the add-on name from the class name .
+The class name must be a fully qualified name that contains the name space.
+Get the add-on by name.
+
+```php
+$name = addon_name(get_class($this));
+$name = addon_name(\Blog\Providers\AddonServiceProvider::class);		// 'blog'
+```
+
+If you omit the argument, returns the name of the add-on contains the caller of the class.
+
+```php
+<?php
+
+namespace Blog\Http\Controllers;
+
+class PostsController
+{
+	public function index()
+	{
+		$name = addon_name();		// 'blog'
+	}
+}
+```
+
 ## Facade expansion
 
-I have to put `\` on the head of the class name to handle a facade from the inside in namespace because an alias loader of Laravel 5 acts on only global namespace.
+Facade of Laravel converts the static method call of class to an instance method invocation, and has been achieved by creating an alias for the facade class in the global namespace.
+For Laravel 5 alias loader does not act only in the global name space , to handle the facade from the name space (such as `App`) it must put `\` to the class name  prefix.
 
 ```
 function index()
