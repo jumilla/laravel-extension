@@ -5,7 +5,7 @@ namespace LaravelPlus\Extension\Addons;
 use Jumilla\Generators\Php\ClassName;
 use Jumilla\Generators\FileGenerator;
 
-class AddonGenerator
+class Generator
 {
     /**
      * @param string $path

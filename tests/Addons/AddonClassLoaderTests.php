@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Addons\AddonClassLoader;
+use LaravelPlus\Extension\Addons\ClassLoader as AddonClassLoader;
 use LaravelPlus\Extension\Addons\Addon;
 use Illuminate\Config\Repository;
 

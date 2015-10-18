@@ -4,7 +4,7 @@ namespace LaravelPlus\Extension\Addons;
 
 use Illuminate\Filesystem\Filesystem;
 
-class AddonDirectory
+class Directory
 {
     /**
      * @param string $name

@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Addons\AddonGenerator;
+use LaravelPlus\Extension\Addons\Generator as AddonGenerator;
 
 class AddonGeneratorTests extends TestCase
 {

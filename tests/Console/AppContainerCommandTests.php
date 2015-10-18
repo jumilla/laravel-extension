@@ -14,6 +14,7 @@ class AppContainerCommandTests extends TestCase
         // 2. condition
         // TODO
         $app->singleton('foo', 'string');
+        $app['qux'] = 'quux';
 
         // 3. test
         $command = $app->make(Command::class);

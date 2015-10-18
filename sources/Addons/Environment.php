@@ -2,8 +2,6 @@
 
 namespace LaravelPlus\Extension\Addons;
 
-use LaravelPlus\Extension\Addons\AddonDirectory;
-
 class Environment
 {
     /**
@@ -17,7 +15,7 @@ class Environment
     public function getAddons()
     {
         if ($this->addons === null) {
-            $this->addons = AddonDirectory::addons();
+            $this->addons = Directory::addons();
         }
 
         return $this->addons;

@@ -2,7 +2,7 @@
 
 use LaravelPlus\Extension\Addons\Environment;
 
-class EnvironmentTests extends TestCase
+class AddonEnvironmentTests extends TestCase
 {
     /**
      * @test

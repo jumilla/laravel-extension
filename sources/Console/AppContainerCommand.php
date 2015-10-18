@@ -34,7 +34,8 @@ class AppContainerCommand extends Command
     {
         $app = new ApplicationHook($this->laravel);
 
-        $objects = $app->getInstances();
+        $instances = $app->getInstances();
+        $objects = $app->getBindings();
         $aliases = [];
 
         foreach ($app->getAliases() as $alias => $abstract) {
@@ -46,11 +47,21 @@ class AppContainerCommand extends Command
         foreach ($objects as $name => $instance) {
             $this->info($name.': ');
 
-            $this->output($instance);
+            if (is_array($instance)) {
+                if ($instance['shared']) {
+                    $this->output(array_get($instances, $name));
+                }
+                else {
+                    $this->output($instance['concrete']);
+                }
+            }
+            else {
+                $this->output($instance);
+            }
 
             if (isset($aliases[$name])) {
                 foreach ($aliases[$name] as $value) {
-                    echo "\t", '[alias] "', $value, '"', "\n";
+                    $this->line("\t[alias] \"$value\"\n");
                 }
             }
         }
@@ -58,16 +69,20 @@ class AppContainerCommand extends Command
 
     private function output($instance)
     {
-        echo "\t";
+        $line = "\t";
         if (is_object($instance)) {
-            echo 'object "', get_class($instance), '"';
+            $line .= 'object "'.get_class($instance).'"';
         } elseif (is_string($instance)) {
-            echo 'string "', $instance, '"';
+            $line .= 'string "'.$instance.'"';
         } elseif (is_bool($instance)) {
-            echo 'bool ', $instance, '';
+            $line .= 'bool '.$instance.'';
+        } elseif (is_null($instance)) {
+            $line .= 'null';
         } else {
-            echo '(unknown) ', $instance, '';
+            $line .= '(unknown) '.$instance;
         }
-        echo "\n";
+        $line .= "\n";
+
+        $this->line($line);
     }
 }

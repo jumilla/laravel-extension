@@ -52,6 +52,19 @@ class GeneratorCommandRegistrarTests extends TestCase
         Assert::isInstanceOf(Generators\Console\TestMakeCommand::class, $app->make('command+.test.make'));
     }
 
+    public function test_makeRegisteredCommands_alreadyRegistered()
+    {
+        $app = $this->createApplication();
+        $registrar = new GeneratorCommandRegistrar($app);
+
+        $app['command+.model.make'] = new stdClass();
+
+        $registrar->register();
+
+        Assert::true($app->bound('command+.model.make'));
+        Assert::isInstanceOf(Generators\Console\ModelMakeCommand::class, $app->make('command+.model.make'));
+    }
+
     public function test_makeLegacyCommands()
     {
         $app = $this->createApplication();

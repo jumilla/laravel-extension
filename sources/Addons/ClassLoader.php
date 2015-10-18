@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Addons;
 
-class AddonClassLoader
+class ClassLoader
 {
     /**
      * @var static
@@ -61,7 +61,7 @@ class AddonClassLoader
             $relativeClassName = substr($className, strlen($namespacePrefix));
 
             // クラスの相対パスを作成する（PSR-4）
-            $relativePath = AddonDirectory::classToPath($relativeClassName);
+            $relativePath = Directory::classToPath($relativeClassName);
 
             // 全ディレクトリ下を探索する (PSR-4)
             foreach ($addon->config('addon.directories') as $directory) {

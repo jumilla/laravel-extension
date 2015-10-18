@@ -75,8 +75,13 @@ class TailCommandTests extends TestCase
     {
         // 1. setup
         $app = $this->createApplication();
+        $remote = $this->createMock('remote');
+        $remoteConnection = $this->createMock('Illuminate\Remote\Connection');
+        $app['remote'] = $remote;
 
         // 2. condition
+        $remote->shouldReceive('connection')->andReturn($remoteConnection)->once();
+        $remoteConnection->shouldReceive('run')->once();
 
         // 3. test
         $command = $app->make(Command::class);

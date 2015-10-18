@@ -3,10 +3,10 @@
 namespace LaravelPlus\Extension;
 
 use Illuminate\Support\Facades\Blade;
-use LaravelPlus\Extension\Addons\Environment as AddonEnvironment;
 use LaravelPlus\Extension\Addons\Addon;
-use LaravelPlus\Extension\Addons\AddonClassLoader;
-use LaravelPlus\Extension\Addons\AddonGenerator;
+use LaravelPlus\Extension\Addons\Environment as AddonEnvironment;
+use LaravelPlus\Extension\Addons\ClassLoader as AddonClassLoader;
+use LaravelPlus\Extension\Addons\Generator as AddonGenerator;
 use LaravelPlus\Extension\Templates\BladeExtension;
 use Jumilla\Versionia\Laravel\Migrator;
 
@@ -15,7 +15,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     /**
      * Addon environment.
      *
-     * @var LaravelPlus\Extension\Addons\Environment
+     * @var \LaravelPlus\Extension\Addons\Environment
      */
     protected $addonEnvironment;
 

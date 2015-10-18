@@ -5,7 +5,7 @@ namespace LaravelPlus\Extension\Addons\Console;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use LaravelPlus\Extension\Addons\AddonDirectory;
+use LaravelPlus\Extension\Addons\Directory as AddonDirectory;
 use LaravelPlus\Extension\Addons\Addon;
 use UnexpectedValueException;
 

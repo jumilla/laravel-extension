@@ -9,7 +9,7 @@ use LaravelPlus\Extension\Repository\NamespacedRepository;
 use Illuminate\Translation\Translator as LaravelTranslator;
 use Illuminate\Validation\Factory as ValidatorFactory;
 
-class FactoryTests extends TestCase
+class SpecsFactoryTests extends TestCase
 {
     public function test_makeInputSpec()
     {

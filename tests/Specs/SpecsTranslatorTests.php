@@ -3,7 +3,7 @@
 use LaravelPlus\Extension\Specs\Translator;
 use Illuminate\Translation\Translator as LaravelTranslator;
 
-class TranslatorTests extends TestCase
+class SpecsTranslatorTests extends TestCase
 {
     public function test_methods_namespaceless()
     {

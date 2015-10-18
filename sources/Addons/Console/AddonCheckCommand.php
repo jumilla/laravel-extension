@@ -4,7 +4,7 @@ namespace LaravelPlus\Extension\Addons\Console;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Finder\Finder;
-use LaravelPlus\Extension\Addons\AddonDirectory;
+use LaravelPlus\Extension\Addons\Directory as AddonDirectory;
 
 class AddonCheckCommand extends Command
 {

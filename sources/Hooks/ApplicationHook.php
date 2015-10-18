@@ -6,12 +6,12 @@ use Illuminate\Contracts\Foundation\Application as ApplicationInterface;
 use Illuminate\Foundation\Application as LaravelApplication;
 
 /**
- * @author Fumio Furukawa <fumio.furukawa@gmail.com>
+ * @author Fumio Furukawa <fumio@jumilla.me>
  */
 class ApplicationHook extends LaravelApplication implements ApplicationInterface
 {
     /**
-     *	@var Illuminate\Contracts\Foundation\Application
+     *	@var \Illuminate\Contracts\Foundation\Application
      */
     private $app;
 

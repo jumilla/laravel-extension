@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Generators;
 
-use LaravelPlus\Extension\Addons\AddonDirectory;
+use LaravelPlus\Extension\Addons\Directory as AddonDirectory;
 use LaravelPlus\Extension\Addons\Addon;
 use UnexpectedValueException;
 

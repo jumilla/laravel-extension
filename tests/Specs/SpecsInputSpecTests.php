@@ -4,7 +4,7 @@ use LaravelPlus\Extension\Specs\InputSpec;
 use LaravelPlus\Extension\Repository\NamespacedRepository;
 use Illuminate\Translation\Translator;
 
-class InputSpecTests extends TestCase
+class SpecsInputSpecTests extends TestCase
 {
     public function test_methods()
     {

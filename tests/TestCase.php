@@ -5,7 +5,7 @@ use Illuminate\Config\Repository as Config;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Filesystem\FilesystemManager;
-use LaravelPlus\Extension\Addons\AddonGenerator;
+use LaravelPlus\Extension\Addons\Generator as AddonGenerator;
 use Jumilla\Versionia\Laravel\Migrator;
 
 abstract class TestCase extends PHPUnit_Framework_TestCase

@@ -5,8 +5,8 @@ namespace LaravelPlus\Extension\Addons\Console;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use LaravelPlus\Extension\Addons\MakeCommandTrait;
-use LaravelPlus\Extension\Addons\AddonDirectory;
-use LaravelPlus\Extension\Addons\AddonGenerator;
+use LaravelPlus\Extension\Addons\Directory as AddonDirectory;
+use LaravelPlus\Extension\Addons\Generator as AddonGenerator;
 use UnexpectedValueException;
 use Exception;
 
@@ -17,7 +17,6 @@ use Exception;
  */
 class AddonMakeCommand extends Command
 {
-    use AddonCommandTrait;
     use MakeCommandTrait;
 
     /**

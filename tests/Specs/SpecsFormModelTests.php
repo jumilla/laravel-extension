@@ -4,7 +4,7 @@ use LaravelPlus\Extension\Specs\FormModel;
 use LaravelPlus\Extension\Repository\NamespacedRepository;
 use Illuminate\Translation\Translator;
 
-class FormModelTests extends TestCase
+class SpecsFormModelTests extends TestCase
 {
     public function test_withNoParameter()
     {

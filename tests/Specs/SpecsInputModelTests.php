@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Factory as ValidatorFactory;
 use Illuminate\Validation\Validator;
 
-class InputModelTests extends TestCase
+class SpecsInputModelTests extends TestCase
 {
     public function test_makeMethod()
     {
