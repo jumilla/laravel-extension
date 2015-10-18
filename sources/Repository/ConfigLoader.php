@@ -12,7 +12,7 @@ class ConfigLoader
      *
      * @param string $directoryPath
      *
-     * @return \Illuminate\Contracts\Config\Repository
+     * @return Illuminate\Contracts\Config\Repository
      */
     public static function load($directoryPath)
     {
@@ -26,8 +26,8 @@ class ConfigLoader
     /**
      * Load the configuration items from all of the files.
      *
-     * @param string                                  $directoryPath
-     * @param \Illuminate\Contracts\Config\Repository $config
+     * @param string                                 $directoryPath
+     * @param Illuminate\Contracts\Config\Repository $config
      */
     protected function loadConfigurationFiles($directoryPath, Repository $config)
     {

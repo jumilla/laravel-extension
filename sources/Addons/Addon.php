@@ -3,7 +3,7 @@
 namespace LaravelPlus\Extension\Addons;
 
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Config\Repository;
+use Illuminate\Contracts\Config\Repository;
 use LaravelPlus\Extension\Repository\ConfigLoader;
 use RuntimeException;
 
@@ -66,14 +66,14 @@ class Addon
     protected $path;
 
     /**
-     * @var Illuminate\Config\Repository
+     * @var Illuminate\Contracts\Config\Repository
      */
     protected $config;
 
     /**
      * @param string                       $name
      * @param string                       $path
-     * @param Illuminate\Config\Repository $config
+     * @param Illuminate\Contracts\Config\Repository $config
      */
     public function __construct($name, $path, Repository $config)
     {
@@ -123,7 +123,7 @@ class Addon
      */
     public function version()
     {
-        return $this->config('addon.version', 4);
+        return $this->config('addon.version', 5);
     }
 
     /**

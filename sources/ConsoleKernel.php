@@ -17,6 +17,6 @@ abstract class ConsoleKernel extends Kernel
 
         $registrar = new GeneratorCommandRegistrar($this->app);
 
-        $this->commands = array_merge($this->commands, $registrar->register(), app(AddonEnvironment::class)->getAddonConsoleCommands());
+        $this->commands = array_merge($this->commands, $registrar->register(), $this->app[AddonEnvironment::class]->getAddonConsoleCommands());
     }
 }

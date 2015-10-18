@@ -2,7 +2,8 @@
 
 namespace LaravelPlus\Extension\Generators;
 
-use Illuminate\Contracts\Foundation\Application as App;
+use Illuminate\Contracts\Foundation\Application;
+use LaravelPlus\Extension\Database;
 
 class GeneratorCommandRegistrar
 {
@@ -11,19 +12,19 @@ class GeneratorCommandRegistrar
      */
     protected static $commands = [
         // make:
-        'command+.console.make' => Generators\Console\ConsoleMakeCommand::class,
-        'command+.controller.make' => Generators\Console\ControllerMakeCommand::class,
-        'command+.event.make' => Generators\Console\EventMakeCommand::class,
-        'command+.job.make' => Generators\Console\JobMakeCommand::class,
-        'command+.listener.make' => Generators\Console\ListenerMakeCommand::class,
-        'command+.middleware.make' => Generators\Console\MiddlewareMakeCommand::class,
+        'command+.console.make' => Console\ConsoleMakeCommand::class,
+        'command+.controller.make' => Console\ControllerMakeCommand::class,
+        'command+.event.make' => Console\EventMakeCommand::class,
+        'command+.job.make' => Console\JobMakeCommand::class,
+        'command+.listener.make' => Console\ListenerMakeCommand::class,
+        'command+.middleware.make' => Console\MiddlewareMakeCommand::class,
         'command+.migration.make' => Database\Console\MigrationMakeCommand::class,
-        'command+.model.make' => Generators\Console\ModelMakeCommand::class,
-        'command+.policy.make' => Generators\Console\PolicyMakeCommand::class,
-        'command+.provider.make' => Generators\Console\ProviderMakeCommand::class,
-        'command+.request.make' => Generators\Console\RequestMakeCommand::class,
+        'command+.model.make' => Console\ModelMakeCommand::class,
+        'command+.policy.make' => Console\PolicyMakeCommand::class,
+        'command+.provider.make' => Console\ProviderMakeCommand::class,
+        'command+.request.make' => Console\RequestMakeCommand::class,
         'command+.seeder.make' => Database\Console\SeederMakeCommand::class,
-        'command+.test.make' => Generators\Console\TestMakeCommand::class,
+        'command+.test.make' => Console\TestMakeCommand::class,
     ];
 
     /**
@@ -35,11 +36,19 @@ class GeneratorCommandRegistrar
         'command.handler.event' => Console\DummyCommand::class,
     ];
 
-    public function __construct(App $app)
+    /**
+     * The constructor.
+     *
+     * @param \Illuminate\Contracts\Foundation\Application $app
+     */
+    public function __construct(Application $app)
     {
         $this->app = $app;
     }
 
+    /**
+     * Register generator commands.
+     */
     public function register()
     {
         $this->registerCommands(static::$commands);
@@ -49,6 +58,11 @@ class GeneratorCommandRegistrar
         return array_keys(static::$commands);
     }
 
+    /**
+     * Register commands.
+     *
+     * @param array $commands
+     */
     protected function registerCommands(array $commands)
     {
         foreach ($commands as $name => $class) {
@@ -66,7 +80,7 @@ class GeneratorCommandRegistrar
     }
 
     /**
-     * setup legacy framework's commands.
+     * Setup legacy framework's commands.
      *
      * @param array $commands
      */

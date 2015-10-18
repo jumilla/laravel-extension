@@ -40,6 +40,30 @@ class AddonMakeCommandTests extends TestCase
         $this->runMakeCommand($app, 'sample:auth');
     }
 
+    public function test_withNoNamespace()
+    {
+        $app = $this->createApplication();
+        $command = $app->make(Command::class);
+
+        return $this->runCommand($app, $command, [
+            'name' => 'foo',
+            'skeleton' => 'minimum',
+            '--no-namespace' => true,
+        ]);
+    }
+
+    public function test_withNamespace()
+    {
+        $app = $this->createApplication();
+        $command = $app->make(Command::class);
+
+        return $this->runCommand($app, $command, [
+            'name' => 'foo',
+            'skeleton' => 'minimum',
+            '--namespace' => 'Bar',
+        ]);
+    }
+
     public function runMakeCommand($app, $skeleton)
     {
         $command = $app->make(Command::class);

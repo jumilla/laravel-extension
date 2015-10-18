@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelPlus\Extension\Console;
+namespace LaravelPlus\Extension\Generators\Console;
 
 use Illuminate\Console\Command as BaseCommand;
 

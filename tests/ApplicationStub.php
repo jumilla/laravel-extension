@@ -171,4 +171,13 @@ class ApplicationStub extends Container implements ApplicationContract
     public function bootstrapWith(array $bootstrappers)
     {
     }
+
+    /**
+     * Load and boot all of the remaining deferred providers.
+     *
+     * @return void
+     */
+    public function loadDeferredProviders()
+    {
+    }
 }

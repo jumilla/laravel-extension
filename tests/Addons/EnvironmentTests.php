@@ -12,5 +12,8 @@ class EnvironmentTests extends TestCase
         $environment = new Environment();
 
         Assert::isInstanceOf(Environment::class, $environment);
+
+        Assert::null($environment->getAddon('foo'));
+        Assert::isEmpty($environment->getAddonConsoleCommands('foo'));
     }
 }

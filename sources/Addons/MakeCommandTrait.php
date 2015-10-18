@@ -9,12 +9,12 @@ trait MakeCommandTrait
     /**
      * @var array
      */
-    protected $__skeletons = [];
+    //protected $skeletons = [];
 
     /**
      * @var string
      */
-    protected $__default_skeleton;
+    //protected $default_skeleton;
 
     /**
      * Choose skeleton by command line parameter or dialog.
