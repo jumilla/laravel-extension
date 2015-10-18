@@ -51,7 +51,7 @@ if (!function_exists('addon_path')) {
 
 if (!function_exists('addon_config')) {
     /**
-     * @param string $name  Addon name.
+     * @param string $name Addon name.
      * @param string $key
      * @param mixed  $value
      *
@@ -87,8 +87,8 @@ if (!function_exists('addon_trans_choice')) {
      *
      * @param string $name
      * @param string $id
-     * @param int    $number
-     * @param array  $parameters
+     * @param int $number
+     * @param array $parameters
      * @param string $domain
      * @param string $locale
      *
@@ -106,8 +106,8 @@ if (!function_exists('addon_view')) {
      *
      * @param string $name
      * @param string $view
-     * @param array  $data
-     * @param array  $mergeData
+     * @param array $data
+     * @param array $mergeData
      *
      * @return \Illuminate\View\View
      */
