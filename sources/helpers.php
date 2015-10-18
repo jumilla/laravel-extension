@@ -6,7 +6,7 @@ if (!function_exists('runtime_get_caller_class')) {
     /**
      * @param int $level
      *
-     * @return string|null
+     * @return string
      */
     function runtime_get_caller_class($level = 1)
     {
@@ -24,7 +24,7 @@ if (!function_exists('spec')) {
      *
      * @param string $path
      *
-     * @return LaravelPlus\Extension\Specs\Factory|LaravelPlus\Extension\Specs\InputSpec
+     * @return \LaravelPlus\Extension\Specs\Factory|LaravelPlus\Extension\Specs\InputSpec
      */
     function spec($path = null)
     {

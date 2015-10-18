@@ -7,7 +7,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 class Translator
 {
     /**
-     * @var Symfony\Component\Translation\TranslatorInterface
+     * @var \Symfony\Component\Translation\TranslatorInterface
      */
     protected $translator;
 
@@ -17,7 +17,7 @@ class Translator
     protected $namespace;
 
     /**
-     * @param Symfony\Component\Translation\TranslatorInterface $translator
+     * @param \Symfony\Component\Translation\TranslatorInterface $translator
      * @param string $namespace
      */
     public function __construct(TranslatorInterface $translator, $namespace = '')
@@ -29,8 +29,8 @@ class Translator
     /**
      * Determine if a translation exists.
      *
-     * @param  string  $key
-     * @param  string  $locale
+     * @param string $key
+     * @param string $locale
      * @return bool
      */
     public function has($key, $locale = null)
@@ -40,7 +40,7 @@ class Translator
 
     /**
      * @param string $key
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return mixed
      */

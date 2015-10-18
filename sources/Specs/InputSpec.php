@@ -24,13 +24,13 @@ class InputSpec
     protected $rules = [];
 
     /**
-     * @var LaravelPlus\Extension\Specs\Translator
+     * @var \LaravelPlus\Extension\Specs\Translator
      */
     protected $translator;
 
     /**
-     * @param LaravelPlus\Extension\Repository\NamespacedRepository $specs
-     * @param Symfony\Component\Translation\TranslatorInterface $translator
+     * @param \LaravelPlus\Extension\Repository\NamespacedRepository $specs
+     * @param \Symfony\Component\Translation\TranslatorInterface $translator
      * @param string $path
      */
     public function __construct(NamespacedRepository $specs, TranslatorInterface $translator, $path)

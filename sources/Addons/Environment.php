@@ -22,7 +22,7 @@ class Environment
     }
 
     /**
-     * @return LaravelPlus\Extension\Addons\Addon
+     * @return \LaravelPlus\Extension\Addons\Addon
      */
     public function getAddon($name)
     {

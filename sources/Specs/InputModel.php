@@ -8,7 +8,7 @@ use InvalidArgumentException;
 class InputModel implements Arrayable
 {
     /**
-     * @var LaravelPlus\Extension\Specs\InputSpec
+     * @var \LaravelPlus\Extension\Specs\InputSpec
      */
     protected $spec;
 
@@ -18,13 +18,13 @@ class InputModel implements Arrayable
     protected $in;
 
     /**
-     * @var Illuminate\Validation\Validator
+     * @var \Illuminate\Validation\Validator
      */
     protected $validator;
 
     /**
-     * @param string|LaravelPlus\Extension\Specs\InputSpec $pathOrSpec
-     * @param array                                        $in
+     * @param string | \LaravelPlus\Extension\Specs\InputSpec $pathOrSpec
+     * @param array $in
      *
      * @return static
      */
@@ -41,7 +41,7 @@ class InputModel implements Arrayable
     }
 
     /**
-     * @param LaravelPlus\Extension\Specs\InputSpec $spec
+     * @param \LaravelPlus\Extension\Specs\InputSpec $spec
      * @param array                                 $in
      */
     public function __construct(InputSpec $spec, array $in = null)
@@ -92,7 +92,7 @@ class InputModel implements Arrayable
     }
 
     /**
-     * @return Illuminate\Support\MessageBag
+     * @return \Illuminate\Support\MessageBag
      */
     public function errors()
     {
@@ -100,7 +100,7 @@ class InputModel implements Arrayable
     }
 
     /**
-     * @return Illuminate\Validation\Validator
+     * @return \Illuminate\Validation\Validator
      */
     public function validator()
     {
@@ -123,7 +123,7 @@ class InputModel implements Arrayable
      * Dynamically set attributes on the model.
      *
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      */
     public function __set($key, $value)
     {

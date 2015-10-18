@@ -69,9 +69,9 @@ class JobMakeCommand extends BaseCommand
     /**
      * Generate file.
      *
-     * @param FileGenerator $generator
-     * @param string        $path
-     * @param string        $fqcn
+     * @param \Jumilla\Generators\FileGenerator $generator
+     * @param string $path
+     * @param string $fqcn
      *
      * @return bool
      */

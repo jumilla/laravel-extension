@@ -27,7 +27,7 @@ class ConfigLoader
      * Load the configuration items from all of the files.
      *
      * @param string                                 $directoryPath
-     * @param Illuminate\Contracts\Config\Repository $config
+     * @param \Illuminate\Contracts\Config\Repository $config
      */
     protected function loadConfigurationFiles($directoryPath, Repository $config)
     {

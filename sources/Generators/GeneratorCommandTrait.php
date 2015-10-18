@@ -11,7 +11,7 @@ trait GeneratorCommandTrait
     /**
      * addon.
      *
-     * @var LaravelPlus\Extension\Addons\Addon
+     * @var \LaravelPlus\Extension\Addons\Addon
      */
     protected $addon;
 

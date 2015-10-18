@@ -6,7 +6,7 @@ if (!function_exists('addon')) {
     /**
      * @param string $name Addon name.
      *
-     * @return LaravelPlus\Extension\Addons\Addon
+     * @return \LaravelPlus\Extension\Addons\Addon
      */
     function addon($name = null)
     {
@@ -16,9 +16,9 @@ if (!function_exists('addon')) {
 
 if (!function_exists('addon_name')) {
     /**
-     * @param string|int $class
+     * @param string | int $class
      *
-     * @return string|null
+     * @return string
      */
     function addon_name($class = 1)
     {
@@ -38,8 +38,8 @@ if (!function_exists('addon_name')) {
 
 if (!function_exists('addon_path')) {
     /**
-     * @param string      $name Addon name.
-     * @param string|null $path
+     * @param string $name Addon name.
+     * @param string $path
      *
      * @return mixed
      */
@@ -109,7 +109,7 @@ if (!function_exists('addon_view')) {
      * @param array  $data
      * @param array  $mergeData
      *
-     * @return Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     function addon_view($name, $view)
     {
@@ -124,7 +124,7 @@ if (!function_exists('addon_spec')) {
      * @param string $name
      * @param string $path
      *
-     * @return LaravelPlus\Extension\Specs\InputSpec
+     * @return \LaravelPlus\Extension\Specs\InputSpec
      */
     function addon_spec($name, $path)
     {

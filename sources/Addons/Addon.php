@@ -66,14 +66,14 @@ class Addon
     protected $path;
 
     /**
-     * @var Illuminate\Contracts\Config\Repository
+     * @var \Illuminate\Contracts\Config\Repository
      */
     protected $config;
 
     /**
      * @param string                       $name
      * @param string                       $path
-     * @param Illuminate\Contracts\Config\Repository $config
+     * @param \Illuminate\Contracts\Config\Repository $config
      */
     public function __construct($name, $path, Repository $config)
     {
@@ -140,7 +140,7 @@ class Addon
      * get config value.
      *
      * @param string $key
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return mixed
      */
@@ -152,10 +152,10 @@ class Addon
     /**
      * Translate the given message.
      *
-     * @param  string  $id
-     * @param  array   $parameters
-     * @param  string  $domain
-     * @param  string  $locale
+     * @param string $id
+     * @param array $parameters
+     * @param string $domain
+     * @param string $locale
      * @return string
      */
     public function trans()
@@ -169,11 +169,11 @@ class Addon
     /**
      * Translates the given message based on a count.
      *
-     * @param  string  $id
-     * @param  int     $number
-     * @param  array   $parameters
-     * @param  string  $domain
-     * @param  string  $locale
+     * @param string $id
+     * @param int $number
+     * @param array $parameters
+     * @param string $domain
+     * @param string $locale
      * @return string
      */
     public function transChoice()
@@ -186,10 +186,10 @@ class Addon
 
     /**
      * @param string $view
-     * @param array  $data
-     * @param array  $mergeData
+     * @param array $data
+     * @param array $mergeData
      *
-     * @return Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function view($view, $data = [], $mergeData = [])
     {
@@ -201,7 +201,7 @@ class Addon
      *
      * @param string $path
      *
-     * @return LaravelPlus\Extension\Specs\InputSpec
+     * @return \LaravelPlus\Extension\Specs\InputSpec
      */
     public function spec($path)
     {
@@ -211,7 +211,7 @@ class Addon
     /**
      * register addon.
      *
-     * @param Illuminate\Contracts\Foundation\Application $app
+     * @param \Illuminate\Contracts\Foundation\Application $app
      */
     public function register(Application $app)
     {
@@ -228,7 +228,7 @@ class Addon
     /**
      * register addon version 4.
      *
-     * @param Illuminate\Contracts\Foundation\Application $app
+     * @param \Illuminate\Contracts\Foundation\Application $app
      */
     private function registerV4(Application $app)
     {
@@ -255,7 +255,7 @@ class Addon
     /**
      * register addon version 5.
      *
-     * @param Illuminate\Contracts\Foundation\Application $app
+     * @param \Illuminate\Contracts\Foundation\Application $app
      */
     private function registerV5(Application $app)
     {
@@ -269,7 +269,7 @@ class Addon
     /**
      * boot addon.
      *
-     * @param Illuminate\Contracts\Foundation\Application $app
+     * @param \Illuminate\Contracts\Foundation\Application $app
      */
     public function boot(Application $app)
     {
@@ -286,7 +286,7 @@ class Addon
     /**
      * boot addon version 4.
      *
-     * @param Illuminate\Contracts\Foundation\Application $app
+     * @param \Illuminate\Contracts\Foundation\Application $app
      */
     private function bootV4(Application $app)
     {
@@ -313,7 +313,7 @@ class Addon
     /**
      * boot addon version 5.
      *
-     * @param Illuminate\Contracts\Foundation\Application $app
+     * @param \Illuminate\Contracts\Foundation\Application $app
      */
     private function bootV5(Application $app)
     {

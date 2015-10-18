@@ -26,7 +26,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param  \Illuminate\Routing\Router  $router
+     * @param \Illuminate\Routing\Router $router
      * @return void
      */
     public function boot(Router $router)
@@ -37,7 +37,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define the routes for the addon.
      *
-     * @param  \Illuminate\Routing\Router  $router  (injection)
+     * @param \Illuminate\Routing\Router $router (injection)
      * @return void
      */
     public function map(Router $router)

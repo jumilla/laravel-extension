@@ -9,7 +9,7 @@ class Factory
      *
      * @param string $path
      *
-     * @return LaravelPlus\Extension\Specs\InputSpec
+     * @return \LaravelPlus\Extension\Specs\InputSpec
      */
     public function make($path)
     {
@@ -22,7 +22,7 @@ class Factory
      * @param string $key
      * @param mixed  $default
      *
-     * @return LaravelPlus\Extension\Repository\NamespacedRepository|string
+     * @return \LaravelPlus\Extension\Repository\NamespacedRepository|string
      */
     function get($key, $default = null)
     {
@@ -32,7 +32,7 @@ class Factory
     /**
      * @param string $namespace
      *
-     * @return LaravelPlus\Extension\Specs\Translator
+     * @return \LaravelPlus\Extension\Specs\Translator
      */
     public function translator($namespace)
     {
@@ -40,10 +40,10 @@ class Factory
     }
 
     /**
-     * @param string|LaravelPlus\Extension\Specs\InputSpec $pathOrSpec
-     * @param array                                        $in
+     * @param string | \LaravelPlus\Extension\Specs\InputSpec $pathOrSpec
+     * @param array                                           $in
      *
-     * @return LaravelPlus\Extension\Specs\InputModel
+     * @return \LaravelPlus\Extension\Specs\InputModel
      */
     public function inputModel($pathOrSpec, array $in = null)
     {
@@ -61,7 +61,7 @@ class Factory
      * @param string $id
      * @param string $path
      *
-     * @return LaravelPlus\Extension\Specs\FormModel
+     * @return \LaravelPlus\Extension\Specs\FormModel
      */
     public function formModel($id, $path)
     {

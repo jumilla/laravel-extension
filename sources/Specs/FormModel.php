@@ -25,7 +25,7 @@ class FormModel
     /**
      *	Form spec.
      *
-     *	@var LaravelPlus\Extension\Specs\InputSpec
+     *	@var \LaravelPlus\Extension\Specs\InputSpec
      */
     protected $spec;
 

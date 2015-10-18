@@ -10,14 +10,14 @@ class Authenticate
     /**
      * The Guard implementation.
      *
-     * @var Guard
+     * @var \Illuminate\Contracts\Auth\Guard
      */
     protected $auth;
 
     /**
      * Create a new filter instance.
      *
-     * @param  Guard  $auth
+     * @param \Illuminate\Contracts\Auth\Guard $auth
      * @return void
      */
     public function __construct(Guard $auth)
@@ -28,8 +28,8 @@ class Authenticate
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)

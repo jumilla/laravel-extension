@@ -221,9 +221,9 @@ class AddonNameCommand extends Command
     /**
      * Replace the given string in the given file.
      *
-     * @param string       $path
-     * @param string|array $search
-     * @param string|array $replace
+     * @param string $path
+     * @param string | array $search
+     * @param string | array $replace
      */
     protected function replaceIn($path, $search, $replace)
     {
