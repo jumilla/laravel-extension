@@ -2,52 +2,49 @@
 
 namespace LaravelPlus\Extension\Specs;
 
+use LaravelPlus\Extension\Repository\NamespacedRepository;
+use Symfony\Component\Translation\TranslatorInterface;
+use InvalidArgumentException;
+
 class InputSpec
 {
-    /**
-     * rule string or array.
-     *
-     * @param string $path
-     *
-     * @return static
-     */
-    public static function make($path)
-    {
-        return new static($path);
-    }
-
     /**
      * @var string
      */
     protected $namespace;
 
     /**
-     * @param string
+     * @var string
      */
     protected $path;
 
     /**
-     * @param array
+     * @var array
      */
     protected $rules = [];
 
     /**
+     * @var LaravelPlus\Extension\Specs\Translator
+     */
+    protected $translator;
+
+    /**
+     * @param LaravelPlus\Extension\Repository\NamespacedRepository $specs
+     * @param Symfony\Component\Translation\TranslatorInterface $translator
      * @param string $path
      */
-    public function __construct($path)
+    public function __construct(NamespacedRepository $specs, TranslatorInterface $translator, $path)
     {
-        $rules = app('specs')->get($path);
+        $rules = $specs->get($path);
 
         if (is_null($rules)) {
-            throw new \InvalidArgumentException("spec '$path' is not found");
+            throw new InvalidArgumentException("spec '$path' is not found");
         }
-
         if (!is_array($rules)) {
-            throw new \InvalidArgumentException('$rules must array in path '.$path);
+            throw new InvalidArgumentException('$rules must array in path '.$path);
         }
-
-        if (!app('translator')->has($path)) {
-            throw new \InvalidArgumentException("translate '$path' is not found");
+        if (!$translator->has($path)) {
+            throw new InvalidArgumentException("translate '$path' is not found");
         }
 
         if (strpos($path, '::') !== false) {
@@ -55,9 +52,11 @@ class InputSpec
         } else {
             $namespace = '';
         }
+
         $this->path = $path;
         $this->namespace = $namespace;
         $this->rules = $rules;
+        $this->translator = new Translator($translator, $namespace);
 
         $this->resolveSpecReferences();
     }
@@ -85,7 +84,7 @@ class InputSpec
     {
         $path = $this->path.'.rules';
 
-        return Translator::make($this->namespace)->get($path, []);
+        return $this->translator->get($path, []);
     }
 
     /**
@@ -95,7 +94,7 @@ class InputSpec
     {
         $path = $this->path.'.attributes';
 
-        return Translator::make($this->namespace)->get($path, []);
+        return $this->translator->get($path, []);
     }
 
     /**
@@ -105,7 +104,7 @@ class InputSpec
     {
         $path = $this->path.'.values';
 
-        return Translator::make($this->namespace)->get($path, []);
+        return $this->translator->get($path, []);
     }
 
     /**
@@ -127,7 +126,7 @@ class InputSpec
     {
         $path = $this->path.'.attributes.'.$name;
 
-        return Translator::make($this->namespace)->get($path);
+        return $this->translator->get($path);
     }
 
     /**
@@ -139,7 +138,7 @@ class InputSpec
     {
         $path = $this->path.'.helptexts.'.$name;
 
-        return Translator::make($this->namespace)->get($path, '');
+        return $this->translator->get($path, '');
     }
 
     /**
@@ -180,14 +179,14 @@ class InputSpec
      */
     private function resolveSpecReferences()
     {
-        foreach ($this->rules as $key => &$value) {
+        foreach ($this->rules as &$value) {
             if (strpos($value, '@') !== false) {
-                list(, $vocabularyPath) = explode('@', $value, 2);
+                list(, $key) = explode('@', $value, 2);
 
-                $rule = app('specs')->get($this->fullpath('vocabulary.'.$vocabularyPath), null);
+                $rule = app('specs')->get($this->fullkey('vocabulary.'.$key), null);
 
                 if (empty($rule)) {
-                    throw new \InvalidArgumentException('specs/vocabulary '.$vocabularyPath.' not found.');
+                    throw new InvalidArgumentException('specs/vocabulary '.$key.' not found.');
                 }
 
                 $value = $rule;
@@ -196,12 +195,12 @@ class InputSpec
     }
 
     /**
-     * @param string $path
+     * @param string $key
      *
      * @return string
      */
-    private function fullpath($path)
+    private function fullkey($key)
     {
-        return $this->namespace ? $this->namespace.'::'.$path : $path;
+        return $this->namespace ? $this->namespace.'::'.$key : $key;
     }
 }

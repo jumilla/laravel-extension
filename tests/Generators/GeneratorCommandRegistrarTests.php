@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\GeneratorCommandRegistrar;
+use LaravelPlus\Extension\Generators\GeneratorCommandRegistrar;
 
 class GeneratorCommandRegistrarTests extends TestCase
 {

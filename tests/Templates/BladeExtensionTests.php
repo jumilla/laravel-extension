@@ -8,8 +8,12 @@ class BladeExtensionTests extends TestCase
 
     public function test_withNoParameter()
     {
-        $command = new BladeExtension();
+        $extension = new BladeExtension();
 
-        Assert::isInstanceOf(BladeExtension::class, $command);
+        $closure = $extension->comment();
+        Assert::same('<?php /* foo */ ?>', $closure('{# foo #}'));
+
+        $closure = $extension->script();
+        Assert::same('<?php  foo ; ?>', $closure('{@ foo @}'));
     }
 }

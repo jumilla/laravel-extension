@@ -2,36 +2,14 @@
 
 namespace LaravelPlus\Extension\Specs;
 
+use Symfony\Component\Translation\TranslatorInterface;
+
 class Translator
 {
     /**
-     * @param string $path
-     * @param mixed  $default
-     *
-     * @return mixed
+     * @var Symfony\Component\Translation\TranslatorInterface
      */
-    public static function translate($path, $default = false)
-    {
-        $string = app('translator')->get($path);
-
-        if ($default !== false) {
-            if ($string == $path) {
-                return $default;
-            }
-        }
-
-        return $string;
-    }
-
-    /**
-     * @param string $namespace
-     *
-     * @return static
-     */
-    public static function make($namespace)
-    {
-        return new static($namespace);
-    }
+    protected $translator;
 
     /**
      * @var string
@@ -39,22 +17,36 @@ class Translator
     protected $namespace;
 
     /**
+     * @param Symfony\Component\Translation\TranslatorInterface $translator
      * @param string $namespace
      */
-    public function __construct($namespace)
+    public function __construct(TranslatorInterface $translator, $namespace = '')
     {
+        $this->translator = $translator;
         $this->namespace = $namespace;
     }
 
     /**
-     * @param string $path
+     * Determine if a translation exists.
+     *
+     * @param  string  $key
+     * @param  string  $locale
+     * @return bool
+     */
+    public function has($key, $locale = null)
+    {
+        return $this->translator->has($this->fullkey($key));
+    }
+
+    /**
+     * @param string $key
      * @param mixed  $default
      *
      * @return mixed
      */
-    public function get($path, $default = false)
+    public function get($key, $default = false)
     {
-        $value = static::translate($this->fullpath($path), $default);
+        $value = $this->translate($this->fullkey($key), $default);
 
         if (is_string($value)) {
             $value = $this->resolve($value);
@@ -76,21 +68,40 @@ class Translator
     public function resolve($string, $default = false)
     {
         if (strpos($string, '@') !== false) {
-            list(, $vocabularyPath) = explode('@', $string, 2);
+            list(, $key) = explode('@', $string, 2);
 
-            $string = static::translate($this->fullpath('vocabulary.'.$vocabularyPath), $default);
+            $string = $this->translate($this->fullkey('vocabulary.'.$key), $default);
         }
 
         return $string;
     }
 
     /**
-     * @param string $path
+     * @param string $key
      *
      * @return string
      */
-    private function fullpath($path)
+    private function fullkey($key)
     {
-        return $this->namespace ? $this->namespace.'::'.$path : $path;
+        return $this->namespace ? $this->namespace.'::'.$key : $key;
+    }
+
+    /**
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    protected function translate($key, $default = false)
+    {
+        $string = $this->translator->get($key);
+
+        if ($default !== false) {
+            if ($string == $key) {
+                return $default;
+            }
+        }
+
+        return $string;
     }
 }

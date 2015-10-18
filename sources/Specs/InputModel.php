@@ -2,13 +2,13 @@
 
 namespace LaravelPlus\Extension\Specs;
 
-use InvalidArgumentException;
 use Illuminate\Contracts\Support\Arrayable;
+use InvalidArgumentException;
 
 class InputModel implements Arrayable
 {
     /**
-     * @var \LaravelPlus\Extension\Specs\InputSpec
+     * @var LaravelPlus\Extension\Specs\InputSpec
      */
     protected $spec;
 
@@ -18,33 +18,34 @@ class InputModel implements Arrayable
     protected $in;
 
     /**
-     * @var \Illuminate\Validation\Validator
+     * @var Illuminate\Validation\Validator
      */
     protected $validator;
 
     /**
-     * @param string|\LaravelPlus\Extension\Specs\InputSpec $spec
-     * @param array                                         $in
+     * @param string|LaravelPlus\Extension\Specs\InputSpec $pathOrSpec
+     * @param array                                        $in
      *
      * @return static
      */
-    public static function make($spec, array $in = null)
+    public static function make($pathOrSpec, array $in = null)
     {
-        $instance = new static($spec, $in);
+        if (is_string($pathOrSpec)) {
+            $spec = new InputSpec(app('specs'), app('translator'), $pathOrSpec);
+        }
+        else {
+            $spec = $pathOrSpec;
+        }
 
-        return $instance;
+        return new static($spec, $in);
     }
 
     /**
-     * @param string|\LaravelPlus\Extension\Specs\InputSpec $spec
-     * @param array                                         $in
+     * @param LaravelPlus\Extension\Specs\InputSpec $spec
+     * @param array                                 $in
      */
-    public function __construct($spec, array $in = null)
+    public function __construct(InputSpec $spec, array $in = null)
     {
-        if (is_string($spec)) {
-            $spec = InputSpec::make($spec);
-        }
-
         $this->spec = $spec;
         $this->in = $in ?: $this->gatherInput();
 
@@ -91,7 +92,7 @@ class InputModel implements Arrayable
     }
 
     /**
-     * @return \Illuminate\Support\MessageBag
+     * @return Illuminate\Support\MessageBag
      */
     public function errors()
     {
@@ -99,7 +100,7 @@ class InputModel implements Arrayable
     }
 
     /**
-     * @return \Illuminate\Validation\Validator
+     * @return Illuminate\Validation\Validator
      */
     public function validator()
     {

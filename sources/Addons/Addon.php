@@ -66,14 +66,14 @@ class Addon
     protected $path;
 
     /**
-     * @var \Illuminate\Config\Repository
+     * @var Illuminate\Config\Repository
      */
     protected $config;
 
     /**
-     * @param string                        $name
-     * @param string                        $path
-     * @param \Illuminate\Config\Repository $config
+     * @param string                       $name
+     * @param string                       $path
+     * @param Illuminate\Config\Repository $config
      */
     public function __construct($name, $path, Repository $config)
     {
@@ -193,20 +193,19 @@ class Addon
      */
     public function view($view, $data = [], $mergeData = [])
     {
-        return view($this->name.$view, $data, $mergeData);
+        return view($this->name.'::'.$view, $data, $mergeData);
     }
 
     /**
-     * Get the specified configuration value.
+     * Get spec.
      *
-     * @param string $key
-     * @param mixed  $default
+     * @param string $path
      *
-     * @return mixed
+     * @return LaravelPlus\Extension\Specs\InputSpec
      */
-    public function spec($key, $default = null)
+    public function spec($path)
     {
-        return spec($this->name.$key, $default);
+        return app(SpecFactory::class)->make($this->name.'::'.$path);
     }
 
     /**

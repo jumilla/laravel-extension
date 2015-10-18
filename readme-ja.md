@@ -531,6 +531,55 @@ $ php artisan make:test FooTests
 $ php artisan make:test FooTests --addon=blog
 ```
 
+## ヘルパ関数
+
+### addon($name = null)
+
+名前を指定してアドオンを取得します。
+
+```php
+$addon = addon('blog');
+```
+
+名前を省略すると、呼び出し元のクラスが含まれるアドオンを返します。
+`addon(addon_name())` と等価です。
+
+```php
+
+namespace Blog\Http\Controllers;
+
+class BlogController
+{
+	public function index()
+	{
+		$addon = addon();	// == addon(addon_name())
+		Assert::same('blog', $addon->name());
+	}
+}
+```
+
+`$addon`オブジェクトを使って、アドオンの属性やリソースにアクセスすることができます。
+
+
+```php
+$addon = addon();
+$addon->path();				// {$root}/addons/blog
+$addon->relativePath();		// addons/blog
+$addon->phpNamespace();		// Blog
+$addon->config('page.row_limit', 20);
+$addon->trans('emails.title');
+$addon->transChoice('emails.title', 2);
+$addon->view('layouts.default');
+```
+
+### addon_name($class)
+
+名前を指定してアドオンを取得します。
+
+```php
+$addon = addon('blog');
+```
+
 ## ファサードの拡張
 
 Laravel5のエイリアスローダーはグローバル名前空間にしか作用しないため、名前空間の中からファサードを扱うにはクラス名の先頭に`\`を付けなければなりません。

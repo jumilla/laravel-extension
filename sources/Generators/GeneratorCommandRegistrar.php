@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelPlus\Extension;
+namespace LaravelPlus\Extension\Generators;
 
 use Illuminate\Contracts\Foundation\Application as App;
 

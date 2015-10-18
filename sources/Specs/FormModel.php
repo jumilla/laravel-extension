@@ -12,7 +12,7 @@ class FormModel
      */
     public static function make($id, $path)
     {
-        return new static($id, $path);
+        return new static($id, new InputSpec(app('specs'), app('translator'), $path));
     }
 
     /**
@@ -25,18 +25,18 @@ class FormModel
     /**
      *	Form spec.
      *
-     *	@var \LaravelPlus\Extension\Specs\InputSpec
+     *	@var LaravelPlus\Extension\Specs\InputSpec
      */
     protected $spec;
 
     /**
      * @param string $id
-     * @param string $path
+     * @param LaravelPlus\Extension\Specs\InputSpec $path
      */
-    public function __construct($id, $path)
+    public function __construct($id, InputSpec $spec)
     {
         $this->id = $id;
-        $this->spec = new InputSpec($path);
+        $this->spec = $spec;
     }
 
     /**

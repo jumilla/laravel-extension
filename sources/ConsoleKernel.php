@@ -4,6 +4,7 @@ namespace LaravelPlus\Extension;
 
 use Illuminate\Foundation\Console\Kernel;
 use LaravelPlus\Extension\Addons\Environment as AddonEnvironment;
+use LaravelPlus\Extension\Generators\GeneratorCommandRegistrar;
 
 abstract class ConsoleKernel extends Kernel
 {

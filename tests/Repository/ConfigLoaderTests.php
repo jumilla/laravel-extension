@@ -6,8 +6,10 @@ class ConfigLoaderTests extends TestCase
 {
     public function test_withNoParameter()
     {
-        $command = new ConfigLoader();
+        $loader = new ConfigLoader();
 
-        Assert::isInstanceOf(ConfigLoader::class, $command);
+//        $loader->load(__DIR__);
+
+        Assert::isInstanceOf(ConfigLoader::class, $loader);
     }
 }

@@ -10,7 +10,7 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * The loader implementation.
      *
-     * @var \LaravelPlus\Extension\Repository\LoaderInterface
+     * @var LaravelPlus\Extension\Repository\LoaderInterface
      */
     protected $loader;
 
@@ -24,7 +24,7 @@ class NamespacedRepository extends NamespacedItemResolver implements ArrayAccess
     /**
      * Create a new configuration repository.
      *
-     * @param \LaravelPlus\Extension\Repository\LoaderInterface $loader
+     * @param LaravelPlus\Extension\Repository\LoaderInterface $loader
      */
     public function __construct(LoaderInterface $loader)
     {

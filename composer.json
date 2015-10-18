@@ -27,6 +27,7 @@
 		},
 		"files": [
 			"sources/helpers.php"
+			"sources/Addons/helpers.php"
 		]
 	},
 	"minimum-stability": "stable",

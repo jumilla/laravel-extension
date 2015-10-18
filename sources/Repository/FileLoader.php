@@ -67,7 +67,7 @@ class FileLoader implements LoaderInterface
         $file = "{$path}/{$group}.php";
 
         if ($this->files->exists($file)) {
-            $items = $this->files->getRequire($file);
+            $items = $this->getRequire($file);
         }
 
         return $items;
