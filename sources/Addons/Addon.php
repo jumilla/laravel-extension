@@ -290,7 +290,7 @@ class Addon
      */
     private function bootV4(Application $app)
     {
-        $filenames = $this->config('files');
+        $filenames = $this->config('addon.files');
 
         $files = [];
 
@@ -317,7 +317,7 @@ class Addon
      */
     private function bootV5(Application $app)
     {
-        $filenames = $this->config('files');
+        $filenames = $this->config('addon.files');
 
         $files = [];
 
