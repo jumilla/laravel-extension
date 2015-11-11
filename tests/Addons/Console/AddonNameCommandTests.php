@@ -21,7 +21,7 @@ class AddonNameCommandTests extends TestCase
 
             Assert::failure();
         } catch (RuntimeException $ex) {
-            Assert::equals('Not enough arguments.', $ex->getMessage());
+            Assert::stringStartsWith('Not enough arguments', $ex->getMessage());
         }
     }
 
@@ -42,7 +42,7 @@ class AddonNameCommandTests extends TestCase
 
             Assert::failure();
         } catch (RuntimeException $ex) {
-            Assert::equals('Not enough arguments.', $ex->getMessage());
+            Assert::stringStartsWith('Not enough arguments', $ex->getMessage());
         }
     }
 
