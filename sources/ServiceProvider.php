@@ -7,7 +7,7 @@ use Jumilla\Addomnipot\Laravel\Environment as AddonEnvironment;
 use Jumilla\Addomnipot\Laravel\ClassLoader as AddonClassLoader;
 use Jumilla\Addomnipot\Laravel\Generator as AddonGenerator;
 use Jumilla\Addomnipot\Laravel\AliasResolver;
-use LaravelPlus\Extension\Addons;
+use Jumilla\Addomnipot\Laravel\Repository;
 use LaravelPlus\Extension\Templates\BladeExtension;
 use Jumilla\Versionia\Laravel\Migrator;
 
