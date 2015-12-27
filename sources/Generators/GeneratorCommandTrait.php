@@ -2,8 +2,8 @@
 
 namespace LaravelPlus\Extension\Generators;
 
-use LaravelPlus\Extension\Addons\Directory as AddonDirectory;
-use LaravelPlus\Extension\Addons\Addon;
+use Jumilla\Addomnipot\Laravel\Environment as AddonEnvironment;
+use Jumilla\Addomnipot\Laravel\Addon;
 use UnexpectedValueException;
 
 trait GeneratorCommandTrait
@@ -49,11 +49,13 @@ trait GeneratorCommandTrait
     protected function getAddon()
     {
         if ($addon = $this->option('addon')) {
-            if (!AddonDirectory::exists($addon)) {
+            $env = app(AddonEnvironment::class);
+
+            if (!$env->exists($addon)) {
                 throw new UnexpectedValueException("Addon '$addon' is not found.");
             }
 
-            return Addon::create(AddonDirectory::path($addon));
+            return Addon::create($env->path($addon));
         } else {
             return;
         }

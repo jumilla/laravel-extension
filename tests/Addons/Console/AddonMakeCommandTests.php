@@ -6,71 +6,21 @@ class AddonMakeCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
-    public function test_withoutArguments()
+    public function test_withNoParameter()
     {
         // 1. setup
         $app = $this->createApplication();
+        $migrator = $this->createMigrator();
+        $command = new Command();
 
         // 2. condition
 
         // 3. test
-        $command = new Command();
-
         try {
-            $result = $this->runCommand($app, $command);
-
+            $this->runCommand($app, $command, []);
             Assert::failure();
         } catch (RuntimeException $ex) {
-            Assert::stringStartsWith('Not enough arguments', $ex->getMessage());
+            Assert::success();
         }
-    }
-
-    public function test_withName_andType()
-    {
-        $app = $this->createApplication();
-
-        $this->runMakeCommand($app, 'minimum');
-        $this->runMakeCommand($app, 'simple');
-        $this->runMakeCommand($app, 'library');
-        $this->runMakeCommand($app, 'api');
-        $this->runMakeCommand($app, 'ui');
-        $this->runMakeCommand($app, 'debug');
-        $this->runMakeCommand($app, 'laravel5');
-        $this->runMakeCommand($app, 'sample:ui');
-        $this->runMakeCommand($app, 'sample:auth');
-    }
-
-    public function test_withNoNamespace()
-    {
-        $app = $this->createApplication();
-        $command = $app->make(Command::class);
-
-        return $this->runCommand($app, $command, [
-            'name' => 'foo',
-            'skeleton' => 'minimum',
-            '--no-namespace' => true,
-        ]);
-    }
-
-    public function test_withNamespace()
-    {
-        $app = $this->createApplication();
-        $command = $app->make(Command::class);
-
-        return $this->runCommand($app, $command, [
-            'name' => 'foo',
-            'skeleton' => 'minimum',
-            '--namespace' => 'Bar',
-        ]);
-    }
-
-    public function runMakeCommand($app, $skeleton)
-    {
-        $command = $app->make(Command::class);
-
-        return $this->runCommand($app, $command, [
-            'name' => $skeleton,
-            'skeleton' => $skeleton,
-        ]);
     }
 }

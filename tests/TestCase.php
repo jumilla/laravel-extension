@@ -5,7 +5,7 @@ use Illuminate\Config\Repository as Config;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Filesystem\FilesystemManager;
-use LaravelPlus\Extension\Addons\Generator as AddonGenerator;
+use Jumilla\Addomnipot\Laravel\Generator as AddonGenerator;
 use Jumilla\Versionia\Laravel\Migrator;
 
 abstract class TestCase extends PHPUnit_Framework_TestCase
@@ -44,6 +44,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         Container::setInstance($this->app = new ApplicationStub([
         ]));
 
+        $this->app[Illuminate\Contracts\Foundation\Application::class] = $this->app;
         $this->app['config'] = new Config([]);
         $this->app['files'] = new Filesystem();
         $this->app['filesystem'] = new FilesystemManager($this->app);

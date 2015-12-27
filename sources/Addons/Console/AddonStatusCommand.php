@@ -2,57 +2,17 @@
 
 namespace LaravelPlus\Extension\Addons\Console;
 
-use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
-use LaravelPlus\Extension\Addons\Directory as AddonDirectory;
+use Jumilla\Addomnipot\Laravel\Console\AddonStatusCommand as BaseCommand;
 
-class AddonStatusCommand extends Command
+class AddonStatusCommand extends BaseCommand
 {
     /**
-     * The console command signature.
-     *
-     * @var string
+     * Create a new console command instance.
      */
-    protected $signature = 'addon:status';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = '[+] List up addon information';
-
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle(Filesystem $filesystem)
+    public function __construct()
     {
-        // make addons/
-        $addonsDirectory = AddonDirectory::path();
-        if (!$filesystem->exists($addonsDirectory)) {
-            $filesystem->makeDirectory($addonsDirectory);
-        }
+        $this->description = '[+] '.$this->description;
 
-        // copy app/config/addon.php
-        $addonConfigSourceFile = __DIR__.'/../../../config/addon.php';
-        $addonConfigFile = app('path.config').'/addon.php';
-        if (!$filesystem->exists($addonConfigFile)) {
-            $filesystem->copy($addonConfigSourceFile, $addonConfigFile);
-
-            $this->info('make config: '.$addonConfigFile);
-        }
-
-        // show lists
-        $addons = AddonDirectory::addons();
-        foreach ($addons as $addon) {
-            $this->dump($addon);
-        }
-    }
-
-    protected function dump($addon)
-    {
-        $this->line($addon->name());
+        parent::__construct();
     }
 }

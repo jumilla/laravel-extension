@@ -13,8 +13,9 @@
 	],
 	"require": {
 		"php": ">=5.5.9",
-        "laravel/framework": "5.1.*",
+        "laravel/framework": "5.2.*",
 		"jumilla/laravel-versionia": "^1.1",
+		"jumilla/laravel-addomnipot": "^0.4",
 		"jumilla/laravel-source-generator": "^1.0"
 	},
     "require-dev": {
@@ -26,8 +27,7 @@
 			"LaravelPlus\\Extension\\": "sources/"
 		},
 		"files": [
-			"sources/helpers.php",
-			"sources/Addons/helpers.php"
+			"sources/helpers.php"
 		]
 	},
 	"minimum-stability": "stable",

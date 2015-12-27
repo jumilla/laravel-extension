@@ -6,24 +6,21 @@ class AddonCheckCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
-    /**
-     * @test
-     */
     public function test_withNoParameter()
     {
         // 1. setup
         $app = $this->createApplication();
-
-        // 2. condition
-        $this->createAddon('foo', 'minimum', [
-            'namespace' => 'Foo',
-        ]);
-
-        // 3. test
+        $migrator = $this->createMigrator();
         $command = new Command();
 
-        $result = $this->runCommand($app, $command);
+        // 2. condition
 
-        Assert::same(0, $result);
+        // 3. test
+        try {
+            $this->runCommand($app, $command, []);
+            Assert::failure();
+        } catch (RuntimeException $ex) {
+            Assert::success();
+        }
     }
 }

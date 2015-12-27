@@ -3,10 +3,11 @@
 namespace LaravelPlus\Extension;
 
 use Illuminate\Support\Facades\Blade;
-use LaravelPlus\Extension\Addons\Addon;
-use LaravelPlus\Extension\Addons\Environment as AddonEnvironment;
-use LaravelPlus\Extension\Addons\ClassLoader as AddonClassLoader;
-use LaravelPlus\Extension\Addons\Generator as AddonGenerator;
+use Jumilla\Addomnipot\Laravel\Environment as AddonEnvironment;
+use Jumilla\Addomnipot\Laravel\ClassLoader as AddonClassLoader;
+use Jumilla\Addomnipot\Laravel\Generator as AddonGenerator;
+use Jumilla\Addomnipot\Laravel\AliasResolver;
+use LaravelPlus\Extension\Addons;
 use LaravelPlus\Extension\Templates\BladeExtension;
 use Jumilla\Versionia\Laravel\Migrator;
 
@@ -15,7 +16,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     /**
      * Addon environment.
      *
-     * @var \LaravelPlus\Extension\Addons\Environment
+     * @var \Jumilla\Addomnipot\Laravel\Environment
      */
     protected $addonEnvironment;
 
@@ -69,7 +70,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         });
 
         // register addon environment
-        $app->instance('addon', $this->addonEnvironment = new AddonEnvironment());
+        $app->instance('addon', $this->addonEnvironment = new AddonEnvironment($app));
         $app->alias('addon', AddonEnvironment::class);
 
         // register addon generator
@@ -84,18 +85,20 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         });
         $app->alias('database.migrator', Migrator::class);
 
-        $this->registerClassResolvers($this->addonEnvironment->getAddons());
+        $this->registerClassResolvers();
 
         $this->setupPackageCommands(static::$commands);
 
-        $this->registerAddons($this->addonEnvironment->getAddons());
+        $this->registerAddons($this->addonEnvironment->addons());
     }
 
     /**
      */
-    protected function registerClassResolvers(array $addons)
+    protected function registerClassResolvers()
     {
-        AddonClassLoader::register($addons);
+        $addons = $this->addonEnvironment->addons();
+
+        AddonClassLoader::register($this->addonEnvironment, $addons);
 
         AliasResolver::register($this->app['path'], $addons, $this->app['config']->get('app.aliases'));
     }
@@ -154,7 +157,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected function bootAddons()
     {
-        foreach ($this->addonEnvironment->getAddons() as $name => $addon) {
+        foreach ($this->addonEnvironment->addons() as $name => $addon) {
             // register package
             $this->registerPackage($name, $addon);
 
@@ -166,8 +169,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     /**
      * Register the package's component namespaces.
      *
-     * @param string                              $namespace
-     * @param \LaravelPlus\Extension\Addons\Addon $addon
+     * @param string                            $namespace
+     * @param \Jumilla\Addomnipot\Laravel\Addon $addon
      */
     protected function registerPackage($namespace, $addon)
     {

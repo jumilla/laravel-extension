@@ -2,7 +2,7 @@
 
 use LaravelPlus\Extension\ConsoleKernel;
 use Illuminate\Contracts\Events\Dispatcher;
-use LaravelPlus\Extension\Addons\Environment as AddonEnvironment;
+use Jumilla\Addomnipot\Laravel\Environment as AddonEnvironment;
 use LaravelPlus\Extension\Generators\GeneratorCommandRegistrar;
 
 class ConsoleKernelTests extends TestCase
@@ -14,7 +14,7 @@ class ConsoleKernelTests extends TestCase
         $addonEnvironment = $this->createMock(AddonEnvironment::class);
         $kernel = new ConsoleKernelStub($app, $dispatcher);
 
-        $addonEnvironment->shouldReceive('getAddonConsoleCommands')->andReturn([])->once();
+        $addonEnvironment->shouldReceive('addonConsoleCommands')->andReturn([])->once();
 
         $app[AddonEnvironment::class] = $addonEnvironment;
 
