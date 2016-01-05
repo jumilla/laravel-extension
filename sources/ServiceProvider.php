@@ -158,35 +158,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function bootAddons()
     {
         foreach ($this->addonEnvironment->addons() as $name => $addon) {
-            // register package
-            $this->registerPackage($name, $addon);
-
             // boot addon
             $addon->boot($this->app);
-        }
-    }
-
-    /**
-     * Register the package's component namespaces.
-     *
-     * @param string                            $namespace
-     * @param \Jumilla\Addomnipot\Laravel\Addon $addon
-     */
-    protected function registerPackage($namespace, $addon)
-    {
-        $lang = $addon->path($addon->config('addon.paths.lang', 'lang'));
-        if (is_dir($lang)) {
-            $this->app['translator']->addNamespace($namespace, $lang);
-        }
-
-        $view = $addon->path($addon->config('addon.paths.views', 'views'));
-        if (is_dir($view)) {
-            $this->app['view']->addNamespace($namespace, $view);
-        }
-
-        $spec = $addon->path($addon->config('addon.paths.specs', 'specs'));
-        if (is_dir($spec)) {
-            $this->app['specs']->addNamespace($namespace, $spec);
         }
     }
 
