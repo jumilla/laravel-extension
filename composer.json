@@ -12,8 +12,8 @@
 		}
 	],
 	"require": {
-		"php": ">=5.5.9",
-        "laravel/framework": "5.2.*",
+		"php": ">=5.6.4",
+        "laravel/framework": "5.3.*",
 		"jumilla/laravel-versionia": "^1.2",
 		"jumilla/laravel-addomnipot": "^1.5",
 		"jumilla/laravel-source-generator": "^1.1"

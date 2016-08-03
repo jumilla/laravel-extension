@@ -1,8 +1,8 @@
 <?php
 
-use LaravelPlus\Extension\Addons\Console\AddonCheckCommand as Command;
+use LaravelPlus\Extension\Addons\Console\AddonListCommand as Command;
 
-class AddonCheckCommandTests extends TestCase
+class AddonListCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

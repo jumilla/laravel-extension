@@ -98,6 +98,7 @@ trait GeneratorCommandTrait
      */
     protected function getRootDirectory()
     {
+        // TODO
         return $this->addon ? $this->addon->path('classes') : parent::getRootDirectory();
     }
 }
