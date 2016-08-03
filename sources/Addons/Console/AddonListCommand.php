@@ -2,9 +2,9 @@
 
 namespace LaravelPlus\Extension\Addons\Console;
 
-use Jumilla\Addomnipot\Laravel\Console\AddonCheckCommand as BaseCommand;
+use Jumilla\Addomnipot\Laravel\Console\AddonListCommand as BaseCommand;
 
-class AddonCheckCommand extends BaseCommand
+class AddonListCommand extends BaseCommand
 {
     /**
      * Create a new console command instance.

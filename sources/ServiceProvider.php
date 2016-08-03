@@ -29,11 +29,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         'command+.app.route' => Console\RouteListCommand::class,
         'command+.app.tail' => Console\TailCommand::class,
 // addon:
+        'command+.addon.list' => Addons\Console\AddonListCommand::class,
         'command+.addon.status' => Addons\Console\AddonStatusCommand::class,
         'command+.addon.make' => Addons\Console\AddonMakeCommand::class,
         'command+.addon.name' => Addons\Console\AddonNameCommand::class,
         'command+.addon.remove' => Addons\Console\AddonRemoveCommand::class,
-        'command+.addon.check' => Addons\Console\AddonCheckCommand::class,
 // database:
         'command+.database.status' => Database\Console\DatabaseStatusCommand::class,
         'command+.database.upgrade' => Database\Console\DatabaseUpgradeCommand::class,
