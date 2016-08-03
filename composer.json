@@ -4,7 +4,7 @@
 	"description": "Laravel Extension Pack",
 	"license": "MIT",
 	"keywords": ["Laravel", "Laravel 5", "addon", "migration", "architecture", "facade"],
-	"homepage": "http://laravel.tokyo",
+	"homepage": "https://laravel.tokyo",
 	"authors": [
 		{
 			"name": "Fumio Furukawa",
@@ -15,7 +15,7 @@
 		"php": ">=5.5.9",
         "laravel/framework": "5.2.*",
 		"jumilla/laravel-versionia": "^1.2",
-		"jumilla/laravel-addomnipot": "^1.3",
+		"jumilla/laravel-addomnipot": "^1.5",
 		"jumilla/laravel-source-generator": "^1.1"
 	},
     "require-dev": {
@@ -30,6 +30,6 @@
 			"sources/helpers.php"
 		]
 	},
-	"minimum-stability": "stable",
+	"minimum-stability": "dev",
 	"prefer-stable": true
 }
