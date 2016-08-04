@@ -55,7 +55,7 @@ trait GeneratorCommandTrait
                 throw new UnexpectedValueException("Addon '$addon' is not found.");
             }
 
-            return Addon::create($env->path($addon));
+            return $env->addon($addon);
         } else {
             return;
         }
@@ -98,7 +98,17 @@ trait GeneratorCommandTrait
      */
     protected function getRootDirectory()
     {
-        // TODO
-        return $this->addon ? $this->addon->path('classes') : parent::getRootDirectory();
+        if ($this->addon) {
+            $directories = $this->addon->config('addon.directories');
+
+            if (! $directories) {
+                $directories = ['classes'];
+            }
+
+            return $this->addon->path($directories[0]);
+        }
+        else {
+            return parent::getRootDirectory();
+        }
     }
 }
