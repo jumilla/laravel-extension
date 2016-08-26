@@ -1,0 +1,59 @@
+<?php
+
+namespace {$namespace};
+
+use Illuminate\Auth\Access\HandlesAuthorization;
+use ${root_namespace}\User;
+use ${root_namespace}\{$model};
+
+class {$class}
+{
+    use HandlesAuthorization;
+
+    /**
+     * Determine whether the user can view the dummyModelName.
+     *
+     * @param  ${root_namespace}\User  $user
+     * @param  ${root_namespace}\{$model}  $dummyModelName
+     * @return mixed
+     */
+    public function view(User $user, {$model} $dummyModelName)
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can create dummyPluralModelName.
+     *
+     * @param  ${root_namespace}\{$model}  $user
+     * @return mixed
+     */
+    public function create(User $user)
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can update the dummyModelName.
+     *
+     * @param  ${root_namespace}\User  $user
+     * @param  ${root_namespace}\{$model};  $dummyModelName
+     * @return mixed
+     */
+    public function update(User $user, {$model} $dummyModelName)
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can delete the dummyModelName.
+     *
+     * @param  ${root_namespace}\User  $user
+     * @param  ${root_namespace}\{$model}  $dummyModelName
+     * @return mixed
+     */
+    public function delete(User $user, {$model} $dummyModelName)
+    {
+        //
+    }
+}

@@ -19,7 +19,7 @@ class ControllerMakeCommand extends BaseCommand
     protected $signature = 'make:controller
         {name : The name of the class}
         {--addon= : The name of the addon}
-        {--resource : Generate an resource controller class}
+        {--resource : Generate a resource controller class}
     ';
 
     /**

@@ -19,9 +19,9 @@ class ListenerMakeCommand extends BaseCommand
      */
     protected $signature = 'make:listener
         {name : The name of the class}
-        {--addon= : The name of the addon}
-        {--event= : The event class the being listened for}
-        {--queued : Indicates the event listener should be queued}
+        {--a|addon= : The name of the addon}
+        {--e|event= : The event class the being listened for}
+        {--q|queued : Indicates the event listener should be queued}
     ';
 
     /**

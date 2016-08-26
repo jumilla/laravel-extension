@@ -7,7 +7,7 @@ use Jumilla\Generators\FileGenerator;
 use LaravelPlus\Extension\Addons\Addon;
 use LaravelPlus\Extension\Generators\GeneratorCommandTrait;
 
-class ConsoleMakeCommand extends BaseCommand
+class MailMakeCommand extends BaseCommand
 {
     use GeneratorCommandTrait;
 
@@ -16,10 +16,9 @@ class ConsoleMakeCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'make:console
+    protected $signature = 'make:event
         {name : The name of the class}
-        {--addon= : The name of the addon}
-        {--command=command.name : The terminal command that should be assigned}
+        {--a|addon= : The name of the addon}
     ';
 
     /**
@@ -27,14 +26,14 @@ class ConsoleMakeCommand extends BaseCommand
      *
      * @var string
      */
-    protected $description = '[+] Create a new Artisan command';
+    protected $description = '[+] Create a new email class';
 
     /**
      * The type of class being generated.
      *
      * @var string
      */
-    protected $type = 'Console';
+    protected $type = 'Mail';
 
     /**
      * The constructor.
@@ -53,7 +52,7 @@ class ConsoleMakeCommand extends BaseCommand
      */
     protected function getDefaultNamespace()
     {
-        return $this->getRootNamespace().'\\Console\\Commands';
+        return $this->getRootNamespace().'\\Mail';
     }
 
     /**
@@ -63,7 +62,7 @@ class ConsoleMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return 'console.stub';
+        return 'mail.stub';
     }
 
     /**
@@ -82,7 +81,6 @@ class ConsoleMakeCommand extends BaseCommand
         return $generator->file($path)->template($this->getStub(), [
             'namespace' => $namespace,
             'class' => $class,
-            'command' => $this->option('command'),
         ]);
     }
 }

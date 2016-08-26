@@ -1,8 +1,8 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Console\ConsoleMakeCommand as Command;
+use LaravelPlus\Extension\Generators\Console\CommandMakeCommand as Command;
 
-class ConsoleMakeCommandTests extends TestCase
+class CommandMakeCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

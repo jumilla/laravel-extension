@@ -2,11 +2,12 @@
 
 namespace {$namespace};
 
-use {$root_namespace}\Jobs\Job;
-use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Bus\Queueable;
 
-class {$class} extends Job implements SelfHandling
+class {$class}
 {
+    use Queueable;
+
     /**
      * Create a new job instance.
      *

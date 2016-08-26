@@ -19,7 +19,7 @@ class JobMakeCommand extends BaseCommand
     protected $signature = 'make:job
         {name : The name of the class}
         {--addon= : The name of the addon}
-        {--queued : Indicates that job should be queued}
+        {--sync : Indicates that job should be synchronous}
     ';
 
     /**
@@ -63,7 +63,7 @@ class JobMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return $this->option('queued') ? 'job-queued.stub' : 'job.stub';
+        return $this->option('sync') ? 'job-sync.stub' : 'job-queued.stub';
     }
 
     /**

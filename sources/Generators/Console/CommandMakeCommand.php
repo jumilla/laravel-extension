@@ -7,7 +7,7 @@ use Jumilla\Generators\FileGenerator;
 use LaravelPlus\Extension\Addons\Addon;
 use LaravelPlus\Extension\Generators\GeneratorCommandTrait;
 
-class TestMakeCommand extends BaseCommand
+class CommandMakeCommand extends BaseCommand
 {
     use GeneratorCommandTrait;
 
@@ -16,9 +16,10 @@ class TestMakeCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'make:test
+    protected $signature = 'make:console
         {name : The name of the class}
-        {--a|addon= : The name of the addon}
+        {--addon= : The name of the addon}
+        {--command=command.name : The terminal command that should be assigned}
     ';
 
     /**
@@ -26,14 +27,14 @@ class TestMakeCommand extends BaseCommand
      *
      * @var string
      */
-    protected $description = '[+] Create a new test class';
+    protected $description = '[+] Create a new Artisan command';
 
     /**
      * The type of class being generated.
      *
      * @var string
      */
-    protected $type = 'Test';
+    protected $type = 'Console';
 
     /**
      * The constructor.
@@ -46,23 +47,13 @@ class TestMakeCommand extends BaseCommand
     }
 
     /**
-     * Get the directory path for root namespace.
+     * Get the default namespace for the class.
      *
      * @return string
      */
-    protected function getRootDirectory()
+    protected function getDefaultNamespace()
     {
-        return $this->addon ? $this->addon->path('tests') : $this->laravel->basePath().'/tests';
-    }
-
-    /**
-     * Get the root namespace for the class.
-     *
-     * @return string
-     */
-    protected function getRootNamespace()
-    {
-        return '';
+        return $this->getRootNamespace().'\\Console\\Commands';
     }
 
     /**
@@ -72,7 +63,7 @@ class TestMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return 'test.stub';
+        return 'command.stub';
     }
 
     /**
@@ -91,6 +82,7 @@ class TestMakeCommand extends BaseCommand
         return $generator->file($path)->template($this->getStub(), [
             'namespace' => $namespace,
             'class' => $class,
+            'command' => $this->option('command'),
         ]);
     }
 }

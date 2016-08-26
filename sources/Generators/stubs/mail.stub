@@ -3,16 +3,16 @@
 namespace {$namespace};
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class {$class} implements ShouldQueue
+class {$class} extends Mailable
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
+    use Queueable, SerializesModels;
 
     /**
-     * Create a new job instance.
+     * Create a new message instance.
      *
      * @return void
      */
@@ -22,12 +22,12 @@ class {$class} implements ShouldQueue
     }
 
     /**
-     * Execute the job.
+     * Build the message.
      *
-     * @return void
+     * @return $this
      */
-    public function handle()
+    public function build()
     {
-        //
+        return $this->view('view.name');
     }
 }

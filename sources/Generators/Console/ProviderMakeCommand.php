@@ -18,7 +18,7 @@ class ProviderMakeCommand extends BaseCommand
      */
     protected $signature = 'make:provider
         {name : The name of the class}
-        {--addon= : The name of the addon}
+        {--a|addon= : The name of the addon}
     ';
 
     /**

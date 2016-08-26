@@ -7,7 +7,7 @@ use Jumilla\Generators\FileGenerator;
 use LaravelPlus\Extension\Addons\Addon;
 use LaravelPlus\Extension\Generators\GeneratorCommandTrait;
 
-class TestMakeCommand extends BaseCommand
+class NotificationMakeCommand extends BaseCommand
 {
     use GeneratorCommandTrait;
 
@@ -16,7 +16,7 @@ class TestMakeCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'make:test
+    protected $signature = 'make:event
         {name : The name of the class}
         {--a|addon= : The name of the addon}
     ';
@@ -26,14 +26,14 @@ class TestMakeCommand extends BaseCommand
      *
      * @var string
      */
-    protected $description = '[+] Create a new test class';
+    protected $description = '[+] Create a new email class';
 
     /**
      * The type of class being generated.
      *
      * @var string
      */
-    protected $type = 'Test';
+    protected $type = 'Notification';
 
     /**
      * The constructor.
@@ -46,23 +46,13 @@ class TestMakeCommand extends BaseCommand
     }
 
     /**
-     * Get the directory path for root namespace.
+     * Get the default namespace for the class.
      *
      * @return string
      */
-    protected function getRootDirectory()
+    protected function getDefaultNamespace()
     {
-        return $this->addon ? $this->addon->path('tests') : $this->laravel->basePath().'/tests';
-    }
-
-    /**
-     * Get the root namespace for the class.
-     *
-     * @return string
-     */
-    protected function getRootNamespace()
-    {
-        return '';
+        return $this->getRootNamespace().'\\Notifications';
     }
 
     /**
@@ -72,7 +62,7 @@ class TestMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return 'test.stub';
+        return 'notification.stub';
     }
 
     /**

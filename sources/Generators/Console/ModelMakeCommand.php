@@ -19,8 +19,8 @@ class ModelMakeCommand extends BaseCommand
      */
     protected $signature = 'make:model
         {name : The name of the class}
-        {--addon= : The name of the addon}
-        {--migration= : Create a new migration file for the model}
+        {--a|addon= : The name of the addon}
+        {--m|migration= : Create a new migration file for the model}
     ';
 
     /**

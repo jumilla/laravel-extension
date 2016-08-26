@@ -14,14 +14,16 @@ class GeneratorCommandRegistrarTests extends TestCase
         $commands = $registrar->register();
 
         Assert::containsAll([
-            'command+.console.make',
+            'command+.command.make',
             'command+.controller.make',
             'command+.event.make',
             'command+.job.make',
             'command+.listener.make',
+            'command+.mail.make',
             'command+.middleware.make',
             'command+.migration.make',
             'command+.model.make',
+            'command+.notification.make',
             'command+.policy.make',
             'command+.provider.make',
             'command+.request.make',
@@ -37,14 +39,16 @@ class GeneratorCommandRegistrarTests extends TestCase
 
         $registrar->register();
 
-        Assert::isInstanceOf(Generators\Console\ConsoleMakeCommand::class, $app->make('command+.console.make'));
+        Assert::isInstanceOf(Generators\Console\CommandMakeCommand::class, $app->make('command+.command.make'));
         Assert::isInstanceOf(Generators\Console\ControllerMakeCommand::class, $app->make('command+.controller.make'));
         Assert::isInstanceOf(Generators\Console\EventMakeCommand::class, $app->make('command+.event.make'));
         Assert::isInstanceOf(Generators\Console\JobMakeCommand::class, $app->make('command+.job.make'));
         Assert::isInstanceOf(Generators\Console\ListenerMakeCommand::class, $app->make('command+.listener.make'));
+        Assert::isInstanceOf(Generators\Console\MailMakeCommand::class, $app->make('command+.mail.make'));
         Assert::isInstanceOf(Generators\Console\MiddlewareMakeCommand::class, $app->make('command+.middleware.make'));
         Assert::isInstanceOf(Database\Console\MigrationMakeCommand::class, $app->make('command+.migration.make'));
         Assert::isInstanceOf(Generators\Console\ModelMakeCommand::class, $app->make('command+.model.make'));
+        Assert::isInstanceOf(Generators\Console\NotificationMakeCommand::class, $app->make('command+.notification.make'));
         Assert::isInstanceOf(Generators\Console\PolicyMakeCommand::class, $app->make('command+.policy.make'));
         Assert::isInstanceOf(Generators\Console\ProviderMakeCommand::class, $app->make('command+.provider.make'));
         Assert::isInstanceOf(Generators\Console\RequestMakeCommand::class, $app->make('command+.request.make'));
@@ -65,6 +69,7 @@ class GeneratorCommandRegistrarTests extends TestCase
         Assert::isInstanceOf(Generators\Console\ModelMakeCommand::class, $app->make('command+.model.make'));
     }
 
+/*
     public function test_makeLegacyCommands()
     {
         $app = $this->createApplication();
@@ -92,4 +97,5 @@ class GeneratorCommandRegistrarTests extends TestCase
         Assert::false($app->bound('command.handler.command'));
         Assert::false($app->bound('command.handler.event'));
     }
+*/
 }

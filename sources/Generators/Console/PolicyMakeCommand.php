@@ -18,7 +18,8 @@ class PolicyMakeCommand extends BaseCommand
      */
     protected $signature = 'make:policy
         {name : The name of the class}
-        {--addon= : The name of the addon}
+        {--m|model : The model that the policy applies to}
+        {--a|addon= : The name of the addon}
     ';
 
     /**
@@ -62,7 +63,7 @@ class PolicyMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return 'policy.stub';
+        return $this->option('model') ? 'policy-model.stub' : 'policy.stub';
     }
 
     /**
@@ -81,6 +82,8 @@ class PolicyMakeCommand extends BaseCommand
         return $generator->file($path)->template($this->getStub(), [
             'namespace' => $namespace,
             'class' => $class,
+            'root_namespace' => $this->getAppNamespace(),     // use App\Jobs\Job
+            'model' => $this->option('model'),
         ]);
     }
 }

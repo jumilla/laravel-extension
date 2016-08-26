@@ -12,14 +12,16 @@ class GeneratorCommandRegistrar
      */
     protected static $commands = [
         // make:
-        'command+.console.make' => Console\ConsoleMakeCommand::class,
+        'command+.command.make' => Console\CommandMakeCommand::class,
         'command+.controller.make' => Console\ControllerMakeCommand::class,
         'command+.event.make' => Console\EventMakeCommand::class,
         'command+.job.make' => Console\JobMakeCommand::class,
         'command+.listener.make' => Console\ListenerMakeCommand::class,
+        'command+.mail.make' => Console\MailMakeCommand::class,
         'command+.middleware.make' => Console\MiddlewareMakeCommand::class,
         'command+.migration.make' => Database\Console\MigrationMakeCommand::class,
         'command+.model.make' => Console\ModelMakeCommand::class,
+        'command+.notification.make' => Console\NotificationMakeCommand::class,
         'command+.policy.make' => Console\PolicyMakeCommand::class,
         'command+.provider.make' => Console\ProviderMakeCommand::class,
         'command+.request.make' => Console\RequestMakeCommand::class,
@@ -31,9 +33,9 @@ class GeneratorCommandRegistrar
      * @var array
      */
     protected static $legacy_commands = [
-        'command.command.make' => Console\DummyCommand::class,
-        'command.handler.command' => Console\DummyCommand::class,
-        'command.handler.event' => Console\DummyCommand::class,
+//        'command.command.make' => Console\DummyCommand::class,
+//        'command.handler.command' => Console\DummyCommand::class,
+//        'command.handler.event' => Console\DummyCommand::class,
     ];
 
     /**

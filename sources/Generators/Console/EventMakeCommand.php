@@ -18,7 +18,7 @@ class EventMakeCommand extends BaseCommand
      */
     protected $signature = 'make:event
         {name : The name of the class}
-        {--addon= : The name of the addon}
+        {--a|addon= : The name of the addon}
     ';
 
     /**
