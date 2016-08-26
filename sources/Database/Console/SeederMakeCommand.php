@@ -17,7 +17,7 @@ class SeederMakeCommand extends BaseCommand
      */
     protected $signature = 'make:seeder
         {name : The name of the class}
-        {--addon= : The name of the addon}
+        {--a|addon= : The name of the addon}
     ';
 
     /**
@@ -35,5 +35,15 @@ class SeederMakeCommand extends BaseCommand
         parent::__construct();
 
         $this->setStubDirectory(__DIR__.'/../stubs');
+    }
+
+    /**
+     * Get the default namespace for the class.
+     *
+     * @return string
+     */
+    protected function getDefaultNamespace()
+    {
+        return $this->getRootNamespace().'\\'.($this->onAddon() ? 'Seeds' : 'Database\\Seeds');
     }
 }

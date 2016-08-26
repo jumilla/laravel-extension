@@ -98,6 +98,6 @@ class MiddlewareMakeCommandTests extends TestCase
         ]);
 
         Assert::same(0, $result);
-        Assert::fileExists($app['path.base'].'/addons/bar/classes/Http/Middleware/Foo.php');
+        Assert::fileExists($app['path.base'].'/addons/bar/classes/Middleware/Foo.php');
     }
 }

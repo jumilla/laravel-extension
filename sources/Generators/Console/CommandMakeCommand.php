@@ -16,7 +16,7 @@ class CommandMakeCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'make:console
+    protected $signature = 'make:command
         {name : The name of the class}
         {--addon= : The name of the addon}
         {--command=command.name : The terminal command that should be assigned}
@@ -53,7 +53,7 @@ class CommandMakeCommand extends BaseCommand
      */
     protected function getDefaultNamespace()
     {
-        return $this->getRootNamespace().'\\Console\\Commands';
+        return $this->getRootNamespace().'\\'.($this->onAddon() ? 'Commands' : 'Console\\Commands');
     }
 
     /**

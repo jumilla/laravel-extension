@@ -42,6 +42,16 @@ trait GeneratorCommandTrait
     }
 
     /**
+     * Option --addon specified.
+     *
+     * @return bool
+     */
+    protected function onAddon()
+    {
+        return $this->option('addon') !== null;
+    }
+
+    /**
      * Get addon.
      *
      * @return string

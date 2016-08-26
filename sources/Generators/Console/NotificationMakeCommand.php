@@ -16,7 +16,7 @@ class NotificationMakeCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'make:event
+    protected $signature = 'make:notification
         {name : The name of the class}
         {--a|addon= : The name of the addon}
     ';

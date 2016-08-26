@@ -98,6 +98,6 @@ class CommandMakeCommandTests extends TestCase
         ]);
 
         Assert::same(0, $result);
-        Assert::fileExists($app['path.base'].'/addons/bar/classes/Console/Commands/Foo.php');
+        Assert::fileExists($app['path.base'].'/addons/bar/classes/Commands/Foo.php');
     }
 }

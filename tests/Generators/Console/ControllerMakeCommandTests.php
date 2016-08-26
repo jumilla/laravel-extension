@@ -98,6 +98,6 @@ class ControllerMakeCommandTests extends TestCase
         ]);
 
         Assert::same(0, $result);
-        Assert::fileExists($app['path.base'].'/addons/bar/classes/Http/Controllers/Foo.php');
+        Assert::fileExists($app['path.base'].'/addons/bar/classes/Controllers/Foo.php');
     }
 }

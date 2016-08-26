@@ -17,7 +17,7 @@ class MigrationMakeCommand extends BaseCommand
      */
     protected $signature = 'make:migration
         {name : The name of the class}
-        {--addon= : The name of the addon}
+        {--a|addon= : The name of the addon}
         {--create= : The table to be created}
         {--update= : The table to be updated}
     ';
@@ -37,5 +37,15 @@ class MigrationMakeCommand extends BaseCommand
         parent::__construct();
 
         $this->setStubDirectory(__DIR__.'/../stubs');
+    }
+
+    /**
+     * Get the default namespace for the class.
+     *
+     * @return string
+     */
+    protected function getDefaultNamespace()
+    {
+        return $this->getRootNamespace().'\\'.($this->onAddon() ? 'Migrations' : 'Database\\Migrations');
     }
 }

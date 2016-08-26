@@ -53,7 +53,7 @@ class ControllerMakeCommand extends BaseCommand
      */
     protected function getDefaultNamespace()
     {
-        return $this->getRootNamespace().'\\Http\\Controllers';
+        return $this->getRootNamespace().'\\'.($this->onAddon() ? 'Controllers' : 'Http\\Controllers');
     }
 
     /**

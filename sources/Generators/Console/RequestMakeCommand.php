@@ -52,7 +52,7 @@ class RequestMakeCommand extends BaseCommand
      */
     protected function getDefaultNamespace()
     {
-        return $this->getRootNamespace().'\\Http\\Requests';
+        return $this->getRootNamespace().'\\'.($this->onAddon() ? 'Requests' : 'Http\\Requests');
     }
 
     /**

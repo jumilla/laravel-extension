@@ -52,7 +52,7 @@ class MiddlewareMakeCommand extends BaseCommand
      */
     protected function getDefaultNamespace()
     {
-        return $this->getRootNamespace().'\\Http\\Middleware';
+        return $this->getRootNamespace().'\\'.($this->onAddon() ? 'Middleware' : 'Http\\Middleware');
     }
 
     /**
