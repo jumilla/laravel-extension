@@ -33,9 +33,7 @@ class GeneratorCommandRegistrar
      * @var array
      */
     protected static $legacy_commands = [
-//        'command.command.make' => Console\DummyCommand::class,
-//        'command.handler.command' => Console\DummyCommand::class,
-//        'command.handler.event' => Console\DummyCommand::class,
+        'command.auth.make' => Console\DummyCommand::class,
     ];
 
     /**

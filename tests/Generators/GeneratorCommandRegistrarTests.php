@@ -69,7 +69,6 @@ class GeneratorCommandRegistrarTests extends TestCase
         Assert::isInstanceOf(Generators\Console\ModelMakeCommand::class, $app->make('command+.model.make'));
     }
 
-/*
     public function test_makeLegacyCommands()
     {
         $app = $this->createApplication();
@@ -77,13 +76,9 @@ class GeneratorCommandRegistrarTests extends TestCase
 
         $registrar->register();
 
-        $app['command.command.make'] = new stdClass();
-        $app['command.handler.command'] = new stdClass();
-        $app['command.handler.event'] = new stdClass();
+        $app['command.auth.make'] = new stdClass();
 
-        Assert::isInstanceOf(Generators\Console\DummyCommand::class, $app->make('command.command.make'));
-        Assert::isInstanceOf(Generators\Console\DummyCommand::class, $app->make('command.handler.command'));
-        Assert::isInstanceOf(Generators\Console\DummyCommand::class, $app->make('command.handler.event'));
+        Assert::isInstanceOf(Generators\Console\DummyCommand::class, $app->make('command.auth.make'));
     }
 
     public function test_makeLegacyCommands_notRegistered()
@@ -93,9 +88,6 @@ class GeneratorCommandRegistrarTests extends TestCase
 
         $registrar->register();
 
-        Assert::false($app->bound('command.command.make'));
-        Assert::false($app->bound('command.handler.command'));
-        Assert::false($app->bound('command.handler.event'));
+        Assert::false($app->bound('command.auth.make'));
     }
-*/
 }
