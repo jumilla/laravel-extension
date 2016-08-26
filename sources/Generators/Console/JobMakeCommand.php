@@ -18,8 +18,8 @@ class JobMakeCommand extends BaseCommand
      */
     protected $signature = 'make:job
         {name : The name of the class}
-        {--addon= : The name of the addon}
-        {--sync : Indicates that job should be synchronous}
+        {--a|addon= : The name of the addon}
+        {--s|sync : Indicates that job should be synchronous}
     ';
 
     /**

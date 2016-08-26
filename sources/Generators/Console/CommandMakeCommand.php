@@ -18,8 +18,8 @@ class CommandMakeCommand extends BaseCommand
      */
     protected $signature = 'make:command
         {name : The name of the class}
-        {--addon= : The name of the addon}
-        {--command=command.name : The terminal command that should be assigned}
+        {--a|addon= : The name of the addon}
+        {--c|command=command.name : The terminal command that should be assigned}
     ';
 
     /**

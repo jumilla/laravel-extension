@@ -21,7 +21,7 @@ class ListenerMakeCommand extends BaseCommand
         {name : The name of the class}
         {--a|addon= : The name of the addon}
         {--e|event= : The event class the being listened for}
-        {--q|queued : Indicates the event listener should be queued}
+        {--queued : Indicates the event listener should be queued}
     ';
 
     /**
