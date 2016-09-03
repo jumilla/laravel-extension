@@ -81,7 +81,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         // register database migrator
         $app->singleton('database.migrator', function ($app) {
-            return new Migrator($app['db']);
+            return new Migrator($app['db'], $app['config']);
         });
         $app->alias('database.migrator', Migrator::class);
 
