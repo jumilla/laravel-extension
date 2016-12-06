@@ -3,8 +3,8 @@
 use LaravelPlus\Extension\Specs\InputModel;
 use LaravelPlus\Extension\Specs\InputSpec;
 use LaravelPlus\Extension\Repository\NamespacedRepository;
-use Symfony\Component\Translation\TranslatorInterface;
 use Illuminate\Http\Request;
+use Illuminate\Translation\Translator;
 use Illuminate\Validation\Factory as ValidatorFactory;
 use Illuminate\Validation\Validator;
 
@@ -14,7 +14,7 @@ class SpecsInputModelTests extends TestCase
     {
         $app = $this->createApplication();
         $app['specs'] = $spec = $this->createMock(NamespacedRepository::class);
-        $app['translator'] = $translator = $this->createMock(TranslatorInterface::class);
+        $app['translator'] = $translator = $this->createMock(Translator::class);
         $app['validator'] = new ValidatorFactory($translator, $app);
         $app['request'] = $request = new Request();
 
@@ -22,6 +22,7 @@ class SpecsInputModelTests extends TestCase
         $translator->shouldReceive('has')->with('foo')->andReturn(true)->once();
         $translator->shouldReceive('get')->with('foo.rules')->andReturn([])->once();
         $translator->shouldReceive('get')->with('foo.attributes')->andReturn([])->once();
+        $translator->shouldReceive('get')->andReturn('bar');
 
         $inputModel = InputModel::make('foo', []);
 
@@ -32,7 +33,7 @@ class SpecsInputModelTests extends TestCase
     {
         $app = $this->createApplication();
         $spec = $this->createMock(InputSpec::class);
-        $app['translator'] = $translator = $this->createMock(TranslatorInterface::class);
+        $app['translator'] = $translator = $this->createMock(Translator::class);
         $app['validator'] = new ValidatorFactory($translator, $app);
         $app['request'] = $request = $this->createMock(Request::class);
 
@@ -51,13 +52,14 @@ class SpecsInputModelTests extends TestCase
     {
         $app = $this->createApplication();
         $spec = $this->createMock(InputSpec::class);
-        $app['translator'] = $translator = $this->createMock(TranslatorInterface::class);
+        $app['translator'] = $translator = $this->createMock(Translator::class);
         $app['validator'] = $validator = new ValidatorFactory($translator, $app);
 
         $spec->shouldReceive('rules')->andReturn(['qux' => 'required'])->once();
         $spec->shouldReceive('ruleMessages')->andReturn([])->once();
         $spec->shouldReceive('labels')->andReturn([])->once();
         $translator->shouldReceive('trans')->andReturn('failed');
+        $translator->shouldReceive('get')->andReturn('failed')->once();
 
         $inputModel = new InputModel($spec, ['qux' => '']);
 
@@ -69,7 +71,7 @@ class SpecsInputModelTests extends TestCase
     {
         $app = $this->createApplication();
         $spec = $this->createMock(InputSpec::class);
-        $app['translator'] = $translator = $this->createMock(TranslatorInterface::class);
+        $app['translator'] = $translator = $this->createMock(Translator::class);
         $app['validator'] = $validator = new ValidatorFactory($translator, $app);
 
         $spec->shouldReceive('rules')->andReturn(['qux' => 'required'])->once();
