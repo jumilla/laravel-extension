@@ -17,13 +17,13 @@ class ServiceProviderTests extends TestCase
         $created = 0;
         $registered = 0;
         $booted = 0;
-        $app['event']->listen(Events\AddonWorldCreated::class, function ($env) use (&$created) {
+        $app['events']->listen(Events\AddonWorldCreated::class, function ($env) use (&$created) {
             ++$created;
         });
-        $app['event']->listen(Events\AddonWorldCreated::class, function ($env) use (&$registered) {
+        $app['events']->listen(Events\AddonWorldCreated::class, function ($env) use (&$registered) {
             ++$registered;
         });
-        $app['event']->listen(Events\AddonWorldCreated::class, function ($env) use (&$booted) {
+        $app['events']->listen(Events\AddonWorldCreated::class, function ($env) use (&$booted) {
             ++$booted;
         });
 

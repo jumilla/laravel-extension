@@ -47,7 +47,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
         $this->app[Illuminate\Contracts\Foundation\Application::class] = $this->app;
         $this->app['config'] = new Config([]);
-        $this->app['event'] = new Dispatcher($this->app);
+        $this->app['events'] = new Dispatcher($this->app);
         $this->app['files'] = new Filesystem();
         $this->app['filesystem'] = new FilesystemManager($this->app);
 

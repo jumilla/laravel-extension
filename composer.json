@@ -14,7 +14,7 @@
 	"require": {
         "laravel/framework": "5.3.*",
 		"jumilla/laravel-versionia": "^1.3.2",
-		"jumilla/laravel-addomnipot": "^1.7.1",
+		"jumilla/laravel-addomnipot": "^1.7.2",
 		"jumilla/laravel-source-generator": "^1.2"
 	},
     "require-dev": {

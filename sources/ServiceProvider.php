@@ -92,11 +92,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->setupPackageCommands(static::$commands);
 
-        $app['event']->fire(new AddonWorldCreated($this->addonEnvironment));
+        $app['events']->fire(new AddonWorldCreated($this->addonEnvironment));
 
         $this->registerAddons($this->addonEnvironment->addons());
 
-        $app['event']->fire(new AddonRegistered($this->addonEnvironment));
+        $app['events']->fire(new AddonRegistered($this->addonEnvironment));
     }
 
     /**
@@ -148,7 +148,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         // setup all addons
         $this->bootAddons();
 
-        $this->app['event']->fire(new AddonBooted($this->addonEnvironment));
+        $this->app['events']->fire(new AddonBooted($this->addonEnvironment));
     }
 
     /**
