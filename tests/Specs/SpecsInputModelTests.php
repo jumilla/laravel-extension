@@ -58,8 +58,7 @@ class SpecsInputModelTests extends TestCase
         $spec->shouldReceive('rules')->andReturn(['qux' => 'required'])->once();
         $spec->shouldReceive('ruleMessages')->andReturn([])->once();
         $spec->shouldReceive('labels')->andReturn([])->once();
-        $translator->shouldReceive('trans')->andReturn('failed');
-        $translator->shouldReceive('get')->andReturn('failed')->once();
+        $translator->shouldReceive('trans')->andReturn('failed')->times(2);
 
         $inputModel = new InputModel($spec, ['qux' => '']);
 

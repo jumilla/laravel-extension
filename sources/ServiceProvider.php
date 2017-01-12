@@ -8,6 +8,9 @@ use Jumilla\Addomnipot\Laravel\ClassLoader as AddonClassLoader;
 use Jumilla\Addomnipot\Laravel\Generator as AddonGenerator;
 use Jumilla\Addomnipot\Laravel\AliasResolver;
 use Jumilla\Addomnipot\Laravel\Repository;
+use Jumilla\Addomnipot\Laravel\Events\AddonWorldCreated;
+use Jumilla\Addomnipot\Laravel\Events\AddonRegistered;
+use Jumilla\Addomnipot\Laravel\Events\AddonBooted;
 use LaravelPlus\Extension\Templates\BladeExtension;
 use Jumilla\Versionia\Laravel\Migrator;
 
@@ -89,7 +92,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->setupPackageCommands(static::$commands);
 
+        $app['event']->fire(new AddonWorldCreated($this->addonEnvironment));
+
         $this->registerAddons($this->addonEnvironment->addons());
+
+        $app['event']->fire(new AddonRegistered($this->addonEnvironment));
     }
 
     /**
@@ -140,6 +147,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         // setup all addons
         $this->bootAddons();
+
+        $this->app['event']->fire(new AddonBooted($this->addonEnvironment));
     }
 
     /**

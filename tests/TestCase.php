@@ -3,6 +3,7 @@
 use Illuminate\Container\Container;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Filesystem\FilesystemManager;
 use Jumilla\Addomnipot\Laravel\Generator as AddonGenerator;
@@ -46,6 +47,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
         $this->app[Illuminate\Contracts\Foundation\Application::class] = $this->app;
         $this->app['config'] = new Config([]);
+        $this->app['event'] = new Dispatcher($this->app);
         $this->app['files'] = new Filesystem();
         $this->app['filesystem'] = new FilesystemManager($this->app);
 
