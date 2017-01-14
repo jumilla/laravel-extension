@@ -12,21 +12,21 @@ class GeneratorCommandRegistrar
      */
     protected static $commands = [
         // make:
-        'command+.command.make' => Console\CommandMakeCommand::class,
-        'command+.controller.make' => Console\ControllerMakeCommand::class,
-        'command+.event.make' => Console\EventMakeCommand::class,
-        'command+.job.make' => Console\JobMakeCommand::class,
-        'command+.listener.make' => Console\ListenerMakeCommand::class,
-        'command+.mail.make' => Console\MailMakeCommand::class,
-        'command+.middleware.make' => Console\MiddlewareMakeCommand::class,
-        'command+.migration.make' => Database\Console\MigrationMakeCommand::class,
-        'command+.model.make' => Console\ModelMakeCommand::class,
-        'command+.notification.make' => Console\NotificationMakeCommand::class,
-        'command+.policy.make' => Console\PolicyMakeCommand::class,
-        'command+.provider.make' => Console\ProviderMakeCommand::class,
-        'command+.request.make' => Console\RequestMakeCommand::class,
-        'command+.seeder.make' => Database\Console\SeederMakeCommand::class,
-        'command+.test.make' => Console\TestMakeCommand::class,
+        'command.console.make' => Console\CommandMakeCommand::class,
+        'command.controller.make' => Console\ControllerMakeCommand::class,
+        'command.event.make' => Console\EventMakeCommand::class,
+        'command.job.make' => Console\JobMakeCommand::class,
+        'command.listener.make' => Console\ListenerMakeCommand::class,
+        'command.mail.make' => Console\MailMakeCommand::class,
+        'command.middleware.make' => Console\MiddlewareMakeCommand::class,
+        'command.migration.make' => Database\Console\MigrationMakeCommand::class,
+        'command.model.make' => Console\ModelMakeCommand::class,
+        'command.notification.make' => Console\NotificationMakeCommand::class,
+        'command.policy.make' => Console\PolicyMakeCommand::class,
+        'command.provider.make' => Console\ProviderMakeCommand::class,
+        'command.request.make' => Console\RequestMakeCommand::class,
+        'command.seeder.make' => Database\Console\SeederMakeCommand::class,
+        'command.test.make' => Console\TestMakeCommand::class,
     ];
 
     /**

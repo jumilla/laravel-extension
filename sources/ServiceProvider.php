@@ -4,6 +4,7 @@ namespace LaravelPlus\Extension;
 
 use Illuminate\Support\Facades\Blade;
 use Jumilla\Addomnipot\Laravel\Environment as AddonEnvironment;
+use Jumilla\Addomnipot\Laravel\Registrar as AddonRegistrar;
 use Jumilla\Addomnipot\Laravel\ClassLoader as AddonClassLoader;
 use Jumilla\Addomnipot\Laravel\Generator as AddonGenerator;
 use Jumilla\Addomnipot\Laravel\AliasResolver;
@@ -11,6 +12,7 @@ use Jumilla\Addomnipot\Laravel\Repository;
 use Jumilla\Addomnipot\Laravel\Events\AddonWorldCreated;
 use Jumilla\Addomnipot\Laravel\Events\AddonRegistered;
 use Jumilla\Addomnipot\Laravel\Events\AddonBooted;
+use LaravelPlus\Extension\Generators\GeneratorCommandRegistrar;
 use LaravelPlus\Extension\Templates\BladeExtension;
 use Jumilla\Versionia\Laravel\Migrator;
 
@@ -88,13 +90,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         });
         $app->alias('database.migrator', Migrator::class);
 
-        $this->setupPackageCommands(static::$commands);
 
         $app['events']->fire(new AddonWorldCreated($this->addonEnvironment));
 
         $this->registerClassResolvers();
 
-        $this->registerAddons($this->addonEnvironment->addons());
+        (new AddonRegistrar)->register($app, $this->addonEnvironment->addons());
 
         $app['events']->fire(new AddonRegistered($this->addonEnvironment));
     }
@@ -124,17 +125,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         }
 
         // Now register all the commands
-        $this->commands(array_keys($commands));
-    }
+        $registrar = new GeneratorCommandRegistrar($this->app);
 
-    /**
-     * Register all addons.
-     */
-    public function registerAddons(array $addons)
-    {
-        foreach ($addons as $addon) {
-            $addon->register($this->app);
-        }
+        $this->commands($registrar->register());
+        $this->commands(array_keys($commands));
     }
 
     /**
@@ -142,13 +136,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
+        $app = $this->app;
+
         //
         $this->registerBladeExtensions();
 
-        // setup all addons
-        $this->bootAddons();
+        // boot all addons
+        (new AddonRegistrar)->boot($app, $this->addonEnvironment->addons());
 
-        $this->app['events']->fire(new AddonBooted($this->addonEnvironment));
+        $this->setupPackageCommands(static::$commands);
+
+        $app['events']->fire(new AddonBooted($this->addonEnvironment));
     }
 
     /**
@@ -159,17 +157,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         Blade::extend(BladeExtension::comment());
 
         Blade::extend(BladeExtension::script());
-    }
-
-    /**
-     * setup & boot addons.
-     */
-    protected function bootAddons()
-    {
-        foreach ($this->addonEnvironment->addons() as $name => $addon) {
-            // boot addon
-            $addon->boot($this->app);
-        }
     }
 
     /**

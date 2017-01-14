@@ -65,30 +65,6 @@ composer require laravel-plus/extension
 	],
 ```
 
-#### 3. `App\Console\Kernel`クラスのベースクラスを設定します。
-
-**app/Console/Kernel.php** ファイルを開き、`use Illuminate\Foundation\Console\Kernel as ConsoleKernel;`の行を次のように変更してください。
-
-```php
-use LaravelPlus\Extension\ConsoleKernel as ConsoleKernel;
-
-class Kernel extends ConsoleKernel
-{
-}
-```
-
-#### 4. `App\Http\Kernel`クラスのベースクラスを設定します。
-
-**app/Http/Kernel.php** ファイルを開き、`use Illuminate\Foundation\Http\Kernel as HttpKernel;`の行を次のように変更してください。
-
-```php
-use LaravelPlus\Extension\HttpKernel as HttpKernel;
-
-class Kernel extends HttpKernel
-{
-}
-```
-
 ## 動作確認
 
 サンプルとして、アドオン`wiki`を作成します。
@@ -210,7 +186,7 @@ php artisan database:seed
 php artisan addon:status
 ```
 
-`addons`ディレクトリや`app/config/addon.php`ファイルが存在しない場合は作成します。
+`addons`ディレクトリや`config/addon.php`ファイルが存在しない場合は作成します。
 
 ### addon:name
 
@@ -248,7 +224,7 @@ php artisan make:addon blog ui
 ひな形は9種類から選べます。
 
 - **minimum** - 最小構成
-- **simple** - **views** ディレクトリと **Http/route.php** があるシンプルな構成
+- **simple** - **views** ディレクトリと **route.php** があるシンプルな構成
 - **library** - PHPクラスとデータベースを提供する構成
 - **api** - APIのための構成
 - **ui** - UIを含むフルセット
@@ -282,7 +258,7 @@ artisanコマンドクラスを生成します。
 $ php artisan make:console foo
 ```
 
-`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Console/Commands/Foo.php` ファイルを生成します。
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Commands/Foo.php` ファイルを生成します。
 
 ```sh
 $ php artisan make:console foo --addon=blog
@@ -304,7 +280,7 @@ $ php artisan make:controller FooController
 $ php artisan make:controller FooController --resource
 ```
 
-`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Http/Controllers/FooController.php` ファイルを生成します。
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Controllers/FooController.php` ファイルを生成します。
 
 ```sh
 $ php artisan make:controller FooController --addon=blog
@@ -387,7 +363,7 @@ $ php artisan make:listener FooListener --event=bar --addon=blog
 $ php artisan make:middleware foo
 ```
 
-`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Http/Middleware/Foo.php` ファイルを生成します。
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Middleware/Foo.php` ファイルを生成します。
 
 ```sh
 $ php artisan make:middleware foo --addon=blog
@@ -415,7 +391,7 @@ $ php artisan make:migration App_1_1 --create=materials
 $ php artisan make:migration App_1_2 --update=materials
 ```
 
-`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Database/Migrations/Blog_1_0.php` ファイルを生成します。
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Migrations/Blog_1_0.php` ファイルを生成します。
 
 ```sh
 $ php artisan make:migration Blog_1_0 --addon=blog
@@ -493,7 +469,7 @@ $ php artisan make:provider FooServiceProvider --addon=blog
 $ php artisan make:request FooRequest
 ```
 
-`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Http/Requests/FooRequest.php` ファイルを生成します。
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Requests/FooRequest.php` ファイルを生成します。
 
 ```sh
 $ php artisan make:request FooRequest --addon=blog
@@ -509,7 +485,7 @@ $ php artisan make:request FooRequest --addon=blog
 $ php artisan make:request staging
 ```
 
-`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Database/Seeds/Staging.php` ファイルを生成します。
+`--addon` オプションに `blog` を指定すると、`addons/blog/classes/Seeds/Staging.php` ファイルを生成します。
 
 ```sh
 $ php artisan make:request staging --addon=blog
@@ -558,7 +534,7 @@ class BlogController
 }
 ```
 
-`addon()` 関数で取得した `LaravelPlus\Extension\Addons\Addon` オブジェクトを使って、アドオンの属性やリソースにアクセスすることができます。
+`addon()` 関数で取得したオブジェクトを使って、アドオンの属性やリソースにアクセスすることができます。
 
 ```php
 $addon = addon();
@@ -588,7 +564,7 @@ $name = addon_name(\Blog\Providers\AddonServiceProvider::class);		// 'blog'
 ```php
 <?php
 
-namespace Blog\Http\Controllers;
+namespace Blog\Controllers;
 
 class PostsController
 {

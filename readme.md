@@ -69,30 +69,6 @@ Edit file `config/app.php`.
 	],
 ```
 
-#### 3. Set the base class of the class `App\Console\Kernel`.
-
-Open the **app/Console/Kernel.php** file, Change `use Illuminate\Foundation\Console\Kernel as ConsoleKernel;` line to the following.
-
-```php
-use LaravelPlus\Extension\ConsoleKernel as ConsoleKernel;
-
-class Kernel extends ConsoleKernel
-{
-}
-```
-
-#### 4. Set the base class of the class `App\Http\Kernel`.
-
-Open the **app/Http/Kernel.php** file, Change `use Illuminate\Foundation\Http\Kernel as HttpKernel;` line to the following.
-
-```php
-use LaravelPlus\Extension\HttpKernel as HttpKernel;
-
-class Kernel extends HttpKernel
-{
-}
-```
-
 ## Check for running
 
 Add-on `wiki` is made as a example.
@@ -214,7 +190,7 @@ Can check the status of addons.
 php artisan addon:status
 ```
 
-When `addons` directory and `app/config/addon.php` file don't exist, it's made.
+When `addons` directory and `config/addon.php` file don't exist, it's made.
 
 ### `addon:name`
 
@@ -252,7 +228,7 @@ php artisan make:addon blog ui
 A skeleton can be chosen from 9 kinds.
 
 - **minimum** - Minimum structure.
-- **simple** - The simple structure with the directory **views** and the file **Http/route.php**.
+- **simple** - The simple structure with the directory **views** and the file **route.php**.
 - **library** - The composition to which a PHP range and a database are offered.
 - **api** - The structure for API.
 - **ui** - Full-set including UI.
@@ -286,7 +262,7 @@ If you specify `foo` to name, to generate a file `app/Console/Commands/Foo.php`.
 $ php artisan make:console foo
 ```
 
-If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Console/Commands/Foo.php`.
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Commands/Foo.php`.
 
 ```sh
 $ php artisan make:console foo --addon=blog
@@ -308,7 +284,7 @@ If you specify option `--resource`, to generate a resource controller.
 $ php artisan make:controller FooController --resource
 ```
 
-If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Http/Controllers/FooController.php`.
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Controllers/FooController.php`.
 
 ```sh
 $ php artisan make:controller FooController --addon=blog
@@ -391,7 +367,7 @@ If you specify `foo` to name, to generate a file `app/Http/Middleware/Foo.php`.
 $ php artisan make:middleware foo
 ```
 
-If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Http/Middleware/Foo.php`.
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Middleware/Foo.php`.
 
 ```sh
 $ php artisan make:middleware foo --addon=blog
@@ -419,7 +395,7 @@ If you specify `materials` to option `--update`, to generate a migration class f
 $ php artisan make:migration App_1_2 --update=materials
 ```
 
-If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Database/Migrations/Blog_1_0.php`.
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Migrations/Blog_1_0.php`.
 
 ```sh
 $ php artisan make:migration Blog_1_0 --addon=blog
@@ -497,7 +473,7 @@ If you specify `FooRequest` to name, to generate a file `app/Http/Requests/FooRe
 $ php artisan make:request FooRequest
 ```
 
-If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Http/Requests/FooRequest.php`.
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Requests/FooRequest.php`.
 
 ```sh
 $ php artisan make:request FooRequest --addon=blog
@@ -513,7 +489,7 @@ If you specify `staging` to name, to generate a file `app/Database/Seeds/Staging
 $ php artisan make:request staging
 ```
 
-If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Database/Seeds/Staging.php`.
+If you specify `blog` to option `--addon`, to generate a file `addons/blog/classes/Seeds/Staging.php`.
 
 ```sh
 $ php artisan make:request staging --addon=blog
@@ -562,7 +538,7 @@ class BlogController
 }
 ```
 
-`LaravelPlus\Extension\Addons\Addon` object retrieved by the `addon()` function, you can access the add-on attributes and resources.
+object retrieved by the `addon()` function, you can access the add-on attributes and resources.
 
 ```php
 $addon = addon();
@@ -592,7 +568,7 @@ If you omit the argument, returns the name of the add-on contains the caller of 
 ```php
 <?php
 
-namespace Blog\Http\Controllers;
+namespace Blog\Controllers;
 
 class PostsController
 {

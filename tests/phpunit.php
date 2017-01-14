@@ -17,7 +17,6 @@ require __DIR__.'/../vendor/autoload.php';
 require __DIR__.'/Assert.php';
 
 require __DIR__.'/ApplicationStub.php';
-require __DIR__.'/Stubs.php';
 
 require __DIR__.'/MockeryTrait.php';
 require __DIR__.'/ConsoleCommandTrait.php';
