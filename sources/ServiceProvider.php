@@ -88,11 +88,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         });
         $app->alias('database.migrator', Migrator::class);
 
-        $this->registerClassResolvers();
-
         $this->setupPackageCommands(static::$commands);
 
         $app['events']->fire(new AddonWorldCreated($this->addonEnvironment));
+
+        $this->registerClassResolvers();
 
         $this->registerAddons($this->addonEnvironment->addons());
 
