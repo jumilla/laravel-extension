@@ -2,12 +2,12 @@
 
 namespace LaravelPlus\Extension\Specs;
 
-use Symfony\Component\Translation\TranslatorInterface;
+use Illuminate\Contracts\Translation\Translator as TranslatorInterface;
 
 class Translator
 {
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface
+     * @var \Illuminate\Contracts\Translation\Translator
      */
     protected $translator;
 
@@ -17,7 +17,7 @@ class Translator
     protected $namespace;
 
     /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
+     * @param \Illuminate\Contracts\Translation\Translator $translator
      * @param string $namespace
      */
     public function __construct(TranslatorInterface $translator, $namespace = '')

@@ -3,7 +3,7 @@
 namespace LaravelPlus\Extension\Specs;
 
 use LaravelPlus\Extension\Repository\NamespacedRepository;
-use Symfony\Component\Translation\TranslatorInterface;
+use Illuminate\Contracts\Translation\Translator as TranslatorInterface;
 use InvalidArgumentException;
 
 class InputSpec
@@ -30,7 +30,7 @@ class InputSpec
 
     /**
      * @param \LaravelPlus\Extension\Repository\NamespacedRepository $specs
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
+     * @param \Illuminate\Contracts\Translation\Translator $translator
      * @param string $path
      */
     public function __construct(NamespacedRepository $specs, TranslatorInterface $translator, $path)
