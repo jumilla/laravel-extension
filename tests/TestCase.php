@@ -6,6 +6,7 @@ use Illuminate\Database\DatabaseManager;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Routing\Router;
 use Jumilla\Addomnipot\Laravel\Generator as AddonGenerator;
 use Jumilla\Versionia\Laravel\Migrator;
 
@@ -50,6 +51,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->app['events'] = new Dispatcher($this->app);
         $this->app['files'] = new Filesystem();
         $this->app['filesystem'] = new FilesystemManager($this->app);
+        $this->app['router'] = new Router($this->app['events'], $this->app);
 
         return $this->app;
     }
