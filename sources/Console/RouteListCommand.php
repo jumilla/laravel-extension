@@ -9,18 +9,18 @@ use Illuminate\Foundation\Console\RouteListCommand as BaseCommand;
 class RouteListCommand extends BaseCommand
 {
     /**
-     * The console command singature.
+     * The console command name.
      *
      * @var string
      */
-    protected $singature = 'route';
+    protected $name = 'route';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = '[+] shortcut to `route:list`';
+    protected $description = '[+] Shortcut to `route:list`';
 
     /**
      * Create a new route command instance.
@@ -29,7 +29,6 @@ class RouteListCommand extends BaseCommand
      */
     public function __construct(Application $app)
     {
-        //        $this->description = '[+] '.$this->description;
         parent::__construct($app['router']);
     }
 }
