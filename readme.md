@@ -56,16 +56,24 @@ Use composer.
 composer require laravel-plus/extension
 ```
 
-#### 2. Add the service provider.
+#### 2. Add/Remove the service provider.
 
 Edit file `config/app.php`.
+- Add `LaravelPlus\Extension\ServiceProvider::class` in `providers` section.
+- Remove line includes `Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class` in `providers` section.
 
 ```php
 	'providers' => [
-		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
+		Illuminate\View\ViewServiceProvider:class,
 		...
 		// Add the folloing line.
-		'LaravelPlus\Extension\ServiceProvider',
+		LaravelPlus\Extension\ServiceProvider::class,
+	],
+```
+
+```php
+	'providers' => [
+		// Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
 	],
 ```
 

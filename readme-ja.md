@@ -52,16 +52,24 @@ composer create-project laravel-plus/laravel5 <project-name>
 composer require laravel-plus/extension
 ```
 
-#### 2. サービスプロバイダーを追加します。
+#### 2. サービスプロバイダーを追加・削除します。
 
-**config/app.php** ファイルの`providers`セクションに、`LaravelPlus\Extension\ServiceProvider`クラスを追加してください。
+**config/app.php** ファイルの`providers`セクションに、`LaravelPlus\Extension\ServiceProvider`クラスを追加します。
+そして、`Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class` の行をコメントアウトします。
 
 ```php
 	'providers' => [
-		Illuminate\Foundation\Providers\ArtisanServiceProvider:class,
+		Illuminate\View\ViewServiceProvider:class,
 		...
 		↓次の行を追加する
 		LaravelPlus\Extension\ServiceProvider::class,
+	],
+```
+
+```php
+	'providers' => [
+		↓次の行をコメントアウトする
+		// Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
 	],
 ```
 
