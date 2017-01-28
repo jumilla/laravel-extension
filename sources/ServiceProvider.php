@@ -3,6 +3,7 @@
 namespace LaravelPlus\Extension;
 
 use Illuminate\Support\AggregateServiceProvider;
+use Illuminate\Foundation\Providers\ComposerServiceProvider;
 
 class ServiceProvider extends AggregateServiceProvider
 {
@@ -13,6 +14,7 @@ class ServiceProvider extends AggregateServiceProvider
      */
     protected $providers = [
         Providers\ArtisanServiceProvider::class,
+        ComposerServiceProvider::class,
         Providers\ExtensionServiceProvider::class,
     ];
 }

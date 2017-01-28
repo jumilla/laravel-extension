@@ -3,12 +3,23 @@
 namespace LaravelPlus\Extension\Providers;
 
 use Illuminate\Foundation\Providers\ArtisanServiceProvider as ServiceProvider;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Console\Scheduling\ScheduleRunCommand;
 use Illuminate\Console\Scheduling\ScheduleFinishCommand;
-use Illuminate\Support\Composer;
+use LaravelPlus\Extension\Console;
+use LaravelPlus\Extension\Addons;
+use LaravelPlus\Extension\Database;
+use LaravelPlus\Extension\Generators;
 
 class ArtisanServiceProvider extends ServiceProvider
 {
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = true;
+
     /**
      * The commands to be registered.
      *
@@ -47,6 +58,20 @@ class ArtisanServiceProvider extends ServiceProvider
         'StorageLink' => 'command.storage.link',
         'Up' => 'command.up',
         'ViewClear' => 'command.view.clear',
+
+        'Route' => 'command+.route',
+        'Tail' => 'command+.tail',
+        'AddonList' => 'command+.addon.list',
+        'AddonStatus' => 'command+.addon.status',
+        'DatabaseStatus' => 'command+.database.status',
+        'DatabaseUpgrade' => 'command+.database.upgrade',
+        'DatabaseClean' => 'command+.database.clean',
+        'DatabaseRefresh' => 'command+.database.refresh',
+        'DatabaseRollback' => 'command+.database.rollback',
+        'DatabaseAgain' => 'command+.database.again',
+        'DatabaseSeed' => 'command+.database.seed',
+        'HashMake' => 'command+.hash.make',
+        'HashCheck' => 'command+.hash.check',
     ];
 
     /**
@@ -56,30 +81,51 @@ class ArtisanServiceProvider extends ServiceProvider
      */
     protected $devCommands = [
         'AppName' => 'command.app.name',
-        'AuthMake' => 'command.auth.make',
-        'CacheTable' => 'command.cache.table',
-        'ConsoleMake' => 'command.console.make',
-        'ControllerMake' => 'command.controller.make',
+        // 'AuthMake' => 'command.auth.make',
+        // 'CacheTable' => 'command.cache.table',
+        // 'ConsoleMake' => 'command.console.make',
+        // 'ControllerMake' => 'command.controller.make',
         'EventGenerate' => 'command.event.generate',
-        'EventMake' => 'command.event.make',
-        'JobMake' => 'command.job.make',
-        'ListenerMake' => 'command.listener.make',
-        'MailMake' => 'command.mail.make',
-        'MiddlewareMake' => 'command.middleware.make',
+        // 'EventMake' => 'command.event.make',
+        // 'JobMake' => 'command.job.make',
+        // 'ListenerMake' => 'command.listener.make',
+        // 'MailMake' => 'command.mail.make',
+        // 'MiddlewareMake' => 'command.middleware.make',
         // 'MigrateMake' => 'command.migrate.make',
-        'ModelMake' => 'command.model.make',
-        'NotificationMake' => 'command.notification.make',
-        //'NotificationTable' => 'command.notification.table',
-        'PolicyMake' => 'command.policy.make',
-        'ProviderMake' => 'command.provider.make',
-        //'QueueFailedTable' => 'command.queue.failed-table',
-        //'QueueTable' => 'command.queue.table',
-        'RequestMake' => 'command.request.make',
-        'SeederMake' => 'command.seeder.make',          // TODO コメントアウトしたいが、何故かエラーになる
-        //'SessionTable' => 'command.session.table',
+        // 'ModelMake' => 'command.model.make',
+        // 'NotificationMake' => 'command.notification.make',
+        // 'NotificationTable' => 'command.notification.table',
+        // 'PolicyMake' => 'command.policy.make',
+        // 'ProviderMake' => 'command.provider.make',
+        // 'QueueFailedTable' => 'command.queue.failed-table',
+        // 'QueueTable' => 'command.queue.table',
+        // 'RequestMake' => 'command.request.make',
+        // 'SeederMake' => 'command.seeder.make',
+        // 'SessionTable' => 'command.session.table',
         'Serve' => 'command.serve',
-        'TestMake' => 'command.test.make',
+        // 'TestMake' => 'command.test.make',
         'VendorPublish' => 'command.vendor.publish',
+
+        'AppContainer' => 'command+.app.container',
+        'AddonName' => 'command+.addon.name',
+        'AddonRemove' => 'command+.addon.remove',
+
+        'MakeAddon' => 'command+.addon.make',
+        'MakeCommand' => 'command+.command.make',
+        'MakeController' => 'command+.controller.make',
+        'MakeEvent' => 'command+.event.make',
+        'MakeJob' => 'command+.job.make',
+        'MakeListener' => 'command+.listener.make',
+        'MakeMail' => 'command+.mail.make',
+        'MakeMiddleware' => 'command+.middleware.make',
+        'MakeMigration' => 'command+.migration.make',
+        'MakeModel' => 'command+.model.make',
+        'MakeNotification' => 'command+.notification.make',
+        'MakePolicy' => 'command+.policy.make',
+        'MakeProvider' => 'command+.provider.make',
+        'MakeRequest' => 'command+.request.make',
+        'MakeSeeder' => 'command+.seeder.make',
+        'MakeTest' => 'command+.test.make',
     ];
 
     /**
@@ -89,10 +135,462 @@ class ArtisanServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        parent::register();
+        $this->registerCommands($this->availableCommands());
+    }
 
-        $this->app->singleton('composer', function ($app) {
-            return new Composer($app['files'], $app->basePath());
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return array_values($this->availableCommands());
+    }
+
+    /**
+     * @return array
+     */
+    protected function availableCommands()
+    {
+        $commands = $this->commands;
+
+        if ($this->app->environment() != 'production') {
+            $commands = array_merge($commands, $this->devCommands);
+        }
+
+        return $commands;
+    }
+
+    /**
+     * Register the given commands.
+     *
+     * @param  array  $commands
+     * @return void
+     */
+    protected function registerCommands(array $commands)
+    {
+        foreach ($commands as $name => $command) {
+            $this->{"register{$name}Command"}($command);
+        }
+
+        $this->commands(array_values($commands));
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerRouteCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Console\RouteListCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerTailCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Console\TailCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerAppContainerCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Console\AppContainerCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerAddonListCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Addons\Console\AddonListCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerAddonStatusCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Addons\Console\AddonStatusCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerAddonNameCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Addons\Console\AddonNameCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerAddonRemoveCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Addons\Console\AddonRemoveCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerDatabaseStatusCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Database\Console\DatabaseStatusCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerDatabaseUpgradeCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Database\Console\DatabaseUpgradeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerDatabaseCleanCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Database\Console\DatabaseCleanCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerDatabaseRefreshCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Database\Console\DatabaseRefreshCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerDatabaseRollbackCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Database\Console\DatabaseRollbackCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerDatabaseAgainCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Database\Console\DatabaseAgainCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerDatabaseSeedCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Database\Console\DatabaseSeedCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerHashMakeCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Console\HashMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerHashCheckCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Console\HashCheckCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeAddonCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Addons\Console\AddonMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeCommandCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Generators\Console\CommandMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeControllerCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Generators\Console\ControllerMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeEventCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Generators\Console\EventMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeJobCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Generators\Console\JobMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeListenerCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Generators\Console\ListenerMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeMailCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Generators\Console\MailMakeCommand($app);
+        });
+    }
+
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeMiddlewareCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Generators\Console\MiddlewareMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeMigrationCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Database\Console\MigrationMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeModelCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Generators\Console\ModelMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeNotificationCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Generators\Console\NotificationMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakePolicyCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Generators\Console\PolicyMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeProviderCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Generators\Console\ProviderMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeRequestCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Generators\Console\RequestMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeSeederCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Database\Console\SeederMakeCommand($app);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+    protected function registerMakeTestCommand($command)
+    {
+        $this->app->singleton($command, function ($app) {
+            return new Generators\Console\TestMakeCommand($app);
         });
     }
 }
