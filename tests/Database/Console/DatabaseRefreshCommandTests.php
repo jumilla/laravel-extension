@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Database\Console\DatabaseRefreshCommand as Command;
+use LaravelPlus\Extension\Database\Commands\DatabaseRefreshCommand as Command;
 
 class DatabaseRefreshCommandTests extends TestCase
 {

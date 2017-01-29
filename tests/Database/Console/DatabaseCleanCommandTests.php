@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Database\Console\DatabaseCleanCommand as Command;
+use LaravelPlus\Extension\Database\Commands\DatabaseCleanCommand as Command;
 
 class DatabaseCleanCommandTests extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Console\RequestMakeCommand as Command;
+use LaravelPlus\Extension\Generators\Commands\RequestMakeCommand as Command;
 
 class RequestMakeCommandTests extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Database\Console\DatabaseRollbackCommand as Command;
+use LaravelPlus\Extension\Database\Commands\DatabaseRollbackCommand as Command;
 
 class DatabaseRollbackCommandTests extends TestCase
 {

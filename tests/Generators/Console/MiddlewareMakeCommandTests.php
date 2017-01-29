@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Console\MiddlewareMakeCommand as Command;
+use LaravelPlus\Extension\Generators\Commands\MiddlewareMakeCommand as Command;
 
 class MiddlewareMakeCommandTests extends TestCase
 {

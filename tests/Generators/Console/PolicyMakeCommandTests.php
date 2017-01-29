@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Console\PolicyMakeCommand as Command;
+use LaravelPlus\Extension\Generators\Commands\PolicyMakeCommand as Command;
 
 class PolicyMakeCommandTests extends TestCase
 {

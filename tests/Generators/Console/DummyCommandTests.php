@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Console\DummyCommand as Command;
+use LaravelPlus\Extension\Generators\Commands\DummyCommand as Command;
 
 class DummyCommandTests extends TestCase
 {

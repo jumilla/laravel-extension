@@ -153,21 +153,21 @@ class ArtisanServiceProviderTests extends TestCase
 
         $provider->register();
 
-        Assert::isInstanceOf(Extension\Console\RouteListCommand::class, $app->make('command+.route'));
-        Assert::isInstanceOf(Extension\Console\TailCommand::class, $app->make('command+.tail'));
-        Assert::isInstanceOf(Extension\Console\HashMakeCommand::class, $app->make('command+.hash.make'));
-        Assert::isInstanceOf(Extension\Console\HashCheckCommand::class, $app->make('command+.hash.check'));
+        Assert::isInstanceOf(Extension\Commands\RouteListCommand::class, $app->make('command+.route'));
+        Assert::isInstanceOf(Extension\Commands\TailCommand::class, $app->make('command+.tail'));
+        Assert::isInstanceOf(Extension\Commands\HashMakeCommand::class, $app->make('command+.hash.make'));
+        Assert::isInstanceOf(Extension\Commands\HashCheckCommand::class, $app->make('command+.hash.check'));
 
-        Assert::isInstanceOf(Addons\Console\AddonListCommand::class, $app->make('command+.addon.list'));
-        Assert::isInstanceOf(Addons\Console\AddonStatusCommand::class, $app->make('command+.addon.status'));
+        Assert::isInstanceOf(Addons\Commands\AddonListCommand::class, $app->make('command+.addon.list'));
+        Assert::isInstanceOf(Addons\Commands\AddonStatusCommand::class, $app->make('command+.addon.status'));
 
-        Assert::isInstanceOf(Database\Console\DatabaseStatusCommand::class, $app->make('command+.database.status'));
-        Assert::isInstanceOf(Database\Console\DatabaseUpgradeCommand::class, $app->make('command+.database.upgrade'));
-        Assert::isInstanceOf(Database\Console\DatabaseCleanCommand::class, $app->make('command+.database.clean'));
-        Assert::isInstanceOf(Database\Console\DatabaseRefreshCommand::class, $app->make('command+.database.refresh'));
-        Assert::isInstanceOf(Database\Console\DatabaseRollbackCommand::class, $app->make('command+.database.rollback'));
-        Assert::isInstanceOf(Database\Console\DatabaseAgainCommand::class, $app->make('command+.database.again'));
-        Assert::isInstanceOf(Database\Console\DatabaseSeedCommand::class, $app->make('command+.database.seed'));
+        Assert::isInstanceOf(Database\Commands\DatabaseStatusCommand::class, $app->make('command+.database.status'));
+        Assert::isInstanceOf(Database\Commands\DatabaseUpgradeCommand::class, $app->make('command+.database.upgrade'));
+        Assert::isInstanceOf(Database\Commands\DatabaseCleanCommand::class, $app->make('command+.database.clean'));
+        Assert::isInstanceOf(Database\Commands\DatabaseRefreshCommand::class, $app->make('command+.database.refresh'));
+        Assert::isInstanceOf(Database\Commands\DatabaseRollbackCommand::class, $app->make('command+.database.rollback'));
+        Assert::isInstanceOf(Database\Commands\DatabaseAgainCommand::class, $app->make('command+.database.again'));
+        Assert::isInstanceOf(Database\Commands\DatabaseSeedCommand::class, $app->make('command+.database.seed'));
     }
 
     public function test_registerPlusDevCommands()
@@ -178,26 +178,26 @@ class ArtisanServiceProviderTests extends TestCase
 
         $provider->register();
 
-        Assert::isInstanceOf(Extension\Console\AppContainerCommand::class, $app->make('command+.app.container'));
+        Assert::isInstanceOf(Extension\Commands\AppContainerCommand::class, $app->make('command+.app.container'));
 
-        Assert::isInstanceOf(Addons\Console\AddonNameCommand::class, $app->make('command+.addon.name'));
-        Assert::isInstanceOf(Addons\Console\AddonRemoveCommand::class, $app->make('command+.addon.remove'));
+        Assert::isInstanceOf(Addons\Commands\AddonNameCommand::class, $app->make('command+.addon.name'));
+        Assert::isInstanceOf(Addons\Commands\AddonRemoveCommand::class, $app->make('command+.addon.remove'));
 
-        Assert::isInstanceOf(Addons\Console\AddonMakeCommand::class, $app->make('command+.addon.make'));
-        Assert::isInstanceOf(Generators\Console\CommandMakeCommand::class, $app->make('command+.command.make'));
-        Assert::isInstanceOf(Generators\Console\ControllerMakeCommand::class, $app->make('command+.controller.make'));
-        Assert::isInstanceOf(Generators\Console\EventMakeCommand::class, $app->make('command+.event.make'));
-        Assert::isInstanceOf(Generators\Console\JobMakeCommand::class, $app->make('command+.job.make'));
-        Assert::isInstanceOf(Generators\Console\ListenerMakeCommand::class, $app->make('command+.listener.make'));
-        Assert::isInstanceOf(Generators\Console\MailMakeCommand::class, $app->make('command+.mail.make'));
-        Assert::isInstanceOf(Generators\Console\MiddlewareMakeCommand::class, $app->make('command+.middleware.make'));
-        Assert::isInstanceOf(Database\Console\MigrationMakeCommand::class, $app->make('command+.migration.make'));
-        Assert::isInstanceOf(Generators\Console\ModelMakeCommand::class, $app->make('command+.model.make'));
-        Assert::isInstanceOf(Generators\Console\NotificationMakeCommand::class, $app->make('command+.notification.make'));
-        Assert::isInstanceOf(Generators\Console\PolicyMakeCommand::class, $app->make('command+.policy.make'));
-        Assert::isInstanceOf(Generators\Console\ProviderMakeCommand::class, $app->make('command+.provider.make'));
-        Assert::isInstanceOf(Generators\Console\RequestMakeCommand::class, $app->make('command+.request.make'));
-        Assert::isInstanceOf(Database\Console\SeederMakeCommand::class, $app->make('command+.seeder.make'));
-        Assert::isInstanceOf(Generators\Console\TestMakeCommand::class, $app->make('command+.test.make'));
+        Assert::isInstanceOf(Addons\Commands\AddonMakeCommand::class, $app->make('command+.addon.make'));
+        Assert::isInstanceOf(Generators\Commands\CommandMakeCommand::class, $app->make('command+.command.make'));
+        Assert::isInstanceOf(Generators\Commands\ControllerMakeCommand::class, $app->make('command+.controller.make'));
+        Assert::isInstanceOf(Generators\Commands\EventMakeCommand::class, $app->make('command+.event.make'));
+        Assert::isInstanceOf(Generators\Commands\JobMakeCommand::class, $app->make('command+.job.make'));
+        Assert::isInstanceOf(Generators\Commands\ListenerMakeCommand::class, $app->make('command+.listener.make'));
+        Assert::isInstanceOf(Generators\Commands\MailMakeCommand::class, $app->make('command+.mail.make'));
+        Assert::isInstanceOf(Generators\Commands\MiddlewareMakeCommand::class, $app->make('command+.middleware.make'));
+        Assert::isInstanceOf(Database\Commands\MigrationMakeCommand::class, $app->make('command+.migration.make'));
+        Assert::isInstanceOf(Generators\Commands\ModelMakeCommand::class, $app->make('command+.model.make'));
+        Assert::isInstanceOf(Generators\Commands\NotificationMakeCommand::class, $app->make('command+.notification.make'));
+        Assert::isInstanceOf(Generators\Commands\PolicyMakeCommand::class, $app->make('command+.policy.make'));
+        Assert::isInstanceOf(Generators\Commands\ProviderMakeCommand::class, $app->make('command+.provider.make'));
+        Assert::isInstanceOf(Generators\Commands\RequestMakeCommand::class, $app->make('command+.request.make'));
+        Assert::isInstanceOf(Database\Commands\SeederMakeCommand::class, $app->make('command+.seeder.make'));
+        Assert::isInstanceOf(Generators\Commands\TestMakeCommand::class, $app->make('command+.test.make'));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Database\Console\DatabaseStatusCommand as Command;
+use LaravelPlus\Extension\Database\Commands\DatabaseStatusCommand as Command;
 
 class DatabaseStatusCommandTests extends TestCase
 {

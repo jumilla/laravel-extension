@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Database\Console\MigrationMakeCommand as Command;
+use LaravelPlus\Extension\Database\Commands\MigrationMakeCommand as Command;
 
 class MigrationMakeCommandTests extends TestCase
 {

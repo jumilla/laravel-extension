@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Database\Console\DatabaseUpgradeCommand as Command;
+use LaravelPlus\Extension\Database\Commands\DatabaseUpgradeCommand as Command;
 
 class DatabaseUpgradeCommandTests extends TestCase
 {

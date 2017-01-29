@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Console\EventMakeCommand as Command;
+use LaravelPlus\Extension\Generators\Commands\EventMakeCommand as Command;
 
 class EventMakeCommandTests extends TestCase
 {

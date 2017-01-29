@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Console\NotificationMakeCommand as Command;
+use LaravelPlus\Extension\Generators\Commands\NotificationMakeCommand as Command;
 
 class NotificationMakeCommandTests extends TestCase
 {

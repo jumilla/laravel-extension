@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Console\ListenerMakeCommand as Command;
+use LaravelPlus\Extension\Generators\Commands\ListenerMakeCommand as Command;
 
 class ListenerMakeCommandTests extends TestCase
 {

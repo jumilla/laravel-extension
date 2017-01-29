@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Console\MailMakeCommand as Command;
+use LaravelPlus\Extension\Generators\Commands\MailMakeCommand as Command;
 
 class MailMakeCommandTests extends TestCase
 {

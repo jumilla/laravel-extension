@@ -6,7 +6,7 @@ use Illuminate\Foundation\Providers\ArtisanServiceProvider as ServiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Console\Scheduling\ScheduleRunCommand;
 use Illuminate\Console\Scheduling\ScheduleFinishCommand;
-use LaravelPlus\Extension\Console;
+use LaravelPlus\Extension\Commands;
 use LaravelPlus\Extension\Addons;
 use LaravelPlus\Extension\Database;
 use LaravelPlus\Extension\Generators;
@@ -186,7 +186,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerRouteCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Console\RouteListCommand($app);
+            return new Commands\RouteListCommand($app);
         });
     }
 
@@ -199,7 +199,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerTailCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Console\TailCommand($app);
+            return new Commands\TailCommand($app);
         });
     }
 
@@ -212,7 +212,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerAppContainerCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Console\AppContainerCommand($app);
+            return new Commands\AppContainerCommand($app);
         });
     }
 
@@ -225,7 +225,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerAddonListCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Addons\Console\AddonListCommand($app);
+            return new Addons\Commands\AddonListCommand($app);
         });
     }
 
@@ -238,7 +238,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerAddonStatusCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Addons\Console\AddonStatusCommand($app);
+            return new Addons\Commands\AddonStatusCommand($app);
         });
     }
 
@@ -251,7 +251,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerAddonNameCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Addons\Console\AddonNameCommand($app);
+            return new Addons\Commands\AddonNameCommand($app);
         });
     }
 
@@ -264,7 +264,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerAddonRemoveCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Addons\Console\AddonRemoveCommand($app);
+            return new Addons\Commands\AddonRemoveCommand($app);
         });
     }
 
@@ -277,7 +277,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerDatabaseStatusCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Database\Console\DatabaseStatusCommand($app);
+            return new Database\Commands\DatabaseStatusCommand($app);
         });
     }
 
@@ -290,7 +290,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerDatabaseUpgradeCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Database\Console\DatabaseUpgradeCommand($app);
+            return new Database\Commands\DatabaseUpgradeCommand($app);
         });
     }
 
@@ -303,7 +303,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerDatabaseCleanCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Database\Console\DatabaseCleanCommand($app);
+            return new Database\Commands\DatabaseCleanCommand($app);
         });
     }
 
@@ -316,7 +316,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerDatabaseRefreshCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Database\Console\DatabaseRefreshCommand($app);
+            return new Database\Commands\DatabaseRefreshCommand($app);
         });
     }
 
@@ -329,7 +329,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerDatabaseRollbackCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Database\Console\DatabaseRollbackCommand($app);
+            return new Database\Commands\DatabaseRollbackCommand($app);
         });
     }
 
@@ -342,7 +342,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerDatabaseAgainCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Database\Console\DatabaseAgainCommand($app);
+            return new Database\Commands\DatabaseAgainCommand($app);
         });
     }
 
@@ -355,7 +355,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerDatabaseSeedCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Database\Console\DatabaseSeedCommand($app);
+            return new Database\Commands\DatabaseSeedCommand($app);
         });
     }
 
@@ -368,7 +368,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerHashMakeCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Console\HashMakeCommand($app);
+            return new Commands\HashMakeCommand($app);
         });
     }
 
@@ -381,7 +381,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerHashCheckCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Console\HashCheckCommand($app);
+            return new Commands\HashCheckCommand($app);
         });
     }
 
@@ -394,7 +394,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeAddonCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Addons\Console\AddonMakeCommand($app);
+            return new Addons\Commands\AddonMakeCommand($app);
         });
     }
 
@@ -407,7 +407,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeCommandCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Generators\Console\CommandMakeCommand($app);
+            return new Generators\Commands\CommandMakeCommand($app);
         });
     }
 
@@ -420,7 +420,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeControllerCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Generators\Console\ControllerMakeCommand($app);
+            return new Generators\Commands\ControllerMakeCommand($app);
         });
     }
 
@@ -433,7 +433,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeEventCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Generators\Console\EventMakeCommand($app);
+            return new Generators\Commands\EventMakeCommand($app);
         });
     }
 
@@ -446,7 +446,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeJobCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Generators\Console\JobMakeCommand($app);
+            return new Generators\Commands\JobMakeCommand($app);
         });
     }
 
@@ -459,7 +459,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeListenerCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Generators\Console\ListenerMakeCommand($app);
+            return new Generators\Commands\ListenerMakeCommand($app);
         });
     }
 
@@ -472,7 +472,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeMailCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Generators\Console\MailMakeCommand($app);
+            return new Generators\Commands\MailMakeCommand($app);
         });
     }
 
@@ -486,7 +486,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeMiddlewareCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Generators\Console\MiddlewareMakeCommand($app);
+            return new Generators\Commands\MiddlewareMakeCommand($app);
         });
     }
 
@@ -499,7 +499,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeMigrationCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Database\Console\MigrationMakeCommand($app);
+            return new Database\Commands\MigrationMakeCommand($app);
         });
     }
 
@@ -512,7 +512,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeModelCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Generators\Console\ModelMakeCommand($app);
+            return new Generators\Commands\ModelMakeCommand($app);
         });
     }
 
@@ -525,7 +525,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeNotificationCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Generators\Console\NotificationMakeCommand($app);
+            return new Generators\Commands\NotificationMakeCommand($app);
         });
     }
 
@@ -538,7 +538,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakePolicyCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Generators\Console\PolicyMakeCommand($app);
+            return new Generators\Commands\PolicyMakeCommand($app);
         });
     }
 
@@ -551,7 +551,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeProviderCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Generators\Console\ProviderMakeCommand($app);
+            return new Generators\Commands\ProviderMakeCommand($app);
         });
     }
 
@@ -564,7 +564,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeRequestCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Generators\Console\RequestMakeCommand($app);
+            return new Generators\Commands\RequestMakeCommand($app);
         });
     }
 
@@ -577,7 +577,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeSeederCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Database\Console\SeederMakeCommand($app);
+            return new Database\Commands\SeederMakeCommand($app);
         });
     }
 
@@ -590,7 +590,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerMakeTestCommand($command)
     {
         $this->app->singleton($command, function ($app) {
-            return new Generators\Console\TestMakeCommand($app);
+            return new Generators\Commands\TestMakeCommand($app);
         });
     }
 }

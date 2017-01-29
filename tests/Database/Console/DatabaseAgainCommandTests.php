@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Database\Console\DatabaseAgainCommand as Command;
+use LaravelPlus\Extension\Database\Commands\DatabaseAgainCommand as Command;
 
 class DatabaseAgainCommandTests extends TestCase
 {

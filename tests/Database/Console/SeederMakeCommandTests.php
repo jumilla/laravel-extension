@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Database\Console\SeederMakeCommand as Command;
+use LaravelPlus\Extension\Database\Commands\SeederMakeCommand as Command;
 
 class SeederMakeCommandTests extends TestCase
 {

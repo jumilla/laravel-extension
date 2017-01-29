@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Console\ModelMakeCommand as Command;
+use LaravelPlus\Extension\Generators\Commands\ModelMakeCommand as Command;
 
 class ModelMakeCommandTests extends TestCase
 {

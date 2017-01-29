@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Console\JobMakeCommand as Command;
+use LaravelPlus\Extension\Generators\Commands\JobMakeCommand as Command;
 
 class JobMakeCommandTests extends TestCase
 {

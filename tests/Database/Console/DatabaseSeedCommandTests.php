@@ -1,6 +1,6 @@
 <?php
 
-use LaravelPlus\Extension\Database\Console\DatabaseSeedCommand as Command;
+use LaravelPlus\Extension\Database\Commands\DatabaseSeedCommand as Command;
 
 class DatabaseSeedCommandTests extends TestCase
 {
