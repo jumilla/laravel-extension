@@ -1,8 +1,8 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Commands\MailMakeCommand as Command;
+use LaravelPlus\Extension\Generators\Commands\PolicyMakeCommand as Command;
 
-class MailMakeCommandTests extends TestCase
+class PolicyMakeCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
@@ -46,7 +46,29 @@ class MailMakeCommandTests extends TestCase
         ]);
 
         Assert::same(0, $result);
-        Assert::fileExists($app['path'].'/Mail/Foo.php');
+        Assert::fileExists($app['path'].'/Policies/Foo.php');
+    }
+
+    /**
+     * @test
+     */
+    public function test_withNameAndModelParameter()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+
+        // 2. condition
+
+        // 3. test
+        $command = $app->make(Command::class);
+
+        $result = $this->runCommand($app, $command, [
+            'name' => 'foo',
+            '--model' => 'bar',
+        ]);
+
+        Assert::same(0, $result);
+        Assert::fileExists($app['path'].'/Policies/Foo.php');
     }
 
     /**
@@ -98,6 +120,32 @@ class MailMakeCommandTests extends TestCase
         ]);
 
         Assert::same(0, $result);
-        Assert::fileExists($app['path.base'].'/addons/bar/classes/Mail/Foo.php');
+        Assert::fileExists($app['path.base'].'/addons/bar/classes/Policies/Foo.php');
+    }
+
+    /**
+     * @test
+     */
+    public function test_withNameAndAddonAndModelParameter()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+        $this->createAddon('bar', 'minimum', [
+            'namespace' => 'Bar',
+        ]);
+
+        // 2. condition
+
+        // 3. test
+        $command = $app->make(Command::class);
+
+        $result = $this->runCommand($app, $command, [
+            'name' => 'foo',
+            '--addon' => 'bar',
+            '--model' => 'zot',
+        ]);
+
+        Assert::same(0, $result);
+        Assert::fileExists($app['path.base'].'/addons/bar/classes/Policies/Foo.php');
     }
 }

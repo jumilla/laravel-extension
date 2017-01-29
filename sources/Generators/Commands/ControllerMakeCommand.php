@@ -6,6 +6,7 @@ use Jumilla\Generators\Laravel\OneFileGeneratorCommand as BaseCommand;
 use Jumilla\Generators\FileGenerator;
 use LaravelPlus\Extension\Addons\Addon;
 use LaravelPlus\Extension\Generators\GeneratorCommandTrait;
+use InvalidArgumentException;
 
 class ControllerMakeCommand extends BaseCommand
 {
@@ -19,6 +20,7 @@ class ControllerMakeCommand extends BaseCommand
     protected $signature = 'make:controller
         {name : The name of the class}
         {--a|addon= : The name of the addon}
+        {--m|model= : Generate a resource controller for the given model}
         {--r|resource : Generate a resource controller class}
     ';
 
@@ -63,6 +65,9 @@ class ControllerMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
+        if ($this->option('model')) {
+            return 'controller-model.stub';
+        }
         return $this->option('resource') ? 'controller-resource.stub' : 'controller-plain.stub';
     }
 
@@ -78,11 +83,31 @@ class ControllerMakeCommand extends BaseCommand
     protected function generateFile(FileGenerator $generator, $path, $fqcn)
     {
         list($namespace, $class) = $this->splitFullQualifyClassName($fqcn);
+        list($model_namespace, $model_class) = $this->splitFullQualifyClassName($this->parseModel($this->option('model', '')));
 
         return $generator->file($path)->template($this->getStub(), [
             'namespace' => $namespace,
             'root_namespace' => $this->getAppNamespace(),   // use App\Http\Controllers\Controller
             'class' => $class,
+            'model_namespace' => $model_namespace ? $model_namespace.'\\' : '',
+            'model_class' => $model_class,
         ]);
+    }
+
+    /**
+     * Get the fully-qualified model class name.
+     *
+     * @param  string  $model
+     * @return string
+     */
+    protected function parseModel($model)
+    {
+        if (preg_match('([^A-Za-z0-9_/\\\\])', $model)) {
+            throw new InvalidArgumentException('Model name contains invalid characters.');
+        }
+
+        $model = trim(str_replace('/', '\\', $model), '\\');
+
+        return $model;
     }
 }

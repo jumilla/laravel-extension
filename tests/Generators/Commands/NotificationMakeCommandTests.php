@@ -52,6 +52,28 @@ class NotificationMakeCommandTests extends TestCase
     /**
      * @test
      */
+    public function test_withNameAndMarkdownParameter()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+
+        // 2. condition
+
+        // 3. test
+        $command = $app->make(Command::class);
+
+        $result = $this->runCommand($app, $command, [
+            'name' => 'foo',
+            '--markdown' => true,
+        ]);
+
+        Assert::same(0, $result);
+        Assert::fileExists($app['path'].'/Notifications/Foo.php');
+    }
+
+    /**
+     * @test
+     */
     public function test_withNameAndAddonParameter_addonNotFound()
     {
         // 1. setup
@@ -95,6 +117,32 @@ class NotificationMakeCommandTests extends TestCase
         $result = $this->runCommand($app, $command, [
             'name' => 'foo',
             '--addon' => 'bar',
+        ]);
+
+        Assert::same(0, $result);
+        Assert::fileExists($app['path.base'].'/addons/bar/classes/Notifications/Foo.php');
+    }
+
+    /**
+     * @test
+     */
+    public function test_withNameAndAddonAndMarkdownParameter()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+        $this->createAddon('bar', 'minimum', [
+            'namespace' => 'Bar',
+        ]);
+
+        // 2. condition
+
+        // 3. test
+        $command = $app->make(Command::class);
+
+        $result = $this->runCommand($app, $command, [
+            'name' => 'foo',
+            '--addon' => 'bar',
+            '--markdown' => true,
         ]);
 
         Assert::same(0, $result);

@@ -77,6 +77,29 @@ class ListenerMakeCommandTests extends TestCase
     /**
      * @test
      */
+    public function test_withNameParameter_withQueued()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+
+        // 2. condition
+
+        // 3. test
+        $command = $app->make(Command::class);
+
+        $result = $this->runCommand($app, $command, [
+            'name' => 'foo',
+            '--event' => 'bar',
+            '--queued' => true,
+        ]);
+
+        Assert::same(0, $result);
+        Assert::fileExists($app['path'].'/Listeners/Foo.php');
+    }
+
+    /**
+     * @test
+     */
     public function test_withNameAndAddonParameter_addonNotFound()
     {
         // 1. setup
@@ -122,6 +145,33 @@ class ListenerMakeCommandTests extends TestCase
             'name' => 'foo',
             '--addon' => 'bar',
             '--event' => 'baz',
+        ]);
+
+        Assert::same(0, $result);
+        Assert::fileExists($app['path.base'].'/addons/bar/classes/Listeners/Foo.php');
+    }
+
+    /**
+     * @test
+     */
+    public function test_withNameAndAddonParameter_withQueued()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+        $this->createAddon('bar', 'minimum', [
+            'namespace' => 'Bar',
+        ]);
+
+        // 2. condition
+
+        // 3. test
+        $command = $app->make(Command::class);
+
+        $result = $this->runCommand($app, $command, [
+            'name' => 'foo',
+            '--addon' => 'bar',
+            '--event' => 'baz',
+            '--queued' => true,
         ]);
 
         Assert::same(0, $result);

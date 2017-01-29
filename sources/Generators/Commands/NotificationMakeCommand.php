@@ -19,6 +19,7 @@ class NotificationMakeCommand extends BaseCommand
     protected $signature = 'make:notification
         {name : The name of the class}
         {--a|addon= : The name of the addon}
+        {--m|markdown : Create a new Markdown template for the notification}
     ';
 
     /**
@@ -62,7 +63,7 @@ class NotificationMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return 'notification-html.stub';
+        return $this->option('markdown') ? 'notification-markdown.stub' : 'notification-html.stub';
     }
 
     /**

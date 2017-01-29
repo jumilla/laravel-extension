@@ -19,6 +19,7 @@ class MailMakeCommand extends BaseCommand
     protected $signature = 'make:mail
         {name : The name of the class}
         {--a|addon= : The name of the addon}
+        {--m|markdown : Create a new Markdown template for the mailable}
     ';
 
     /**
@@ -62,7 +63,7 @@ class MailMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return 'mail-view.stub';
+        return $this->option('markdown') ? 'mail-markdown.stub' : 'mail-view.stub';
     }
 
     /**
