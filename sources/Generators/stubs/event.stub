@@ -3,12 +3,16 @@
 namespace {$namespace};
 
 use {$root_namespace}\Events\Event;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class {$class} extends Event
 {
-    use SerializesModels;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
@@ -27,6 +31,6 @@ class {$class} extends Event
      */
     public function broadcastOn()
     {
-        return [];
+        return new PrivateChannel('channel-name');
     }
 }

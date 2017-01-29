@@ -3,6 +3,7 @@
 namespace {$namespace};
 
 use {$root_namespace}\Http\Controllers\Controller as BaseController;
+use {$model_namespace}{$model_class};
 use Illuminate\Http\Request;
 
 class {$class} extends BaseController
@@ -30,7 +31,7 @@ class {$class} extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,10 +42,10 @@ class {$class} extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  \{$model_namespace}{$model_class}  $model
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show({$model_class} $model)
     {
         //
     }
@@ -52,10 +53,10 @@ class {$class} extends BaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  \{$model_namespace}{$model_class}  $model
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit({$model_class} $model)
     {
         //
     }
@@ -63,11 +64,11 @@ class {$class} extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int  $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \{$model_namespace}{$model_class}  $model
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, {$model_class} $model)
     {
         //
     }
@@ -75,10 +76,10 @@ class {$class} extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  \{$model_namespace}{$model_class}  $model
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy({$model_class} $model)
     {
         //
     }

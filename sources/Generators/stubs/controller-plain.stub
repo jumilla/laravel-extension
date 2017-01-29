@@ -4,7 +4,6 @@ namespace {$namespace};
 
 use {$root_namespace}\Http\Controllers\Controller as BaseController;
 use Illuminate\Http\Request;
-use {$root_namespace}\Http\Requests;
 
 class {$class} extends BaseController
 {
