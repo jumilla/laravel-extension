@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Database\Console;
 
-use Jumilla\Versionia\Laravel\Console\DatabaseRollbackCommand as BaseCommand;
+use Jumilla\Versionia\Laravel\Commands\DatabaseRollbackCommand as BaseCommand;
 
 class DatabaseRollbackCommand extends BaseCommand
 {

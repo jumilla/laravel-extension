@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Database\Console;
 
-use Jumilla\Versionia\Laravel\Console\DatabaseAgainCommand as BaseCommand;
+use Jumilla\Versionia\Laravel\Commands\DatabaseAgainCommand as BaseCommand;
 
 class DatabaseAgainCommand extends BaseCommand
 {

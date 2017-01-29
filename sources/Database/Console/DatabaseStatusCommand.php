@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Database\Console;
 
-use Jumilla\Versionia\Laravel\Console\DatabaseStatusCommand as BaseCommand;
+use Jumilla\Versionia\Laravel\Commands\DatabaseStatusCommand as BaseCommand;
 
 class DatabaseStatusCommand extends BaseCommand
 {

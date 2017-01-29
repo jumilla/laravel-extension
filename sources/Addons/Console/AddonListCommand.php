@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Addons\Console;
 
-use Jumilla\Addomnipot\Laravel\Console\AddonListCommand as BaseCommand;
+use Jumilla\Addomnipot\Laravel\Commands\AddonListCommand as BaseCommand;
 
 class AddonListCommand extends BaseCommand
 {

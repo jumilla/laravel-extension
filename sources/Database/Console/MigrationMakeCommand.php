@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Database\Console;
 
-use Jumilla\Versionia\Laravel\Console\MigrationMakeCommand as BaseCommand;
+use Jumilla\Versionia\Laravel\Commands\MigrationMakeCommand as BaseCommand;
 use LaravelPlus\Extension\Addons\Addon;
 use LaravelPlus\Extension\Generators\GeneratorCommandTrait;
 

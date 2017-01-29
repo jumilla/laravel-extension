@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Database\Console;
 
-use Jumilla\Versionia\Laravel\Console\DatabaseUpgradeCommand as BaseCommand;
+use Jumilla\Versionia\Laravel\Commands\DatabaseUpgradeCommand as BaseCommand;
 
 class DatabaseUpgradeCommand extends BaseCommand
 {

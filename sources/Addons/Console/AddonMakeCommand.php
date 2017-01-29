@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Addons\Console;
 
-use Jumilla\Addomnipot\Laravel\Console\AddonMakeCommand as BaseCommand;
+use Jumilla\Addomnipot\Laravel\Commands\AddonMakeCommand as BaseCommand;
 
 class AddonMakeCommand extends BaseCommand
 {

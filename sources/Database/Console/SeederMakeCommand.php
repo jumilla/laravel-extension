@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Database\Console;
 
-use Jumilla\Versionia\Laravel\Console\SeederMakeCommand as BaseCommand;
+use Jumilla\Versionia\Laravel\Commands\SeederMakeCommand as BaseCommand;
 use LaravelPlus\Extension\Addons\Addon;
 use LaravelPlus\Extension\Generators\GeneratorCommandTrait;
 

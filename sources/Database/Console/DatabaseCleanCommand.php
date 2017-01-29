@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Database\Console;
 
-use Jumilla\Versionia\Laravel\Console\DatabaseCleanCommand as BaseCommand;
+use Jumilla\Versionia\Laravel\Commands\DatabaseCleanCommand as BaseCommand;
 
 class DatabaseCleanCommand extends BaseCommand
 {

@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Database\Console;
 
-use Jumilla\Versionia\Laravel\Console\DatabaseSeedCommand as BaseCommand;
+use Jumilla\Versionia\Laravel\Commands\DatabaseSeedCommand as BaseCommand;
 
 class DatabaseSeedCommand extends BaseCommand
 {

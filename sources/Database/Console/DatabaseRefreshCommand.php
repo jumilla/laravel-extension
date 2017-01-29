@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Database\Console;
 
-use Jumilla\Versionia\Laravel\Console\DatabaseRefreshCommand as BaseCommand;
+use Jumilla\Versionia\Laravel\Commands\DatabaseRefreshCommand as BaseCommand;
 
 class DatabaseRefreshCommand extends BaseCommand
 {

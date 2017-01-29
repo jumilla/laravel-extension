@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Addons\Console;
 
-use Jumilla\Addomnipot\Laravel\Console\AddonRemoveCommand as BaseCommand;
+use Jumilla\Addomnipot\Laravel\Commands\AddonRemoveCommand as BaseCommand;
 
 class AddonRemoveCommand extends BaseCommand
 {

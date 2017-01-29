@@ -2,7 +2,7 @@
 
 namespace LaravelPlus\Extension\Addons\Console;
 
-use Jumilla\Addomnipot\Laravel\Console\AddonStatusCommand as BaseCommand;
+use Jumilla\Addomnipot\Laravel\Commands\AddonStatusCommand as BaseCommand;
 
 class AddonStatusCommand extends BaseCommand
 {
