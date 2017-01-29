@@ -79,7 +79,7 @@ class ListenerMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return $this->option('queued') ? 'listener-queued.stub' : 'listener.stub';
+        return $this->option('queued') ? 'listener-queued.stub' : 'listener-sync.stub';
     }
 
     /**

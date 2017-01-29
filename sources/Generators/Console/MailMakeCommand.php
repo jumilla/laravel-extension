@@ -62,7 +62,7 @@ class MailMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return 'mail.stub';
+        return 'mail-view.stub';
     }
 
     /**

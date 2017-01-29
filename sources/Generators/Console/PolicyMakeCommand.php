@@ -63,7 +63,7 @@ class PolicyMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return $this->option('model') ? 'policy-model.stub' : 'policy.stub';
+        return $this->option('model') ? 'policy-model.stub' : 'policy-plain.stub';
     }
 
     /**

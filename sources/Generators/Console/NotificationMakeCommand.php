@@ -62,7 +62,7 @@ class NotificationMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return 'notification.stub';
+        return 'notification-html.stub';
     }
 
     /**

@@ -63,7 +63,7 @@ class ControllerMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return $this->option('resource') ? 'controller-resource.stub' : 'controller.stub';
+        return $this->option('resource') ? 'controller-resource.stub' : 'controller-plain.stub';
     }
 
     /**
