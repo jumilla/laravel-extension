@@ -2,6 +2,8 @@
 
 use Illuminate\Container\Container;
 use Illuminate\Config\Repository as Config;
+use Illuminate\Cache\Repository as Cache;
+use Illuminate\Cache\NullStore;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
@@ -10,7 +12,7 @@ use Illuminate\Routing\Router;
 use Jumilla\Addomnipot\Laravel\Generator as AddonGenerator;
 use Jumilla\Versionia\Laravel\Migrator;
 
-abstract class TestCase extends PHPUnit_Framework_TestCase
+abstract class TestCase extends PHPUnit\Framework\TestCase
 {
     use MockeryTrait;
 
@@ -47,12 +49,13 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         ]));
 
         $this->app[Illuminate\Contracts\Foundation\Application::class] = $this->app;
+        $this->app[Illuminate\Contracts\Cache\Repository::class] = new Cache(new NullStore());
         $this->app['config'] = new Config([]);
         $this->app['events'] = new Dispatcher($this->app);
         $this->app['files'] = new Filesystem();
         $this->app['filesystem'] = new FilesystemManager($this->app);
         $this->app['router'] = new Router($this->app['events'], $this->app);
-
+        
         return $this->app;
     }
 

@@ -67,6 +67,16 @@ class ApplicationStub extends Container implements ApplicationContract
     }
 
     /**
+     * Determine if we are running in the console.
+     *
+     * @return bool
+     */
+    public function runningInConsole()
+    {
+        return php_sapi_name() == 'cli';
+    }
+
+    /**
      * Determine if the application is currently down for maintenance.
      *
      * @return bool
@@ -133,51 +143,27 @@ class ApplicationStub extends Container implements ApplicationContract
     }
 
     /**
-     * Get the path to the cached "compiled.php" file.
-     *
-     * @return string
-     */
-    public function getCachedCompilePath()
-    {
-        return $this->basePath().'/cache';
-    }
-
-    /**
      * Get the path to the cached services.json file.
      *
      * @return string
      */
     public function getCachedServicesPath()
     {
-        return $this->basePath().'/cache';
+        return $this->bootstrapPath().'/cache/services.json';
+    }
+
+    /**
+     * Get the path to the cached packages.php file.
+     *
+     * @return string
+     */
+    public function getCachedPackagesPath()
+    {
+        return $this->bootstrapPath().'/cache/packages.php';
     }
 
     public function getNamespace()
     {
-        return 'App';
-    }
-
-    public function hasBeenBootstrapped()
-    {
-        return false;
-    }
-
-    /**
-     * Run the given array of bootstrap classes.
-     *
-     * @param  array  $bootstrappers
-     * @return void
-     */
-    public function bootstrapWith(array $bootstrappers)
-    {
-    }
-
-    /**
-     * Load and boot all of the remaining deferred providers.
-     *
-     * @return void
-     */
-    public function loadDeferredProviders()
-    {
+        return 'App\\';
     }
 }
