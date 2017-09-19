@@ -14,8 +14,8 @@
 	"require": {
 		"php": "^7.0",
         "laravel/framework": "^5.5",
-		"jumilla/laravel-versionia": "^2.0|dev-master",
-		"jumilla/laravel-addomnipot": "^2.0|dev-master",
+		"jumilla/laravel-versionia": "^2.0",
+		"jumilla/laravel-addomnipot": "^2.0",
 		"jumilla/laravel-source-generator": "^1.3"
 	},
     "require-dev": {
