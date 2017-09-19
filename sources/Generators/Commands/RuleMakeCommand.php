@@ -52,7 +52,7 @@ class RuleMakeCommand extends BaseCommand
      */
     protected function getDefaultNamespace()
     {
-        return $this->getRootNamespace().'\\Rule';
+        return $this->getRootNamespace().'\\Rules';
     }
 
     /**
@@ -62,7 +62,7 @@ class RuleMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return 'request.stub';
+        return 'rule.stub';
     }
 
     /**
