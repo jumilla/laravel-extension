@@ -1,8 +1,8 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Commands\RequestMakeCommand as Command;
+use LaravelPlus\Extension\Generators\Commands\RuleMakeCommand as Command;
 
-class RequestMakeCommandTests extends TestCase
+class RuleMakeCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
@@ -46,10 +46,10 @@ class RequestMakeCommandTests extends TestCase
         ]);
 
         Assert::same(0, $result);
-        Assert::fileExists($app['path'].'/Http/Requests/Foo.php');
+        Assert::fileExists($app['path'].'/Rule/Foo.php');
     }
 
-     /**
+    /**
      * @test
      */
     public function test_withNameAndAddonParameter_addonNotFound()
@@ -98,6 +98,6 @@ class RequestMakeCommandTests extends TestCase
         ]);
 
         Assert::same(0, $result);
-        Assert::fileExists($app['path.base'].'/addons/bar/classes/Requests/Foo.php');
+        Assert::fileExists($app['path.base'].'/addons/bar/classes/Rule/Foo.php');
     }
 }

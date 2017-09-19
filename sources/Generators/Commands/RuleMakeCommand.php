@@ -7,7 +7,7 @@ use Jumilla\Generators\FileGenerator;
 use LaravelPlus\Extension\Addons\Addon;
 use LaravelPlus\Extension\Generators\GeneratorCommandTrait;
 
-class RequestMakeCommand extends BaseCommand
+class RuleMakeCommand extends BaseCommand
 {
     use GeneratorCommandTrait;
 

@@ -1,8 +1,8 @@
 <?php
 
-use LaravelPlus\Extension\Generators\Commands\RequestMakeCommand as Command;
+use LaravelPlus\Extension\Generators\Commands\ResourceMakeCommand as Command;
 
-class RequestMakeCommandTests extends TestCase
+class ResourceMakeCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
@@ -46,10 +46,32 @@ class RequestMakeCommandTests extends TestCase
         ]);
 
         Assert::same(0, $result);
-        Assert::fileExists($app['path'].'/Http/Requests/Foo.php');
+        Assert::fileExists($app['path'].'/Http/Resources/Foo.php');
     }
 
-     /**
+    /**
+     * @test
+     */
+     public function test_withNameAndCollectionParameter()
+     {
+         // 1. setup
+         $app = $this->createApplication();
+ 
+         // 2. condition
+ 
+         // 3. test
+         $command = $app->make(Command::class);
+ 
+         $result = $this->runCommand($app, $command, [
+             'name' => 'foo',
+             '--collection' => true,
+         ]);
+ 
+         Assert::same(0, $result);
+         Assert::fileExists($app['path'].'/Http/Resources/Foo.php');
+     }
+ 
+    /**
      * @test
      */
     public function test_withNameAndAddonParameter_addonNotFound()
@@ -98,6 +120,6 @@ class RequestMakeCommandTests extends TestCase
         ]);
 
         Assert::same(0, $result);
-        Assert::fileExists($app['path.base'].'/addons/bar/classes/Requests/Foo.php');
+        Assert::fileExists($app['path.base'].'/addons/bar/classes/Resources/Foo.php');
     }
 }
