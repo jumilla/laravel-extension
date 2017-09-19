@@ -30,6 +30,15 @@
 			"sources/helpers.php"
 		]
 	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"LaravelPlus\\Extension\\ServiceProvider"
+			],
+			"aliases": {
+			}
+		}
+	},
 	"minimum-stability": "stable",
 	"prefer-stable": true
 }
