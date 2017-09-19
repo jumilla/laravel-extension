@@ -19,7 +19,7 @@ class ResourceMakeCommand extends BaseCommand
     protected $signature = 'make:resource
         {name : The name of the class}
         {--a|addon= : The name of the addon}
-        {--c|collection= : Create a resource collection}
+        {--c|collection : Create a resource collection}
     ';
 
     /**
