@@ -40,7 +40,26 @@ class TestMakeCommandTests extends TestCase
         ]);
 
         Assert::same(0, $result);
-        Assert::fileExists($app['path.base'].'/tests/Foo.php');
+        Assert::fileExists($app['path.base'].'/tests/Feature/Foo.php');
+    }
+
+    public function test_withNameAndUnitParameter()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+
+        // 2. condition
+
+        // 3. test
+        $command = $app->make(Command::class);
+
+        $result = $this->runCommand($app, $command, [
+            'name' => 'foo',
+            '--unit' => true,
+        ]);
+
+        Assert::same(0, $result);
+        Assert::fileExists($app['path.base'].'/tests/Unit/Foo.php');
     }
 
     public function test_withNameAndAddonParameter_addonNotFound()
@@ -86,6 +105,29 @@ class TestMakeCommandTests extends TestCase
         ]);
 
         Assert::same(0, $result);
-        Assert::fileExists($app['path.base'].'/addons/bar/tests/Foo.php');
+        Assert::fileExists($app['path.base'].'/addons/bar/tests/Feature/Foo.php');
+    }
+
+    public function test_withNameAndUnitAndAddonParameter_addonFound()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+        $this->createAddon('bar', 'minimum', [
+            'namespace' => 'Bar',
+        ]);
+
+        // 2. condition
+
+        // 3. test
+        $command = $app->make(Command::class);
+
+        $result = $this->runCommand($app, $command, [
+            'name' => 'foo',
+            '--addon' => 'bar',
+            '--unit' => true,
+        ]);
+
+        Assert::same(0, $result);
+        Assert::fileExists($app['path.base'].'/addons/bar/tests/Unit/Foo.php');
     }
 }

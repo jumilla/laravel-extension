@@ -46,7 +46,7 @@ class RuleMakeCommandTests extends TestCase
         ]);
 
         Assert::same(0, $result);
-        Assert::fileExists($app['path'].'/Rule/Foo.php');
+        Assert::fileExists($app['path'].'/Rules/Foo.php');
     }
 
     /**
@@ -98,6 +98,6 @@ class RuleMakeCommandTests extends TestCase
         ]);
 
         Assert::same(0, $result);
-        Assert::fileExists($app['path.base'].'/addons/bar/classes/Rule/Foo.php');
+        Assert::fileExists($app['path.base'].'/addons/bar/classes/Rules/Foo.php');
     }
 }

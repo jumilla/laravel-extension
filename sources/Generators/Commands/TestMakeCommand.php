@@ -53,17 +53,27 @@ class TestMakeCommand extends BaseCommand
      */
     protected function getRootDirectory()
     {
-        return ($this->addon ? $this->addon->path('tests') : $this->laravel->basePath().'/tests') . ($this->option('unit') ? '/Unit' : '/Feature');
+        return $this->addon ? $this->addon->path('tests') : $this->laravel->basePath().'/tests';
     }
 
     /**
+     * Get the default namespace for the class.
+     *
+     * @return $string
+     */
+     protected function getRootNamespace()
+     {
+         return $this->addon ? 'Tests\\'.studly_case($this->addon->name()) : 'Tests';
+     }
+ 
+     /**
      * Get the root namespace for the class.
      *
      * @return string
      */
-    protected function getRootNamespace()
+    protected function getDefaultNamespace()
     {
-        return ($this->addon ? $this->getRootNamespace().'\\Tests' : 'Tests') . ($this->option('unit') ? '\\Unit' : '\\Feature');
+        return $this->getRootNamespace() . ($this->option('unit') ? '\\Unit' : '\\Feature');
     }
 
     /**

@@ -80,7 +80,6 @@ class RequestMakeCommand extends BaseCommand
 
         return $generator->file($path)->template($this->getStub(), [
             'namespace' => $namespace,
-            'root_namespace' => $this->getAppNamespace(),       // use App\Http\Requests\Request
             'class' => $class,
         ]);
     }

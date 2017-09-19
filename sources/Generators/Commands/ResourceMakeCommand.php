@@ -81,7 +81,6 @@ class ResourceMakeCommand extends BaseCommand
 
         return $generator->file($path)->template($this->getStub(), [
             'namespace' => $namespace,
-            'root_namespace' => $this->getAppNamespace(),
             'class' => $class,
         ]);
     }
