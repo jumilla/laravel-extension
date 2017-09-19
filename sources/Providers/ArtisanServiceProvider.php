@@ -44,7 +44,6 @@ class ArtisanServiceProvider extends ServiceProvider
         // 'MigrateStatus' => 'command.migrate.status',
         'Optimize' => 'command.optimize',
         'PackageDiscover' => 'command.package.discover',
-        'Preset' => 'command.preset',
         'QueueFailed' => 'command.queue.failed',
         'QueueFlush' => 'command.queue.flush',
         'QueueForget' => 'command.queue.forget',
@@ -90,6 +89,7 @@ class ArtisanServiceProvider extends ServiceProvider
         // 'ControllerMake' => 'command.controller.make',
         'EventGenerate' => 'command.event.generate',
         // 'EventMake' => 'command.event.make',
+        // 'FactoryMake' => 'command.factory.make',
         // 'JobMake' => 'command.job.make',
         // 'ListenerMake' => 'command.listener.make',
         // 'MailMake' => 'command.mail.make',
@@ -103,10 +103,13 @@ class ArtisanServiceProvider extends ServiceProvider
         // 'QueueFailedTable' => 'command.queue.failed-table',
         // 'QueueTable' => 'command.queue.table',
         // 'RequestMake' => 'command.request.make',
+        // 'ResourceMake' => 'command.resource.make',
+        // 'RuletMake' => 'command.rule.make',
         // 'SeederMake' => 'command.seeder.make',
         // 'SessionTable' => 'command.session.table',
-        'Serve' => 'command.serve',
         // 'TestMake' => 'command.test.make',
+        'Preset' => 'command.preset',
+        'Serve' => 'command.serve',
         'VendorPublish' => 'command.vendor.publish',
 
         'AppContainer' => 'command+.app.container',
@@ -127,6 +130,8 @@ class ArtisanServiceProvider extends ServiceProvider
         'MakePolicy' => 'command+.policy.make',
         'MakeProvider' => 'command+.provider.make',
         'MakeRequest' => 'command+.request.make',
+        'MakeResource' => 'command+.resource.make',
+        'MakeRule' => 'command+.rule.make',
         'MakeSeeder' => 'command+.seeder.make',
         'MakeTest' => 'command+.test.make',
     ];
@@ -433,14 +438,14 @@ class ArtisanServiceProvider extends ServiceProvider
      * @param string $command
      * @return void
      */
-    protected function registerMakeEventCommand($command)
-    {
-        $this->app->singleton($command, function ($app) {
-            return new Generators\Commands\EventMakeCommand($app);
-        });
-    }
-
-    /**
+     protected function registerMakeEventCommand($command)
+     {
+         $this->app->singleton($command, function ($app) {
+             return new Generators\Commands\EventMakeCommand($app);
+         });
+     }
+ 
+      /**
      * Register the command.
      *
      * @param string $command
@@ -572,6 +577,32 @@ class ArtisanServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+     protected function registerMakeResourceCommand($command)
+     {
+         $this->app->singleton($command, function ($app) {
+             return new Generators\Commands\ResourceMakeCommand($app);
+         });
+     }
+ 
+    /**
+     * Register the command.
+     *
+     * @param string $command
+     * @return void
+     */
+     protected function registerMakeRuleCommand($command)
+     {
+         $this->app->singleton($command, function ($app) {
+             return new Generators\Commands\RuleMakeCommand($app);
+         });
+     }
+ 
+      /**
      * Register the command.
      *
      * @param string $command
