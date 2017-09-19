@@ -19,6 +19,7 @@ class TestMakeCommand extends BaseCommand
     protected $signature = 'make:test
         {name : The name of the class}
         {--a|addon= : The name of the addon}
+        {--u|unit : Create a unit test}
     ';
 
     /**
@@ -52,7 +53,7 @@ class TestMakeCommand extends BaseCommand
      */
     protected function getRootDirectory()
     {
-        return $this->addon ? $this->addon->path('tests') : $this->laravel->basePath().'/tests';
+        return ($this->addon ? $this->addon->path('tests') : $this->laravel->basePath().'/tests') . ($this->option('unit') ? '/Unit' : '/Feature');
     }
 
     /**
@@ -62,7 +63,7 @@ class TestMakeCommand extends BaseCommand
      */
     protected function getRootNamespace()
     {
-        return '';
+        return ($this->addon ? $this->getRootNamespace().'\\Tests' : 'Tests') . ($this->option('unit') ? '\\Unit' : '\\Feature');
     }
 
     /**
@@ -72,7 +73,7 @@ class TestMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return 'test.stub';
+        return $this->option('unit') ? 'test-unit.stub' : 'test-feature.stub';
     }
 
     /**
