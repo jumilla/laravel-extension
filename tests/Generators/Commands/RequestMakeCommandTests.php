@@ -49,7 +49,7 @@ class RequestMakeCommandTests extends TestCase
         Assert::fileExists($app['path'].'/Http/Requests/Foo.php');
     }
 
-     /**
+    /**
      * @test
      */
     public function test_withNameAndAddonParameter_addonNotFound()
