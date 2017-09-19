@@ -2,7 +2,7 @@
 
 namespace {$namespace};
 
-use Tests\TestCase;
+use {$root_namespace}\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class {$class} extends TestCase
